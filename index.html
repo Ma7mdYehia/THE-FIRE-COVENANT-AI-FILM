@@ -217,6 +217,34 @@
     .card-action { position: absolute; inset: auto 22px 20px; display: flex; align-items: center; gap: 7px; color: #e7c18d; font-size: 11px; font-weight: 700; }
     .card-action svg { width: 15px; height: 15px; transition: transform .2s ease; }
     .episode-card:hover .card-action svg { transform: translateX(-4px); }
+    .episode-card.trailer-card {
+      grid-column: span 2;
+      min-height: 360px;
+      isolation: isolate;
+      background: #0b0908;
+    }
+    .trailer-card .trailer-bg,
+    .trailer-card .trailer-shade { position: absolute; inset: 0; }
+    .trailer-card .trailer-bg {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 47%;
+      filter: saturate(.82) contrast(1.08);
+      transition: transform .55s cubic-bezier(.22,1,.36,1);
+      z-index: -3;
+    }
+    .trailer-card:hover .trailer-bg { transform: scale(1.025); }
+    .trailer-card .trailer-shade {
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(7,6,6,.94) 0%, rgba(7,6,6,.58) 52%, rgba(7,6,6,.35) 100%),
+        linear-gradient(0deg, rgba(7,6,6,.92) 0%, transparent 70%);
+    }
+    .trailer-card::before { color: rgba(242,169,59,.12); }
+    .trailer-card .ep-meta,
+    .trailer-card h3,
+    .trailer-card p,
+    .trailer-card .card-action { position: relative; z-index: 2; }
+    .trailer-card h3 { max-width: 520px; margin-top: 98px; font-size: clamp(28px,4vw,44px); }
+    .trailer-card p { max-width: 590px; color: #c9c3bd; }
 
     .filterbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: -6px 0 24px; }
     .filter-btn { min-height: 40px; border: 1px solid var(--border); border-radius: 999px; padding: 9px 13px; color: var(--muted); background: rgba(244,244,242,.025); cursor: pointer; }
@@ -313,6 +341,40 @@
     .scene-meta span { padding:6px 8px; border-radius:999px; color:#bdb7b1; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); font-size:10px; }
     .result-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
     .result-slot { min-height:150px; display:grid; place-items:center; text-align:center; padding:18px; border:1px dashed rgba(244,244,242,.16); border-radius:16px; color:var(--muted-2); font-size:11px; background:rgba(0,0,0,.16); }
+    .trailer-modal-hero img { object-fit: cover; object-position: center 46%; filter: brightness(.72); }
+    .sheet-preview {
+      margin: 12px 0 14px; padding: 10px; border-radius: 20px;
+      border: 1px solid rgba(217,119,6,.2); background: #080707;
+    }
+    .sheet-preview img {
+      width: 100%; max-height: 760px; object-fit: contain; border-radius: 14px;
+      background: #050505;
+    }
+    .sheet-preview figcaption {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 11px 5px 2px; color: var(--muted); font-size: 11px;
+    }
+    .sheet-preview a { color: #efbd79; text-decoration: none; font-weight: 700; }
+    .attachment-head { margin: 18px 0 10px; }
+    .attachment-head h4 { margin: 0 0 4px; font-size: 16px; }
+    .attachment-head p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+    .attachment-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+    .attachment-card {
+      display: grid; grid-template-columns: 112px 1fr; gap: 13px; min-height: 122px;
+      padding: 10px; border-radius: 16px; border: 1px solid rgba(244,244,242,.08);
+      background: rgba(244,244,242,.026);
+    }
+    .attachment-card img {
+      width: 112px; height: 102px; object-fit: cover; border-radius: 11px; background: #070707;
+    }
+    .attachment-copy { padding: 4px 2px; }
+    .attachment-copy small { color: var(--amber-bright); font: 700 9px/1 Inter,sans-serif; letter-spacing: .09em; direction: ltr; }
+    .attachment-copy h5 { margin: 7px 0 5px; font-size: 13px; }
+    .attachment-copy p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+    .text-lock-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; direction: ltr; text-align: left; }
+    .text-lock-list li { color: #f0d2a5; font: 600 12px/1.5 Inter,sans-serif; }
+    .text-lock-list li::before { content: "“"; color: var(--amber); }
+    .text-lock-list li::after { content: "”"; color: var(--amber); }
     .prompt-head { display:flex; justify-content:space-between; align-items:center; gap:15px; padding:13px 15px; border-bottom:1px solid rgba(244,244,242,.07); }
     .prompt-head strong { font:700 10px/1 Inter,sans-serif; color:#e9bc7d; letter-spacing:.12em; direction:ltr; }
     .copy-btn { color:var(--ink); background:rgba(244,244,242,.06); border:1px solid var(--border); border-radius:10px; padding:8px 10px; cursor:pointer; font-size:11px; }
@@ -342,6 +404,8 @@
       h1 { font-size:clamp(58px,21vw,86px); }
       section { padding:68px 0; }
       .phase-grid, .episodes-grid, .characters-grid, .locations-grid, .workflow, .result-grid { grid-template-columns:1fr; }
+      .episode-card.trailer-card { grid-column: auto; min-height: 330px; }
+      .attachment-grid { grid-template-columns: 1fr; }
       .scene-summary { grid-template-columns:46px 1fr; }
       .scene-state { grid-column:2; justify-self:start; }
       .phase-card { min-height:240px; }
@@ -353,6 +417,8 @@
       .modal-title { inset:auto 20px 20px; }
       .modal-body { padding:8px 20px 28px; }
       .modal-hero, .modal-hero img, .empty-media { min-height:310px; }
+      .attachment-card { grid-template-columns: 90px 1fr; }
+      .attachment-card img { width: 90px; height: 90px; }
       .footer-inner { align-items:flex-start; flex-direction:column; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -371,7 +437,7 @@
       <nav class="nav" aria-label="أقسام الصفحة">
         <a href="#plan">الخطة</a><a href="#story">القصة</a><a href="#episodes">الحلقات</a><a href="#characters">الشخصيات</a><a href="#locations">المواقع</a><a href="#workflow">طريقة العمل</a>
       </nav>
-      <span class="phase-chip">PHASE 01 · COMPLETE</span>
+      <span class="phase-chip">TRAILER · PRODUCTION READY</span>
     </div>
   </header>
 
@@ -425,7 +491,7 @@
 
     <section id="episodes">
       <div class="shell">
-        <div class="section-head"><div><p class="kicker">SEASON 01 · 8 EPISODES</p><h2>حلقات الموسم الأول</h2></div><p>الحلقة الأولى دخلت مرحلة الإنتاج: افتحها للوصول إلى المشاهد، برومبتات الصورة والحركة، ومساحات النتائج. باقي الحلقات ما زالت ضمن الـSeries Bible.</p></div>
+        <div class="section-head"><div><p class="kicker">OFFICIAL TRAILER + SEASON 01</p><h2>التريلر وحلقات الموسم</h2></div><p>ابدأ بالحلقة الخاصة رقم 00 للوصول إلى مقدمة التريلر، 8 Scene Sheets، مراجع كل مشهد، برومبتات Flow Omni والقفلة النهائية. ثم استكشف حلقات الموسم الأول.</p></div>
         <div id="episodesGrid" class="episodes-grid"></div>
       </div>
     </section>
@@ -461,8 +527,8 @@
     </section>
 
     <div class="shell next-phase glass">
-      <div><p class="kicker">CURRENT BUILD</p><h2>المرحلة الثانية: الحلقة الأولى قيد الإنتاج</h2><p>تم تأسيس 8 وحدات سينمائية للحلقة «البيضة الأخيرة». الخطوة التالية إنتاج الـScene Sheets واعتماد Start / End Frames مشهدًا بمشهد.</p></div>
-      <span class="btn">EPISODE 01 · IN PRODUCTION</span>
+      <div><p class="kicker">CURRENT BUILD</p><h2>حزمة التريلر جاهزة للتحريك</h2><p>تم توثيق المقدمة، 8 مشاهد، النهاية، جميع الـScene Sheets والمراجع المطلوبة، مع برومبت مستقل وشرح مرفقات لكل وحدة إنتاجية.</p></div>
+      <span class="btn">TRAILER · 10 UNITS READY</span>
     </div>
   </main>
 
@@ -471,6 +537,7 @@
   <dialog id="detailDialog" aria-labelledby="modalHeading"><div class="modal-scroll"><button class="modal-close" aria-label="إغلاق النافذة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div id="modalContent"></div></div></dialog>
   <div class="toast" id="toast" role="status">تم نسخ البرومبت</div>
 
+  <script src="trailer-data.js"></script>
   <script>
     const episodes = [
       {n:1,title:"البيضة الأخيرة",en:"THE LAST EGG",idea:"يعود كشّافو الحدود ببيضة تنين سليمة عُثر عليها تحت معبد محترق. آزر يتعرّف إلى سلالتها، بينما تضيء علامة غامضة في كف ليان لحظة اقترابها منها.",turn:"يأمر يحيى بإخفاء البيضة داخل قاعة الحكم، لكن خبر وجودها يتسرّب قبل نهاية الليلة.",cast:"يحيى، علياء، آزر، ليان، زين",hook:"نادر يتلقى قطعة من القشرة ويقول: عاد العهد الذي سرقوه منا."},
@@ -516,6 +583,7 @@
       {id:"lower-chamber",name:"الحجرة السفلية",en:"THE LOWER CHAMBER",image:"assets/lower-chamber.webp",desc:"غرفة طقسية مدفونة أسفل قاعة الحكم، مرتبطة بالعهد الأول. تضم منصة دائرية للبيضة ومسارًا حجريًا حلزونيًا وآلية لا تستجيب إلا لحامل العلامة.",visual:"حجرة دائرية عميقة، ممر حلزوني، منصة حجرية مركزية، قنوات ذهبية خافتة، أبواب سرية ومصابيح زيتية داخل تجاويف الجدار.",prompt:`Create the official cinematic location production sheet for THE LOWER CHAMBER beneath the Great Hall in The Fire Covenant. An ancient circular covenant chamber built around a central dragon-egg dais. Preserve exact geography: descending spiral stone walkway, deep circular floor, central raised platform, radial carved channels, concealed doors, narrow archive niches and an old mechanical lock that reacts to the Keeper's palm mark. Dark volcanic stone, weathered bronze, faint dormant gold lines and low amber oil lamps. Include top-down view, entrance approach, central dais, spiral path, hidden-door detail, activated and dormant lighting states, floor plan and texture callouts. Cinematic photorealism, sacred and secret rather than horror, consistent architecture, no modern objects, no European crypt styling, no text errors.`}
     ];
 
+    const trailer = window.trailerProduction;
     const iconArrow = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>`;
     const episodesGrid = document.getElementById('episodesGrid');
     const charactersGrid = document.getElementById('charactersGrid');
@@ -524,7 +592,15 @@
     const modalContent = document.getElementById('modalContent');
     const toast = document.getElementById('toast');
 
-    episodesGrid.innerHTML = episodes.map(ep => `
+    episodesGrid.innerHTML = `
+      <button class="episode-card trailer-card" data-ep="00" data-kind="trailer">
+        <img class="trailer-bg" src="${trailer.cover}" alt="" />
+        <span class="trailer-shade"></span>
+        <span class="ep-meta">SPECIAL 00 · OFFICIAL TRAILER</span>
+        <h3>${trailer.title}</h3>
+        <p>${trailer.summary}</p>
+        <span class="card-action">افتح حزمة التريلر ${iconArrow}</span>
+      </button>` + episodes.map(ep => `
       <button class="episode-card" data-ep="0${ep.n}" data-kind="episode" data-id="${ep.n}">
         <span class="ep-meta">EPISODE 0${ep.n}</span><h3>${ep.title}</h3><p>${ep.idea}</p>
         <span class="card-action">افتح فكرة الحلقة ${iconArrow}</span>
@@ -542,6 +618,69 @@
         <img src="${location.image}" alt="Location Sheet — ${location.name}" loading="lazy" />
         <span class="location-copy"><span class="badge ready">✓ موقع معتمد</span><h3>${location.name}</h3><p>${location.desc}</p></span>
       </button>`).join('');
+
+    function renderAttachments(unit) {
+      return `<div class="attachment-head"><h4>المرفقات المطلوبة بالترتيب</h4><p>ارفع الملفات بالترتيب الموضح. وظيفة كل ملف محددة حتى لا يخلط Flow بين التكوين وهوية الشخصية والموقع.</p></div>
+        <div class="attachment-grid">${unit.attachments.map((attachment, index) => `
+          <article class="attachment-card">
+            <a href="${attachment.src}" target="_blank" rel="noopener" aria-label="فتح ${attachment.name} بالحجم الكامل"><img src="${attachment.src}" alt="${attachment.name}" loading="lazy" /></a>
+            <div class="attachment-copy">
+              <small>UPLOAD ${String(index + 1).padStart(2, "0")} · ${attachment.type}</small>
+              <h5>${attachment.name}</h5>
+              <p>${attachment.role}</p>
+            </div>
+          </article>`).join("")}</div>`;
+    }
+
+    function renderTrailerUnit(unit) {
+      const textLock = unit.screenText.length
+        ? `<article class="detail-panel"><h3>النصوص الظاهرة حرفيًا</h3><ul class="text-lock-list">${unit.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
+        : `<article class="detail-panel"><h3>النصوص الظاهرة</h3><p>لا توجد نصوص أو عناوين داخل هذا المشهد.</p></article>`;
+      return `<article class="scene-item">
+        <button class="scene-summary" data-scene-toggle>
+          <span class="scene-no">${unit.order}</span>
+          <span><h4>${unit.title}</h4><p dir="ltr">${unit.en} · ${unit.duration}</p></span>
+          <span class="scene-state">جاهز للتحريك</span>
+        </button>
+        <div class="scene-content">
+          <div class="scene-meta"><span>${unit.duration}</span><span>Vertical 9:16</span><span>Google Flow Omni</span></div>
+          <figure class="sheet-preview">
+            <a href="${unit.image}" target="_blank" rel="noopener"><img src="${unit.image}" alt="${unit.title}" loading="lazy" /></a>
+            <figcaption><span>${unit.id === "intro" || unit.id === "outro" ? "الغلاف المعتمد" : "Scene Sheet المعتمدة"}</span><a href="${unit.image}" target="_blank" rel="noopener">فتح بالحجم الكامل ↗</a></figcaption>
+          </figure>
+          <div class="detail-grid">
+            <article class="detail-panel"><h3>الهدف الدرامي</h3><p>${unit.purpose}</p></article>
+            <article class="detail-panel"><h3>الراوي</h3><p dir="ltr">${unit.narrator}</p></article>
+            ${textLock}
+            <article class="detail-panel"><h3>قاعدة التنفيذ</h3><p>الـScene Sheet تتحكم في ترتيب اللقطات والكادرات فقط. ملفات الشخصيات والمواقع هي المرجع الحاسم للهوية والتفاصيل.</p></article>
+          </div>
+          ${renderAttachments(unit)}
+          <div class="prompt-wrap">
+            <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-trailer="${unit.id}">نسخ البرومبت</button></div>
+            <pre>${escapeHtml(unit.prompt)}</pre>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function openTrailer() {
+      modalContent.innerHTML = `
+        <div class="modal-hero trailer-modal-hero">
+          <img src="${trailer.cover}" alt="${trailer.en}" />
+          <div class="modal-title"><span class="badge ready">✓ 10 وحدات جاهزة للتحريك</span><h2 id="modalHeading">${trailer.title}</h2><p dir="ltr">${trailer.en}</p></div>
+        </div>
+        <div class="modal-body">
+          <div class="detail-grid">
+            <article class="detail-panel"><h3>حزمة الإنتاج</h3><p>${trailer.summary}</p></article>
+            <article class="detail-panel"><h3>المقاس والأداة</h3><p dir="ltr">${trailer.format} · ${trailer.duration}</p></article>
+            <article class="detail-panel"><h3>صوت الراوي الثابت</h3><p>${trailer.narrator}</p></article>
+            <article class="detail-panel"><h3>طريقة الاستخدام</h3><p>افتح أي وحدة، حمّل الصورة، ارفع المرفقات بالترتيب، ثم انسخ البرومبت كاملًا إلى Flow Omni.</p></article>
+          </div>
+          <div class="production-head"><div><p class="kicker">TRAILER · PRODUCTION BOARD</p><h3>المقدمة + 8 مشاهد + النهاية</h3></div><p>كل الصور والمراجع والبرومبتات موثقة داخل كل وحدة</p></div>
+          <div class="scene-list">${trailer.units.map(renderTrailerUnit).join("")}</div>
+        </div>`;
+      showDialog();
+    }
 
     function openEpisode(ep) {
       const production = ep.n === 1 ? `<div class="production-head"><div><p class="kicker">PHASE 02 · PRODUCTION BOARD</p><h3>مشاهد الحلقة الأولى</h3></div><p>8 وحدات سينمائية · افتح كل مشهد للوصول للبرومبتات</p></div><div class="scene-list">${episodeOneScenes.map(scene => `<article class="scene-item"><button class="scene-summary" data-scene-toggle><span class="scene-no">0${scene.n}</span><span><h4>${scene.title}</h4><p>${scene.location} · ${scene.cast}</p></span><span class="scene-state">بانتظار الـScene Sheet</span></button><div class="scene-content"><div class="scene-meta"><span>المدة: ${scene.duration}</span><span>${scene.location}</span><span>${scene.cast}</span></div><article class="detail-panel"><h3>الهدف الدرامي</h3><p>${scene.desc}</p></article><div class="prompt-wrap"><div class="prompt-head"><strong>IMAGE / SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-text="${encodeURIComponent(scene.image)}">نسخ</button></div><pre>${escapeHtml(scene.image)}</pre></div><div class="prompt-wrap"><div class="prompt-head"><strong>MOTION PROMPT</strong><button class="copy-btn" data-copy-text="${encodeURIComponent(scene.motion)}">نسخ</button></div><pre>${escapeHtml(scene.motion)}</pre></div><div class="result-grid"><div class="result-slot">SCENE SHEET RESULT<br>تُضاف الصورة المعتمدة هنا</div><div class="result-slot">FINAL VIDEO RESULT<br>يُضاف رابط الفيديو والملاحظات هنا</div></div></div></article>`).join('')}</div>` : `<div class="prompt-wrap"><div class="prompt-head"><strong>PHASE 02 STATUS</strong></div><pre>هذه الحلقة ما زالت ضمن الـSeries Bible.\nيبدأ تفكيك مشاهدها بعد اعتماد وإنتاج الحلقة الأولى.</pre></div>`;
@@ -579,6 +718,7 @@
     document.addEventListener('click', event => {
       const card = event.target.closest('[data-kind]');
       if (card) {
+        if (card.dataset.kind === 'trailer') openTrailer();
         if (card.dataset.kind === 'episode') openEpisode(episodes.find(ep => String(ep.n) === card.dataset.id));
         if (card.dataset.kind === 'character') openCharacter(characters.find(ch => ch.id === card.dataset.id));
         if (card.dataset.kind === 'location') openLocation(locations.find(location => location.id === card.dataset.id));
@@ -588,6 +728,11 @@
       if (sceneToggle) sceneToggle.closest('.scene-item').classList.toggle('open');
       const directCopy = event.target.closest('[data-copy-text]');
       if (directCopy) navigator.clipboard.writeText(decodeURIComponent(directCopy.dataset.copyText)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+      const trailerCopy = event.target.closest('[data-copy-trailer]');
+      if (trailerCopy) {
+        const unit = trailer.units.find(item => item.id === trailerCopy.dataset.copyTrailer);
+        if (unit) navigator.clipboard.writeText(unit.prompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+      }
       if (event.target.closest('[data-copy="prompt"]')) {
         const text = document.getElementById('promptText').innerText;
         navigator.clipboard.writeText(text).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
