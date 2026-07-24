@@ -92,12 +92,13 @@
     }
     .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--ink); margin-inline-end: auto; }
     .brand-mark {
-      width: 40px; height: 40px; border-radius: 13px;
+      width: 44px; height: 44px; border-radius: 14px;
       display: grid; place-items: center;
-      color: #17100a; font-weight: 800;
-      background: linear-gradient(135deg, #f3b04f, #bd5d02);
-      box-shadow: 0 10px 28px -15px rgba(217,119,6,.95);
+      overflow: hidden;
+      background: radial-gradient(circle, rgba(217,119,6,.12), transparent 70%);
+      box-shadow: 0 12px 30px -18px rgba(217,119,6,.9);
     }
+    .brand-mark img { width: 100%; height: 100%; object-fit: contain; }
     .brand-copy { line-height: 1.1; }
     .brand-copy strong { display: block; font-size: 14px; }
     .brand-copy span { color: var(--muted); font: 500 10px/1.2 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
@@ -245,6 +246,24 @@
     .trailer-card .card-action { position: relative; z-index: 2; }
     .trailer-card h3 { max-width: 520px; margin-top: 98px; font-size: clamp(28px,4vw,44px); }
     .trailer-card p { max-width: 590px; color: #c9c3bd; }
+    .episode-card.episode-ready { isolation: isolate; background: #0b0908; }
+    .episode-ready .episode-bg,
+    .episode-ready .episode-shade { position: absolute; inset: 0; }
+    .episode-ready .episode-bg {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 44%;
+      filter: brightness(.48) saturate(.78); z-index: -3;
+      transition: transform .55s cubic-bezier(.22,1,.36,1);
+    }
+    .episode-ready:hover .episode-bg { transform: scale(1.035); }
+    .episode-ready .episode-shade {
+      z-index: -2;
+      background: linear-gradient(0deg, rgba(7,6,6,.98) 0%, rgba(7,6,6,.55) 58%, rgba(7,6,6,.28) 100%);
+    }
+    .episode-ready::before { z-index: -1; color: rgba(242,169,59,.16); }
+    .episode-ready .ep-meta,
+    .episode-ready h3,
+    .episode-ready p,
+    .episode-ready .card-action { position: relative; z-index: 2; }
 
     .filterbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: -6px 0 24px; }
     .filter-btn { min-height: 40px; border: 1px solid var(--border); border-radius: 999px; padding: 9px 13px; color: var(--muted); background: rgba(244,244,242,.025); cursor: pointer; }
@@ -342,6 +361,45 @@
     .result-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
     .result-slot { min-height:150px; display:grid; place-items:center; text-align:center; padding:18px; border:1px dashed rgba(244,244,242,.16); border-radius:16px; color:var(--muted-2); font-size:11px; background:rgba(0,0,0,.16); }
     .trailer-modal-hero img { object-fit: cover; object-position: center 46%; filter: brightness(.72); }
+    .episode-production-hero img { object-fit: cover; object-position: center 42%; filter: brightness(.58) saturate(.84); }
+    .production-guide {
+      margin: 0 0 24px; padding: 20px; border-radius: 20px;
+      border: 1px solid rgba(217,119,6,.24);
+      background: linear-gradient(145deg, rgba(217,119,6,.09), rgba(10,9,9,.5));
+    }
+    .production-guide h3 { margin: 0 0 12px; font-size: 18px; }
+    .production-guide ol { margin: 0; padding: 0 22px 0 0; display: grid; gap: 8px; }
+    .production-guide li { color: #c9c3bd; font-size: 12px; line-height: 1.75; }
+    .scene-purpose { margin-bottom: 12px; }
+    .prompt-stack { display: grid; gap: 12px; margin-top: 12px; }
+    .episode-prep-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:0 0 24px; }
+    .episode-prep-card {
+      position:relative; min-height:240px; overflow:hidden; padding:0; border-radius:20px;
+      border:1px solid rgba(244,244,242,.1); color:var(--ink); text-align:right; cursor:pointer;
+      background:#0a0908; transition:.25s ease;
+    }
+    .episode-prep-card:hover { transform:translateY(-3px); border-color:rgba(217,119,6,.35); }
+    .episode-prep-card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.58) saturate(.82); }
+    .episode-prep-card::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(7,6,6,.96),rgba(7,6,6,.08) 75%); }
+    .episode-prep-copy { position:absolute; inset:auto 18px 17px; z-index:2; }
+    .episode-prep-copy small { color:var(--amber-bright); font:700 9px/1 Inter,sans-serif; letter-spacing:.12em; }
+    .episode-prep-copy h4 { margin:8px 0 3px; font-size:17px; }
+    .episode-prep-copy p { margin:0; color:#c2bcb6; font-size:11px; line-height:1.6; }
+    .watermark-guide {
+      display:grid; grid-template-columns:150px 1fr; gap:20px; align-items:center;
+      margin:0 0 24px; padding:18px; border-radius:20px;
+      border:1px solid rgba(217,119,6,.22);
+      background:linear-gradient(145deg,rgba(217,119,6,.08),rgba(8,7,7,.58));
+    }
+    .watermark-guide img { width:150px; height:150px; object-fit:contain; }
+    .watermark-guide h4 { margin:0 0 7px; font-size:18px; }
+    .watermark-guide p { margin:0 0 12px; color:var(--muted); font-size:12px; line-height:1.75; }
+    .watermark-actions { display:flex; flex-wrap:wrap; gap:8px; }
+    .watermark-actions a {
+      color:#f3c887; text-decoration:none; font-size:11px; font-weight:700;
+      padding:8px 10px; border-radius:10px; border:1px solid rgba(217,119,6,.22);
+      background:rgba(217,119,6,.06);
+    }
     .sheet-preview {
       margin: 12px 0 14px; padding: 10px; border-radius: 20px;
       border: 1px solid rgba(217,119,6,.2); background: #080707;
@@ -406,6 +464,10 @@
       .phase-grid, .episodes-grid, .characters-grid, .locations-grid, .workflow, .result-grid { grid-template-columns:1fr; }
       .episode-card.trailer-card { grid-column: auto; min-height: 330px; }
       .attachment-grid { grid-template-columns: 1fr; }
+      .episode-prep-grid { grid-template-columns:1fr; }
+      .watermark-guide { grid-template-columns:1fr; text-align:center; }
+      .watermark-guide img { margin-inline:auto; }
+      .watermark-actions { justify-content:center; }
       .scene-summary { grid-template-columns:46px 1fr; }
       .scene-state { grid-column:2; justify-self:start; }
       .phase-card { min-height:240px; }
@@ -431,13 +493,13 @@
   <header class="topbar">
     <div class="topbar-inner glass">
       <a class="brand" href="#top" aria-label="عهد النار — العودة للبداية">
-        <span class="brand-mark">ع</span>
+        <span class="brand-mark"><img src="assets/branding/fire-covenant-emblem-512-v1.png" alt="" /></span>
         <span class="brand-copy"><strong>عهد النار</strong><span>AI SERIES LAB</span></span>
       </a>
       <nav class="nav" aria-label="أقسام الصفحة">
         <a href="#plan">الخطة</a><a href="#story">القصة</a><a href="#episodes">الحلقات</a><a href="#characters">الشخصيات</a><a href="#locations">المواقع</a><a href="#workflow">طريقة العمل</a>
       </nav>
-      <span class="phase-chip">TRAILER · PRODUCTION READY</span>
+      <span class="phase-chip">EPISODE 02 · PRODUCTION READY</span>
     </div>
   </header>
 
@@ -456,14 +518,14 @@
           </div>
         </div>
         <aside class="hero-stat-card glass" aria-label="حالة المشروع">
-          <p>حالة ملف الإنتاج — المرحلة الثانية</p>
+          <p>حالة ملف الإنتاج — الحلقة الثانية موثقة</p>
           <div class="stats">
             <div class="stat"><strong>08</strong><span>حلقات مخططة</span></div>
             <div class="stat"><strong>10</strong><span>عناصر شخصيات منفّذة</span></div>
-            <div class="stat"><strong>06</strong><span>مواقع معتمدة</span></div>
-            <div class="stat"><strong>02/03</strong><span>المرحلة الحالية</span></div>
+            <div class="stat"><strong>08</strong><span>مواقع معتمدة</span></div>
+            <div class="stat"><strong>14</strong><span>وحدة في الحلقة الثانية</span></div>
           </div>
-          <div class="progress-line" aria-label="نسبة تقدم المشروع 67 بالمئة"><i style="width:66.67%"></i></div>
+          <div class="progress-line" aria-label="نسبة تقدم المشروع 75 بالمئة"><i style="width:75%"></i></div>
         </aside>
       </div>
     </section>
@@ -527,8 +589,8 @@
     </section>
 
     <div class="shell next-phase glass">
-      <div><p class="kicker">CURRENT BUILD</p><h2>حزمة التريلر جاهزة للتحريك</h2><p>تم توثيق المقدمة، 8 مشاهد، النهاية، جميع الـScene Sheets والمراجع المطلوبة، مع برومبت مستقل وشرح مرفقات لكل وحدة إنتاجية.</p></div>
-      <span class="btn">TRAILER · 10 UNITS READY</span>
+      <div><p class="kicker">CURRENT BUILD</p><h2>الحلقة الثانية جاهزة للتحريك</h2><p>تم توثيق Previously On، المشاهد 01–12، تشويق الحلقة الثالثة، برمبتات الصور والتحريك، الحوارات، المرفقات، والمواقع والهوية الجديدة.</p></div>
+      <span class="btn">EPISODE 02 · 14 UNITS READY</span>
     </div>
   </main>
 
@@ -538,10 +600,12 @@
   <div class="toast" id="toast" role="status">تم نسخ البرومبت</div>
 
   <script src="trailer-data.js"></script>
+  <script src="episode-01-data.js"></script>
+  <script src="episode-02-data.js"></script>
   <script>
     const episodes = [
       {n:1,title:"البيضة الأخيرة",en:"THE LAST EGG",idea:"يعود كشّافو الحدود ببيضة تنين سليمة عُثر عليها تحت معبد محترق. آزر يتعرّف إلى سلالتها، بينما تضيء علامة غامضة في كف ليان لحظة اقترابها منها.",turn:"يأمر يحيى بإخفاء البيضة داخل قاعة الحكم، لكن خبر وجودها يتسرّب قبل نهاية الليلة.",cast:"يحيى، علياء، آزر، ليان، زين",hook:"نادر يتلقى قطعة من القشرة ويقول: عاد العهد الذي سرقوه منا."},
-      {n:2,title:"رماد تحت العرش",en:"ASH BENEATH THE THRONE",idea:"تنتشر شائعة أن الملك أخفى آخر بيضة ليحتكر قوة التنانين. يستغل نادر قصة اختفاء قيس ليحوّل الشك القديم إلى غضب شعبي منظم.",turn:"محاولة سرقة داخل القصر تكشف أن الخيانة وصلت إلى الحرس، لكن الفاعل يختفي قبل كشف سيده.",cast:"يحيى، علياء، زين، نادر، ليان",hook:"آزر يرفض أمر الملك لأول مرة ويقف أمام باب البيضة."},
+      {n:2,title:"رماد تحت العرش",en:"ASH BENEATH THE THRONE",idea:"تنتشر شائعة أن الملك أخفى آخر بيضة ليحتكر قوة التنانين. يستغل نادر قصة اختفاء قيس ليحوّل الشك القديم إلى غضب شعبي منظم.",turn:"محاولة سرقة داخل القصر تكشف أن الخيانة وصلت إلى الحرس، لكن الفاعل يختفي قبل كشف سيده.",cast:"يحيى، علياء، زين، نادر، ليان، آزر",hook:"خائن مجهول يرسل رسالة مختومة بالخاتم الملكي إلى نادر، بينما يتحرك جيشه نحو العاصمة."},
       {n:3,title:"الجناح المكسور",en:"THE BROKEN WING",idea:"تستدرج الرايات السوداء آزر خارج المدينة وتصيبه بسلاح مصنوع من قشرة تنين قديمة. تقود علياء الدفاع الميداني بينما يحاول زين إعادة آزر حيًا.",turn:"تثبت الإصابة أن نادر يمتلك معرفة بالعهد لا يفترض أن يعرفها إلا أفراد البيت الملكي.",cast:"علياء، آزر، زين، نادر",hook:"داخل القاعة، تنبض البيضة مع كل نفس مؤلم لآزر."},
       {n:4,title:"حافظة العهد",en:"KEEPER OF THE COVENANT",idea:"تفك ليان رموز كتاب العهد وتكتشف أن التنين لا يُورّث للملوك؛ بل يختار راكبه. يرسلها يحيى مع زين إلى المعبد الأول بحثًا عن الصفحة المفقودة.",turn:"تكشف الصفحة أن ظهور البيضة يعني اقتراب سقوط الحارس القديم، لا عودة مجده.",cast:"ليان، زين، يحيى، آزر",hook:"الفارس الرمادي يراقب ليان من فوق التلال ثم يختفي دون هجوم."},
       {n:5,title:"الرايات السوداء",en:"THE BLACK BANNERS",idea:"يوحّد نادر القبائل الساخطة والحاميات المنشقة تحت راية واحدة، ويعرض على يحيى تسليم البيضة مقابل تجنيب العاصمة الحرب.",turn:"يرفض يحيى الإنذار، لكن بوابة داخلية تُفتح لجيش نادر مع حلول الظلام.",cast:"يحيى، نادر، علياء، زين، الفارس الرمادي",hook:"ترتفع الرايات السوداء فوق أول برج من أسوار العاصمة."},
@@ -550,7 +614,7 @@
       {n:8,title:"وارثة الرماد",en:"HEIR OF ASHES",idea:"وسط رماد القاعة تولد نيرا، وتختار ليان أمام الجميع. تتوحد قوة الملكة والحرس وآزر في معركة أخيرة تمنع نادر من السيطرة على المولودة.",turn:"ينسحب نادر حيًا ومعه سر من كتاب العهد، بينما يبدأ عهد جديد لا يملكه العرش وحده.",cast:"ليان، نيرا، يحيى، علياء، آزر، نادر، زين",hook:"يكشف الفارس الرمادي للحظة عن شارة نظام قديم، ثم يقول: لقد وُلدت أخيرًا."}
     ];
 
-    const episodeOneScenes = [
+    const legacyEpisodeOneScenes = [
       {n:1,title:"العاصمة في عصرها الذهبي",duration:"20–30 ثانية",location:"العاصمة · الفجر",cast:"أهل المدينة، الحرس، آزر",desc:"افتتاح هادئ يثبت ما الذي قد تخسره المملكة: مدينة مزدهرة، عدل ظاهر في حياة الناس، وآزر يحلّق فوقها كحارس لا كوحش.",image:`Create a cinematic vertical 9:16 establishing scene of the prosperous capital of The Fire Covenant at sunrise. Preserve the approved Golden Age city architecture: monumental Arab-inspired stone city, terraced gardens, clean organized markets, water channels, scholars, craftspeople and families living safely. Royal guards help citizens without intimidation. The palace and Great Hall rise at the highest point. Azar, the approved colossal ancient charcoal-black dragon with weathered horns and amber fissures, glides peacefully high above the city as a distant guardian. Warm sunrise, vast scale, photoreal cinematic realism, 24mm aerial lens, no text, no modern objects, no destruction.`,motion:`Animate as a slow 8-second cinematic aerial descent over the prosperous capital. Begin wide above the gardens and water channels, drift forward toward the Great Hall, then let Azar cross the upper third of frame with slow powerful wingbeats. Citizens and market fabrics move subtly and naturally. Preserve all architecture and character designs. No sudden camera moves, no added buildings, no fire, no text or watermark.`},
       {n:2,title:"الكشّافون عند البوابة",duration:"45–60 ثانية",location:"البوابة الشرقية · صباحًا",cast:"زين، كشّافو الحدود، الحرس",desc:"ثلاثة كشّافين يعودون مرهقين بعربة مغطاة. زين يلاحظ احتراق راياتهم ويأمر بإغلاق البوابة قبل كشف ما يحملونه.",image:`Create a cinematic 16:9 scene at the eastern gate of the approved prosperous capital. Zayn, the approved Arab royal-guard commander in charcoal, aged bronze and dark-green armor, confronts three exhausted border scouts beside a heavy covered wagon. Their travel cloaks are ash-stained and one torn banner is burned at the edge. Zayn lifts the canvas slightly and warm amber light touches his shocked face, but the object inside remains hidden. Massive Arab stone gate, disciplined guards, morning dust, realistic scale, 35mm lens, tense restrained performance, cinematic photorealism, exact character continuity, no text.`,motion:`Create a tense 7-second grounded cinematic shot. Slow handheld push toward Zayn as the scouts stop the wagon. Wind moves the burned banner. Zayn signals the guards to close the gate, then lifts one corner of the canvas; an amber glow briefly illuminates his eyes. Do not reveal the egg fully. Preserve faces, costumes, wagon and gate. Natural movement only, no dialogue, no text.`},
       {n:3,title:"كشف البيضة أمام الملك",duration:"2–3 دقائق",location:"قاعة الحكم · الظهيرة",cast:"يحيى، علياء، زين، ليان، آزر",desc:"تكشف العربة عن البيضة السليمة داخل قاعة الحكم. آزر يستيقظ في منطقة استراحته ويتعامل معها كشيء يعرفه ويخشاه في الوقت نفسه.",image:`Inside the approved colossal Great Hall of Rule, create a cinematic 16:9 reveal scene. King Yahia and Warrior Queen Alia stand beside Zayn as royal guards pull away an ash-stained canvas, revealing the approved intact dark volcanic dragon egg with subtle gold-amber veins. The egg is small relative to the immense hall but radiates focused warm light. In the enormous dragon resting bay, approved Azar raises his ancient scarred head, eyes fixed on the egg with recognition and dread. Preserve exact Great Hall layout, throne platform, roof flight opening and dragon scale. Volumetric daylight, 28mm lens, premium photoreal fantasy, no hatching, no cracks, no text.`,motion:`Animate an 8-second cinematic reveal. Start behind King Yahia and Queen Alia as guards pull the canvas away. Camera arcs slowly to expose the intact egg. Its amber veins pulse once. In deep background Azar opens one eye, lifts his heavy head and releases a low breath that stirs dust. Everyone remains controlled, no exaggerated reactions. Preserve approved identities, hall geometry and egg design. No cracks, fire, dialogue, text or watermark.`},
@@ -580,10 +644,14 @@
       {id:"eastern-gate",name:"البوابة الشرقية",en:"THE EASTERN GATE",image:"assets/eastern-gate.webp",desc:"المدخل التجاري والعسكري الرئيسي للعاصمة. تمر عبره القوافل والكشّافون، ويتحول لاحقًا إلى أول خط دفاع عند بداية الحصار.",visual:"برجان حجريان ذهبيان، بوابة مزدوجة مدعمة بالنحاس، ممر تفتيش، ساحة خارجية وطريق قوافل يمتد نحو الصحراء.",prompt:`Create the official cinematic location production sheet for THE EASTERN GATE of the Golden Capital in The Fire Covenant. A massive fortified Arab-inspired gateway serving caravans, scouts and royal forces. Preserve exact geography: twin square towers, central reinforced double gate, raised guard bridge, inspection courtyard inside the walls, defensive murder slots, side stairways, outer caravan road and distant arid hills. Golden weathered stone, aged bronze gate hardware, dark-green royal banners and practical defensive construction. Include exterior daylight view, interior courtyard, gate closed, gate open with caravan scale, tower-top view, side elevation, floor plan and texture callouts. Cinematic photorealism, consistent proportions, no modern elements, no European castle design, no text errors.`},
       {id:"covenant-library",name:"مكتبة العهد",en:"THE COVENANT LIBRARY",image:"assets/covenant-library.webp",desc:"أرشيف سري تحت القصر تحفظ فيه مخطوطات الفرسان الأوائل وخرائط المعابد وصفحات العهد التي لا يطّلع عليها إلا الملك وحافظته.",visual:"مكتبة حجرية تحت الأرض، رفوف شاهقة، طاولة بحث مركزية، أعمدة محفورة، غرفة خرائط مخفية وشعاع ضوء يسقط من فتحة علوية.",prompt:`Create the official cinematic location production sheet for THE COVENANT LIBRARY beneath the royal citadel in The Fire Covenant. An ancient hidden archive built for the first dragon riders. Lock the spatial layout: tall circular reading chamber, towering carved shelves, central stone research table under a narrow shaft of warm daylight, map alcoves, sealed manuscript vault, hidden lower passage and covenant mechanism built into the floor. Dark brown stone, aged timber, bronze mechanisms, parchment, restrained amber lamps and fine dust in the light. Include main chamber wide view, central table, archive aisles, sealed vault, hidden mechanism, overhead plan and material callouts. Cinematic photorealism, mysterious but functional, consistent layout, no modern library objects, no European gothic styling, no text errors.`},
       {id:"black-banners-camp",name:"معسكر الرايات السوداء",en:"BLACK BANNERS CAMP",image:"assets/black-banners-camp.webp",desc:"قاعدة نادر المتنقلة خارج العاصمة؛ معسكر منظم لا يبدو كعصابة، بل كجيش ثوري يملك قيادة وإمدادًا واستطلاعًا وخطة حصار.",visual:"وادي صخري داكن، خيام فحمية، رايات سوداء، خيمة قيادة مركزية، حلقات حراسة، حدادة ميدانية وطرق خفية للخروج.",prompt:`Create the official cinematic location production sheet for the BLACK BANNERS CAMP in The Fire Covenant. A disciplined rebel army base hidden in a dark rocky valley, clearly organized by a former royal commander rather than a chaotic bandit camp. Fix the geography: central command tent, concentric defensive rings, black banner lines, cavalry area, field forge, supply lanes, scout ridge, prisoner enclosure and concealed exit routes. Charcoal tents, muted dark-red identifiers, black banners, low orange fires and cold moonlit rock. Include dusk aerial, ground-level approach, command tent interior, guard perimeter, forge and cavalry zones, night version, camp map and material callouts. Cinematic photorealism, coherent scale and layout, no fantasy monsters, no modern military equipment, no text errors.`},
-      {id:"lower-chamber",name:"الحجرة السفلية",en:"THE LOWER CHAMBER",image:"assets/lower-chamber.webp",desc:"غرفة طقسية مدفونة أسفل قاعة الحكم، مرتبطة بالعهد الأول. تضم منصة دائرية للبيضة ومسارًا حجريًا حلزونيًا وآلية لا تستجيب إلا لحامل العلامة.",visual:"حجرة دائرية عميقة، ممر حلزوني، منصة حجرية مركزية، قنوات ذهبية خافتة، أبواب سرية ومصابيح زيتية داخل تجاويف الجدار.",prompt:`Create the official cinematic location production sheet for THE LOWER CHAMBER beneath the Great Hall in The Fire Covenant. An ancient circular covenant chamber built around a central dragon-egg dais. Preserve exact geography: descending spiral stone walkway, deep circular floor, central raised platform, radial carved channels, concealed doors, narrow archive niches and an old mechanical lock that reacts to the Keeper's palm mark. Dark volcanic stone, weathered bronze, faint dormant gold lines and low amber oil lamps. Include top-down view, entrance approach, central dais, spiral path, hidden-door detail, activated and dormant lighting states, floor plan and texture callouts. Cinematic photorealism, sacred and secret rather than horror, consistent architecture, no modern objects, no European crypt styling, no text errors.`}
+      {id:"lower-chamber",name:"الحجرة السفلية",en:"THE LOWER CHAMBER",image:"assets/lower-chamber.webp",desc:"غرفة طقسية مدفونة أسفل قاعة الحكم، مرتبطة بالعهد الأول. تضم منصة دائرية للبيضة ومسارًا حجريًا حلزونيًا وآلية لا تستجيب إلا لحامل العلامة.",visual:"حجرة دائرية عميقة، ممر حلزوني، منصة حجرية مركزية، قنوات ذهبية خافتة، أبواب سرية ومصابيح زيتية داخل تجاويف الجدار.",prompt:`Create the official cinematic location production sheet for THE LOWER CHAMBER beneath the Great Hall in The Fire Covenant. An ancient circular covenant chamber built around a central dragon-egg dais. Preserve exact geography: descending spiral stone walkway, deep circular floor, central raised platform, radial carved channels, concealed doors, narrow archive niches and an old mechanical lock that reacts to the Keeper's palm mark. Dark volcanic stone, weathered bronze, faint dormant gold lines and low amber oil lamps. Include top-down view, entrance approach, central dais, spiral path, hidden-door detail, activated and dormant lighting states, floor plan and texture callouts. Cinematic photorealism, sacred and secret rather than horror, consistent architecture, no modern objects, no European crypt styling, no text errors.`},
+      {id:"capital-market-rooftops",name:"سوق وأسـطح العاصمة",en:"THE CAPITAL MARKET & ROOFTOPS",image:"assets/capital-market-rooftops.webp",desc:"حي السوق المركزي أسفل القلعة الملكية، وهو مسرح انتشار الإشاعة والمطاردة في الحلقة الثانية. يربط الشارع والقناة والأزقة بالأسطح في جغرافيا واحدة واضحة.",visual:"شارع سوق حجري ذهبي بجوار قناة، باعة ومظلات، جسر صغير، ممر خدمة، سلم خارجي، أسطح متدرجة ومسار رؤية ثابت نحو قاعة الحكم.",prompt:`Create the official cinematic location production sheet for THE CAPITAL MARKET & ROOFTOPS inside the approved Golden City. Lock one coherent recurring geography: a wide market avenue beside the central canal, covered bazaar lane, carved stone bridge, hidden merchant service alley, exterior staircase beside a fabric-dyer courtyard, connected flat and stepped rooftops with believable jump distances, and a constant skyline view toward the circular Great Hall. Warm golden limestone, carved Arab-inspired arches, aged timber, bronze fittings, terracotta and teal fabrics, clean water, palms and flowering vines. Include a large hero view of the main market plus supporting views of the bazaar, stairs, bridge, alley, rooftop chase route, palace viewpoint and a high three-quarter district overview. Premium cinematic photorealism, practical action geography, citizens only for scale, no modern objects, no readable signs, no architectural drift.`},
+      {id:"royal-inner-passages",name:"الممرات الملكية الداخلية",en:"THE ROYAL INNER PASSAGES",image:"assets/royal-inner-passages.webp",desc:"شبكة آمنة خلف قاعة الحكم تربط منصة العرش بالجناح الملكي ومكتبة العهد وممر الخدمة والسلم السري المؤدي إلى الحجرة السفلية.",visual:"حجر فحمي داكن، خطوط أرضية برونزية، تقاطع حراسة مثمن، ستائر ملكية خمريّة، باب مكتبة بآلية دائرية، باب تنين سري وسلم حلزوني سفلي.",prompt:`Create the official recurring location production sheet for THE ROYAL INNER PASSAGES behind and beneath the Great Hall. Lock the connected geography: long throne corridor with one bronze covenant floor line, octagonal four-way guard junction, refined royal-wing passage, carved timber-and-bronze Covenant Library entrance, narrow practical service corridor, concealed dragon-relief door with palm-sized release, and a descending spiral stair transitioning toward the Lower Chamber. Include a high three-quarter cutaway proving how every route connects. Match the Great Hall's dark weathered stone, aged bronze, restrained amber firelight and Arab-inspired covenant carvings. Wide enough for patrols, pursuit and camera movement. Premium cinematic photorealism, no characters as main subjects, no modern objects, no prison or horror styling, no European castle design and no readable text.`}
     ];
 
     const trailer = window.trailerProduction;
+    const episodeOneProduction = window.episodeOneProduction;
+    const episodeTwoProduction = window.episodeTwoProduction;
     const iconArrow = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>`;
     const episodesGrid = document.getElementById('episodesGrid');
     const charactersGrid = document.getElementById('charactersGrid');
@@ -601,9 +669,11 @@
         <p>${trailer.summary}</p>
         <span class="card-action">افتح حزمة التريلر ${iconArrow}</span>
       </button>` + episodes.map(ep => `
-      <button class="episode-card" data-ep="0${ep.n}" data-kind="episode" data-id="${ep.n}">
+      <button class="episode-card ${ep.n === 1 || ep.n === 2 ? "episode-ready" : ""}" data-ep="0${ep.n}" data-kind="episode" data-id="${ep.n}">
+        ${ep.n === 1 ? `<img class="episode-bg" src="${episodeOneProduction.scenes[0].image}" alt="" /><span class="episode-shade"></span>` : ""}
+        ${ep.n === 2 ? `<img class="episode-bg" src="${episodeTwoProduction.scenes[1].image}" alt="" /><span class="episode-shade"></span>` : ""}
         <span class="ep-meta">EPISODE 0${ep.n}</span><h3>${ep.title}</h3><p>${ep.idea}</p>
-        <span class="card-action">افتح فكرة الحلقة ${iconArrow}</span>
+        <span class="card-action">${ep.n === 1 || ep.n === 2 ? "افتح حزمة الإنتاج الكاملة" : "افتح فكرة الحلقة"} ${iconArrow}</span>
       </button>`).join('');
 
     charactersGrid.innerHTML = characters.map(ch => `
@@ -663,6 +733,45 @@
       </article>`;
     }
 
+    function renderEpisodeScene(scene, productionKey) {
+      const textLock = scene.screenText.length
+        ? `<article class="detail-panel"><h3>النصوص الظاهرة حرفيًا</h3><ul class="text-lock-list">${scene.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
+        : `<article class="detail-panel"><h3>النصوص الظاهرة</h3><p>لا توجد نصوص على الشاشة داخل هذا المشهد.</p></article>`;
+      return `<article class="scene-item">
+        <button class="scene-summary" data-scene-toggle>
+          <span class="scene-no">${scene.order}</span>
+          <span><h4>${scene.title}</h4><p dir="ltr">${scene.en} · ${scene.duration}</p></span>
+          <span class="scene-state">الصورة والبرومبت جاهزان</span>
+        </button>
+        <div class="scene-content">
+          <div class="scene-meta">
+            <span>${scene.duration}</span><span>Vertical 9:16</span><span>${scene.location}</span><span>${scene.cast}</span>
+          </div>
+          <figure class="sheet-preview">
+            <a href="${scene.image}" target="_blank" rel="noopener"><img src="${scene.image}" alt="Scene ${scene.order} — ${scene.title}" loading="lazy" /></a>
+            <figcaption><span>Scene Sheet معتمدة · 8 لقطات</span><a href="${scene.image}" target="_blank" rel="noopener">فتح الصورة بالحجم الكامل ↗</a></figcaption>
+          </figure>
+          <div class="detail-grid">
+            <article class="detail-panel scene-purpose"><h3>الهدف الدرامي</h3><p>${scene.purpose}</p></article>
+            <article class="detail-panel"><h3>الصوت المعتمد</h3><p dir="ltr">${scene.narrator}</p></article>
+            ${textLock}
+            <article class="detail-panel"><h3>قاعدة التنفيذ</h3><p>ارفع الشيت أولًا، ثم المراجع بالترتيب. أعد بناء كل Panel كلقطة Full Screen مستقلة؛ لا تحرّك شبكة الشيت نفسها.</p></article>
+          </div>
+          ${renderAttachments(scene)}
+          <div class="prompt-stack">
+            <div class="prompt-wrap">
+              <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-episode-image="${scene.id}" data-episode-production="${productionKey}">نسخ برومبت الصورة</button></div>
+              <pre>${escapeHtml(scene.imagePrompt)}</pre>
+            </div>
+            <div class="prompt-wrap">
+              <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-episode-motion="${scene.id}" data-episode-production="${productionKey}">نسخ برومبت التحريك</button></div>
+              <pre>${escapeHtml(scene.motionPrompt)}</pre>
+            </div>
+          </div>
+        </div>
+      </article>`;
+    }
+
     function openTrailer() {
       modalContent.innerHTML = `
         <div class="modal-hero trailer-modal-hero">
@@ -683,9 +792,61 @@
     }
 
     function openEpisode(ep) {
-      const production = ep.n === 1 ? `<div class="production-head"><div><p class="kicker">PHASE 02 · PRODUCTION BOARD</p><h3>مشاهد الحلقة الأولى</h3></div><p>8 وحدات سينمائية · افتح كل مشهد للوصول للبرومبتات</p></div><div class="scene-list">${episodeOneScenes.map(scene => `<article class="scene-item"><button class="scene-summary" data-scene-toggle><span class="scene-no">0${scene.n}</span><span><h4>${scene.title}</h4><p>${scene.location} · ${scene.cast}</p></span><span class="scene-state">بانتظار الـScene Sheet</span></button><div class="scene-content"><div class="scene-meta"><span>المدة: ${scene.duration}</span><span>${scene.location}</span><span>${scene.cast}</span></div><article class="detail-panel"><h3>الهدف الدرامي</h3><p>${scene.desc}</p></article><div class="prompt-wrap"><div class="prompt-head"><strong>IMAGE / SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-text="${encodeURIComponent(scene.image)}">نسخ</button></div><pre>${escapeHtml(scene.image)}</pre></div><div class="prompt-wrap"><div class="prompt-head"><strong>MOTION PROMPT</strong><button class="copy-btn" data-copy-text="${encodeURIComponent(scene.motion)}">نسخ</button></div><pre>${escapeHtml(scene.motion)}</pre></div><div class="result-grid"><div class="result-slot">SCENE SHEET RESULT<br>تُضاف الصورة المعتمدة هنا</div><div class="result-slot">FINAL VIDEO RESULT<br>يُضاف رابط الفيديو والملاحظات هنا</div></div></div></article>`).join('')}</div>` : `<div class="prompt-wrap"><div class="prompt-head"><strong>PHASE 02 STATUS</strong></div><pre>هذه الحلقة ما زالت ضمن الـSeries Bible.\nيبدأ تفكيك مشاهدها بعد اعتماد وإنتاج الحلقة الأولى.</pre></div>`;
+      let production;
+      let hero;
+      if (ep.n === 1) {
+        production = `
+          <div class="production-guide">
+            <h3>إرشادات التنفيذ الثابتة</h3>
+            <ol>${episodeOneProduction.rules.map(rule => `<li>${rule}</li>`).join("")}</ol>
+          </div>
+          <div class="production-head">
+            <div><p class="kicker">EPISODE 01 · PRODUCTION BOARD</p><h3>المشهد 01 إلى 12</h3></div>
+            <p>افتح كل مشهد للوصول للصورة والمرفقات وبرومبتَي الإنشاء والتحريك</p>
+          </div>
+          <div class="scene-list">${episodeOneProduction.scenes.map(scene => renderEpisodeScene(scene, "episode-01")).join("")}</div>`;
+        hero = `<div class="modal-hero episode-production-hero"><img src="${episodeOneProduction.scenes[0].image}" alt="${episodeOneProduction.en}" /><div class="modal-title"><span class="badge ready">✓ 12 مشهدًا جاهزًا للإنتاج</span><h2 id="modalHeading">${episodeOneProduction.title}</h2><p dir="ltr">${episodeOneProduction.en}</p></div></div>`;
+      } else if (ep.n === 2) {
+        const episodeLocations = episodeTwoProduction.locations.map(id => locations.find(location => location.id === id));
+        production = `
+          <div class="production-guide">
+            <h3>نظام السرد والتنفيذ المعتمد</h3>
+            <ol>${episodeTwoProduction.rules.map(rule => `<li>${rule}</li>`).join("")}</ol>
+          </div>
+          <div class="watermark-guide">
+            <img src="${episodeTwoProduction.watermark.overlay}" alt="علامة YEHIA.DIGITAL الشفافة" />
+            <div>
+              <h4>علامة حقوق الفيديو المعتمدة</h4>
+              <p>${episodeTwoProduction.watermark.usage}</p>
+              <div class="watermark-actions">
+                <a href="${episodeTwoProduction.watermark.overlay}" target="_blank" rel="noopener">نسخة المونتاج 512×512 ↗</a>
+                <a href="${episodeTwoProduction.watermark.master}" target="_blank" rel="noopener">النسخة الأصلية ↗</a>
+              </div>
+            </div>
+          </div>
+          <div class="production-head">
+            <div><p class="kicker">EPISODE 02 · LOCATION LOCKS</p><h3>المواقع الجديدة المعتمدة</h3></div>
+            <p>اضغط على أي موقع لفتح Location Sheet والبرومبت الكامل</p>
+          </div>
+          <div class="episode-prep-grid">${episodeLocations.map(location => `
+            <button class="episode-prep-card" data-kind="location" data-id="${location.id}">
+              <img src="${location.image}" alt="${location.name}" loading="lazy" />
+              <span class="episode-prep-copy"><small>EPISODE 02 · LOCATION LOCKED</small><h4>${location.name}</h4><p dir="ltr">${location.en}</p></span>
+            </button>`).join("")}
+          </div>
+          <div class="production-head">
+            <div><p class="kicker">EPISODE 02 · PRODUCTION BOARD</p><h3>Previously On + المشاهد 01–12 + Next Episode</h3></div>
+            <p>كل وحدة تشمل الشيت والمرفقات والصوت وبرمبتَي الصورة والتحريك</p>
+          </div>
+          <div class="scene-list">${episodeTwoProduction.scenes.map(scene => renderEpisodeScene(scene, "episode-02")).join("")}</div>`;
+        hero = `<div class="modal-hero episode-production-hero"><img src="${episodeTwoProduction.scenes[1].image}" alt="${episodeTwoProduction.en}" /><div class="modal-title"><span class="badge ready">✓ 14 وحدة جاهزة للإنتاج</span><h2 id="modalHeading">${episodeTwoProduction.title}</h2><p dir="ltr">${episodeTwoProduction.en}</p></div></div>`;
+      } else {
+        production = `<div class="prompt-wrap"><div class="prompt-head"><strong>PHASE 02 STATUS</strong></div><pre>هذه الحلقة ما زالت ضمن الـSeries Bible.
+يبدأ تفكيك مشاهدها بعد اعتماد وإنتاج الحلقة الثانية.</pre></div>`;
+        hero = `<div class="modal-hero"><div class="empty-media">0${ep.n}</div><div class="modal-title"><span class="badge ready">الموسم الأول · الحلقة 0${ep.n}</span><h2 id="modalHeading">${ep.title}</h2><p dir="ltr">${ep.en}</p></div></div>`;
+      }
       modalContent.innerHTML = `
-        <div class="modal-hero"><div class="empty-media">0${ep.n}</div><div class="modal-title"><span class="badge ready">الموسم الأول · الحلقة 0${ep.n}</span><h2 id="modalHeading">${ep.title}</h2><p dir="ltr">${ep.en}</p></div></div>
+        ${hero}
         <div class="modal-body"><div class="detail-grid">
           <article class="detail-panel"><h3>فكرة الحلقة</h3><p>${ep.idea}</p></article>
           <article class="detail-panel"><h3>التحول الدرامي</h3><p>${ep.turn}</p></article>
@@ -732,6 +893,18 @@
       if (trailerCopy) {
         const unit = trailer.units.find(item => item.id === trailerCopy.dataset.copyTrailer);
         if (unit) navigator.clipboard.writeText(unit.prompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+      }
+      const episodeImageCopy = event.target.closest('[data-copy-episode-image]');
+      if (episodeImageCopy) {
+        const production = episodeImageCopy.dataset.episodeProduction === "episode-02" ? episodeTwoProduction : episodeOneProduction;
+        const scene = production.scenes.find(item => item.id === episodeImageCopy.dataset.copyEpisodeImage);
+        if (scene) navigator.clipboard.writeText(scene.imagePrompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+      }
+      const episodeMotionCopy = event.target.closest('[data-copy-episode-motion]');
+      if (episodeMotionCopy) {
+        const production = episodeMotionCopy.dataset.episodeProduction === "episode-02" ? episodeTwoProduction : episodeOneProduction;
+        const scene = production.scenes.find(item => item.id === episodeMotionCopy.dataset.copyEpisodeMotion);
+        if (scene) navigator.clipboard.writeText(scene.motionPrompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       if (event.target.closest('[data-copy="prompt"]')) {
         const text = document.getElementById('promptText').innerText;
