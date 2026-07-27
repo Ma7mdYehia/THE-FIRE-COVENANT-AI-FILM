@@ -749,3 +749,344 @@ No extra text, no “coming soon”, no logo replacement, no QR code, no text mo
     }
   ]
 };
+
+(() => {
+  const imagePrompts = {
+    intro: `CREATE A PREMIUM CINEMATIC VERTICAL 9:16 OFFICIAL TRAILER COVER.
+
+DELIVERABLE:
+Generate one finished cover image, not a storyboard and not a Scene Sheet.
+The composition must feel like high-budget live-action medieval fantasy key art designed for a vertical Reel.
+
+COMPOSITION:
+A monumental ancient Golden City rises from darkness beneath a storm-filled night sky.
+A colossal charcoal-black dragon forms a protective silhouette above and behind the central citadel, its anatomy grounded and believable, with restrained ember-amber light visible between selected scales.
+A narrow molten-gold vertical beam rises from the heart of the citadel and becomes the visual axis of the entire cover.
+Keep the lower city detailed but subdued, the middle clear for the title, and the dragon readable without turning it into a generic monster poster.
+Use layered smoke, tiny floating embers, deep atmospheric perspective and a strong central silhouette.
+
+COLOR AND LIGHT:
+Near-black volcanic stone, deep bronze, restrained antique gold and faint ember orange.
+Cold storm light around the dragon; warm covenant light from the city.
+High contrast, cinematic realism, premium theatrical finish, subtle film grain.
+
+EXACT ON-SCREEN TEXT:
+"OFFICIAL TRAILER"
+"THE FIRE COVENANT"
+"A YEHIA.DIGITAL PRODUCTION"
+
+TYPOGRAPHY:
+Place "OFFICIAL TRAILER" small above the main title.
+Place "THE FIRE COVENANT" as the dominant centered hero title in elegant engraved medieval serif lettering.
+Place "A YEHIA.DIGITAL PRODUCTION" small at the very bottom.
+All text must be perfectly spelled, centered, readable and integrated into the negative space.
+
+NEGATIVE CONSTRAINTS:
+No extra words, no subtitle, no episode number, no CTA, no QR code, no modern skyline, no sci-fi technology, no cartoon styling, no bright fantasy rainbow colors, no distorted dragon anatomy, no duplicated wings, no watermark and no storyboard grid.`,
+
+    "scene-01": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "THE FIRST PULSE".
+
+REFERENCE INPUT:
+Upload the Layan Character Sheet, Lower Chamber Location Sheet and Dragon Egg Reference.
+Do not upload or copy an existing Scene Sheet.
+The Layan Character Sheet is the sole authority for her exact face, age, natural skin, covered hair, wardrobe, body proportions and covenant mark.
+The Lower Chamber Location Sheet is the sole authority for architecture, spiral descent, circular chamber, volcanic stone, bronze details, oil lamps, central dais and dormant gold channels.
+Use only the intact black-scaled egg from the Dragon Egg Reference; ignore every adult-dragon image.
+
+SHEET LAYOUT:
+Create one clean rectangular portrait master sheet with exactly eight clearly separated tall cinematic panels.
+Arrange four panels across the top row and four across the bottom row.
+Use thin dark separators and consistent margins.
+Every panel is a separate vertical 9:16 Reel composition, not a crop of one panorama.
+Add only small white shot numbers 01–08 and tiny timestamps in the upper corners.
+No title block, captions, UI cards or explanatory text.
+
+SHOT 01 — wide rear view: Layan descending alone from darkness along the spiral path.
+SHOT 02 — extreme low detail beside her boots and robe; dormant gold floor channels faintly responding.
+SHOT 03 — dramatic overhead reveal of the deep circular chamber with Layan small and the egg dais at center.
+SHOT 04 — over-the-shoulder medium-wide composition toward the intact egg.
+SHOT 05 — macro of her open palm and faint covenant mark beginning to glow.
+SHOT 06 — side-profile medium shot; her hand stops several centimeters before the shell.
+SHOT 07 — macro of one restrained amber pulse inside the egg's fine veins; shell completely intact.
+SHOT 08 — close portrait reaction; natural brown human eye with a round pupil, awe and contained fear.
+
+VISUAL STYLE:
+High-budget live-action medieval fantasy, photorealistic skin and materials, controlled subterranean haze, warm oil flame against deep shadow, restrained amber highlights, cinematic contrast and realistic lens depth.
+Preserve screen direction and spatial geography across all eight panels.
+
+IDENTITY AND STORY LOCK:
+The same Layan appears in every relevant panel.
+She never touches the egg.
+No crack, no hatchling, no adult dragon, no extra person, no face drift, no uncovered hair, no glowing fantasy iris, no malformed hands, no duplicated subject, no modern object and no watermark.`,
+
+    "scene-02": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "AZAR AWAKENS".
+
+REFERENCE INPUT:
+Upload the Azar Creature Sheet and Great Hall Location Sheet.
+Do not upload or copy an existing Scene Sheet.
+Use the adult Azar only; ignore every egg panel.
+The Azar Creature Sheet is the absolute authority for the same charcoal-black dragon anatomy, head, horns, scales, folded wings, proportions and amber eye.
+The Great Hall Location Sheet is the absolute authority for the colossal resting bay, circular pool, dark stone, bronze mechanisms, fire bowls and roof opening.
+
+SHEET LAYOUT:
+Create one clean rectangular portrait master sheet containing exactly eight separate tall cinematic panels in a four-across top row and four-across bottom row.
+Use thin dark dividers, uniform margins, small white shot numbers 01–08 and tiny timestamps only.
+Each panel must read as an independent vertical 9:16 Reel shot.
+No title card, captions, UI frame or extra text.
+
+SHOT 01 — macro of perfectly still black water in Azar's resting bay as one circular ripple forms.
+SHOT 02 — extreme close-up of one colossal claw flexing against wet stone.
+SHOT 03 — low detail tracking composition along dormant charcoal scales with faint amber fissures.
+SHOT 04 — dust falling through light as one enormous folded wing shifts.
+SHOT 05 — vast wide reveal of Azar beginning to rise inside the Great Hall.
+SHOT 06 — imposing low angle toward his head as he inhales without roaring.
+SHOT 07 — tight profile close-up of the eyelid beginning to open.
+SHOT 08 — extreme macro of the fully opened amber dragon eye, sharp and steady.
+
+VISUAL STYLE:
+Photorealistic high-budget live-action medieval fantasy, monumental scale, wet stone reflections, restrained bronze firelight, cold roof light, volumetric dust and cinematic deep blacks.
+Build a clear escalation from stillness to awakening.
+
+CREATURE AND LOCATION LOCK:
+One consistent Azar only.
+No egg, no human, no flight, no roar, no fire breath, no attack, no altered horns, no extra wings, no anatomy drift, no modern object, no sci-fi machinery, no duplicated dragon and no watermark.`,
+
+    "scene-03": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "THE ENEMY KNOWS".
+
+REFERENCE INPUT:
+Upload the Nader Character Sheet, Black Banners Camp Location Sheet and Army Pack.
+Do not upload or copy an existing Scene Sheet.
+The Nader Character Sheet controls his exact mature Arab face, hair, beard, body proportions, layered black armor, approved mask, cloak and sheathed curved sword.
+The Black Banners Camp Location Sheet controls the rocky terrain, command tent, fires, defensive layout, black-crimson banners and night atmosphere.
+The Army Pack controls only the disciplined Black Banner soldiers and cavalry.
+
+SHEET LAYOUT:
+One rectangular portrait master sheet with exactly eight distinct tall cinematic panels: four on top and four below.
+Thin dark separators, consistent spacing, small white shot numbers 01–08 and tiny timestamps only.
+Each panel is its own vertical 9:16 shot.
+No title, dialogue, captions, decorative UI or paragraph text.
+
+SHOT 01 — high aerial night view descending over the camp, one distant fire resembling a glowing eye.
+SHOT 02 — ground-level view through disciplined rebel ranks and snapping black banners.
+SHOT 03 — centered push composition toward the command tent.
+SHOT 04 — macro of a tiny ancient shell fragment glowing faintly inside a protective case.
+SHOT 05 — compressed unmasked portrait of Nader studying the fragment with calm recognition.
+SHOT 06 — three-quarter medium portrait as he looks toward the distant capital; sword remains sheathed.
+SHOT 07 — low medium shot as he raises the approved black mask over the same face.
+SHOT 08 — masked close-up with coordinated camp movement beginning behind him.
+
+VISUAL STYLE:
+High-budget live-action medieval fantasy thriller, photorealistic faces, practical armor, cold moonlight, warm campfire accents, black and deep-crimson faction palette, restrained smoke and premium cinematic contrast.
+
+IDENTITY AND FACTION LOCK:
+Nader's face, beard, armor and proportions remain identical before and during masking.
+Keep the fragment small.
+No dragon, no egg, no glowing weapon, no random red army, no face drift, no extra limbs, no gore, no modern object, no sci-fi element and no watermark.`,
+
+    "scene-04": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "THE KING AND THE DRAGON".
+
+REFERENCE INPUT:
+Upload the King Yahia Character Sheet, Azar Creature Sheet and Great Hall Location Sheet.
+Do not upload or copy an existing Scene Sheet.
+The King Yahia Character Sheet is the only authority for his exact mature Arab face, skin tone, hair, beard, crown, black royal armor, cloak, body proportions and sword.
+The Azar Creature Sheet is the only authority for the same adult dragon anatomy, horns, scales, wings and amber eye; ignore the egg.
+The Great Hall Location Sheet locks the circular resting bay, narrow bridge, dark stone, bronze details, fire bowls and monumental scale.
+
+SHEET LAYOUT:
+Create one clean rectangular portrait sheet with exactly eight separate tall cinematic panels arranged four across the top and four across the bottom.
+Use thin dark separators and only small white shot numbers 01–08 with tiny timestamps.
+Every panel is an independent vertical 9:16 Reel composition.
+No title, dialogue, captions, UI elements or extra text.
+
+SHOT 01 — macro of the covenant mark glowing once in deep shadow.
+SHOT 02 — vast symmetrical wide: King Yahia faces colossal Azar across the resting bay.
+SHOT 03 — low rear full-body composition of the king walking alone toward the dragon.
+SHOT 04 — overhead view of the king crossing the narrow stone bridge above the circular bay.
+SHOT 05 — extreme close-up of Azar's amber eye reflecting the approaching king.
+SHOT 06 — over Azar's shoulder toward the tiny but steady king.
+SHOT 07 — eye-level side-profile two-shot showing their ancient bond and scale difference.
+SHOT 08 — low hero portrait faithful to the front Character Sheet: Yahia half-draws his sword while Azar rises behind him.
+
+VISUAL STYLE:
+Premium photorealistic live-action medieval fantasy, regal black and antique-gold palette, controlled firelight, cool overhead storm light, volumetric haze, realistic skin, metal, leather and dragon scales.
+
+IDENTITY LOCK:
+Reproduce the exact King Yahia face without beautifying, de-aging or changing facial proportions.
+Keep one consistent Azar.
+No face drift, no crown change, no costume redesign, no dragon redesign, no egg, no battle, no fire breath, no glowing sword, no extra character, no modern object, no duplicated limbs and no watermark.`,
+
+    "scene-05": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "THE EASTERN GATE".
+
+REFERENCE INPUT:
+Upload the Queen Alia Character Sheet, Eastern Gate Location Sheet and Army Pack.
+Do not upload or copy an existing Scene Sheet.
+The Queen Alia Character Sheet controls her exact mature Arab face, natural brown eyes, covered hair, dark royal armor, cloak, sword and body proportions.
+The Eastern Gate Location Sheet locks the exact towers, monumental doors, walls, balconies, chains, gears, banners and courtyard geography.
+Use the Army Pack for Royal Guards and Black Banner cavalry while preserving their separate faction colors and insignia.
+
+SHEET LAYOUT:
+One clean rectangular portrait master sheet with exactly eight clearly divided tall cinematic panels in two rows of four.
+Thin dark separators, consistent margins, small white shot numbers 01–08 and tiny timestamps only.
+Every panel is a distinct vertical 9:16 Reel frame.
+No title block, captions, dialogue, UI or extra text.
+
+SHOT 01 — high aerial reveal of the Eastern Gate with distant cavalry emerging from dust.
+SHOT 02 — compressed long-lens view from the battlements toward Black Banner riders.
+SHOT 03 — close three-quarter portrait of Queen Alia with the army subtly reflected in her natural eyes.
+SHOT 04 — low-angle medium hero shot as she raises her sword in one precise command signal.
+SHOT 05 — dynamic overhead courtyard view as Royal Guards move and the giant doors begin closing.
+SHOT 06 — macro mechanical detail of ancient chains, gears and locking teeth under tension.
+SHOT 07 — ground-level cavalry charge with pounding hooves and dense dust.
+SHOT 08 — wide symmetrical exterior of the narrowing gate opening moments before impact.
+
+VISUAL STYLE:
+High-budget live-action medieval fantasy action, photorealistic face and armor, hard desert daylight filtered through dust, antique stone and bronze, controlled motion energy and cinematic contrast.
+
+IDENTITY AND FACTION LOCK:
+Use the same Queen Alia face and wardrobe in every appearance.
+Natural brown human eyes only.
+Do not mix Royal Guard and Black Banner designs.
+No face drift, no uncovered hair, no duplicated riders, no firearms, no modern machinery, no sci-fi technology, no glowing weapon, no gore, no malformed horses and no watermark.`,
+
+    "scene-06": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "AZAR TAKES FLIGHT".
+
+REFERENCE INPUT:
+Upload the Azar Creature Sheet, Great Hall Location Sheet and Golden City Location Sheet.
+Do not upload or copy an existing Scene Sheet.
+The Azar Creature Sheet locks the exact adult dragon anatomy, head, horns, charcoal scales, amber fissures, wings and proportions; ignore the egg.
+The Great Hall Location Sheet controls the resting bay and circular roof portal.
+The Golden City Location Sheet controls the royal citadel, towers, streets, bridges, materials and skyline.
+
+SHEET LAYOUT:
+Create one rectangular portrait production sheet with exactly eight independent tall cinematic panels, four across the top row and four across the bottom.
+Use thin dark separators, small white shot numbers 01–08 and tiny timestamps only.
+Every panel must be a separate vertical 9:16 Reel composition.
+No title, captions, UI, borders around the whole artwork or extra text.
+
+SHOT 01 — extreme low close-up as one colossal claw strikes wet Great Hall stone.
+SHOT 02 — low lateral full-body composition as Azar surges forward and unfolds both wings.
+SHOT 03 — frontal low angle during the first wingbeat, water and dust driven toward camera.
+SHOT 04 — steep rising view following him toward the circular roof opening.
+SHOT 05 — exterior low angle as Azar passes cleanly through the portal into storm light.
+SHOT 06 — side aerial chase composition beside his first full wingbeat over the citadel.
+SHOT 07 — high rear aerial as he banks above the approved Golden City.
+SHOT 08 — dramatic front three-quarter aerial as he turns toward the distant battlefield.
+
+VISUAL STYLE:
+Photorealistic high-budget live-action medieval fantasy spectacle, realistic aerodynamics and scale, storm-blue ambient light, restrained ember glow, bronze city highlights, volumetric clouds and cinematic motion-ready framing.
+
+CREATURE AND LOCATION LOCK:
+One consistent Azar in all eight panels.
+The city and Great Hall remain structurally intact.
+No egg, no humans near the dragon, no fire attack, no destruction, no extra wings, no altered horns, no duplicated dragon, no anatomy errors, no modern skyline, no aircraft, no sci-fi element and no watermark.`,
+
+    "scene-07": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "SHADOW OVER THE ARMY".
+
+REFERENCE INPUT:
+Upload the Azar Creature Sheet, Nader Character Sheet, Eastern Gate Location Sheet and Army Pack.
+Do not upload or copy an existing Scene Sheet.
+The Azar Creature Sheet locks the exact adult dragon anatomy, scales, horns, wings and amber eye.
+The Nader Character Sheet locks his exact face beneath the approved mask, armor, cloak, body proportions and curved sword.
+The Eastern Gate Location Sheet locks the architecture and terrain.
+The Army Pack controls Black Banner troops, cavalry and equipment.
+
+SHEET LAYOUT:
+One rectangular portrait master sheet containing exactly eight distinct tall cinematic panels in a four-by-two arrangement.
+Use thin dark separators, even spacing, small white shot numbers 01–08 and tiny timestamps only.
+Every panel is its own vertical 9:16 Reel shot.
+No title, dialogue, captions, UI blocks or extra written text.
+
+SHOT 01 — vast dragon shadow sweeping over ordered Black Banner ranks.
+SHOT 02 — extreme low ground view between horse legs as animals react and dust rises.
+SHOT 03 — overhead dive composition following Azar toward open ground between army and gate.
+SHOT 04 — heavy three-quarter landing as claws hit earth and wings brake through dust.
+SHOT 05 — wide symmetrical standoff: Azar centered between the army and Eastern Gate.
+SHOT 06 — compressed masked close-up of Nader remaining still while soldiers behind him recoil.
+SHOT 07 — low lateral medium-full shot as Nader steps forward and draws the approved curved sword.
+SHOT 08 — tense profile composition holding Azar's amber eye and Nader's mask in one frame.
+
+VISUAL STYLE:
+High-budget photorealistic medieval fantasy warfare, monumental scale, practical armor and horses, dense grounded dust, cold daylight, restrained ember accents and premium cinematic contrast.
+
+IDENTITY, CREATURE AND FACTION LOCK:
+Preserve the same Nader and same Azar throughout.
+No soldiers are killed in the landing.
+No fire breath, no glowing weapon, no face or mask drift, no altered dragon anatomy, no duplicated troops, no malformed horses, no modern object, no firearms, no sci-fi technology, no gore and no watermark.`,
+
+    "scene-08": `CREATE ONE CINEMATIC PORTRAIT PRODUCTION SCENE SHEET FOR "THE COVENANT CHOOSES".
+
+REFERENCE INPUT:
+Upload the Layan Character Sheet, Lower Chamber Location Sheet and Dragon Egg Reference.
+Do not upload or copy an existing Scene Sheet.
+The Layan Character Sheet is the sole authority for her exact face, age, natural skin, brown human eyes, covered hair, wardrobe, body proportions and palm mark.
+The Lower Chamber Location Sheet locks the spiral chamber, central dais, volcanic stone, bronze details, oil lamps and gold channels.
+Use only the exact intact black-scaled egg from the Dragon Egg Reference; ignore the adult dragon completely.
+
+SHEET LAYOUT:
+Create one clean rectangular portrait master sheet with exactly eight separate tall cinematic panels arranged four across the top and four across the bottom.
+Use thin dark dividers, consistent margins, small white shot numbers 01–08 and tiny timestamps only.
+Every panel is an independent vertical 9:16 Reel composition.
+No title, captions, dialogue, UI panel or extra text.
+
+SHOT 01 — macro of one molten-gold channel glowing across the Lower Chamber floor.
+SHOT 02 — overhead descent composition toward Layan and the egg on the central dais.
+SHOT 03 — controlled side-profile medium-wide as she approaches through flickering amber light.
+SHOT 04 — macro of the covenant mark brightening in her open palm.
+SHOT 05 — extreme close-up of her fingertips moments before touching the shell.
+SHOT 06 — contact frame: gold light travels through the shell and chamber channels.
+SHOT 07 — macro of exactly one tiny hairline crack appearing in the black scales.
+SHOT 08 — close portrait of Layan in reflected gold light, realizing she has been chosen; natural brown eye and round pupil.
+
+VISUAL STYLE:
+Premium photorealistic live-action medieval fantasy mystery, realistic skin and hands, dark volcanic stone, ancient bronze, restrained oil flame, controlled golden light and cinematic depth.
+Escalate visually from quiet approach to one precise supernatural response.
+
+IDENTITY AND STORY LOCK:
+Use the same Layan face and clothing throughout.
+Only one hairline crack appears and it remains tiny.
+No hatchling, no adult dragon, no exploding egg, no multiple cracks, no face drift, no uncovered hair, no glowing fantasy iris, no malformed fingers, no extra character, no modern object and no watermark.`,
+
+    outro: `CREATE A PREMIUM CINEMATIC VERTICAL 9:16 FINAL CTA END COVER.
+
+DELIVERABLE:
+Generate one finished final cover image, not a Scene Sheet and not a storyboard.
+This is the quiet final frame of a high-budget medieval-fantasy trailer and must prioritize the CTA.
+
+COMPOSITION:
+Use a dark atmospheric background inspired by ancient volcanic stone, drifting smoke, restrained embers and a distant Golden City silhouette.
+Place a dragon only as a subtle embossed shadow, cropped wing silhouette or small heraldic presence within the environment; it must not be the hero.
+Create generous clean negative space in the center for the CTA.
+A thin restrained molten-gold light seam may guide the eye vertically without competing with the text.
+
+EXACT HERO TEXT:
+"WANT THE PROMPT & FULL BREAKDOWN?"
+"Comment Prompt"
+
+EXACT PRODUCTION CREDIT:
+"A YEHIA.DIGITAL PRODUCTION"
+
+TYPOGRAPHY AND HIERARCHY:
+The CTA is the hero.
+Set "WANT THE PROMPT & FULL BREAKDOWN?" in large elegant condensed cinematic serif lettering.
+Set "Comment Prompt" directly below as a clear high-contrast action line.
+Place "A YEHIA.DIGITAL PRODUCTION" very small at the absolute bottom edge.
+Use off-white and restrained antique gold.
+All text must be perfectly spelled, centered and readable on a phone screen.
+
+COLOR AND STYLE:
+Near-black, charcoal, antique gold and a tiny amount of ember orange.
+Premium live-action medieval fantasy branding, refined texture, cinematic depth, subtle film grain and polished theatrical finish.
+
+TEXT EXCLUSIONS:
+Do not write "THE FIRE COVENANT".
+Do not write "VISIT YEHIA.DIGITAL".
+Do not add "COMING SOON", a URL, username, QR code, social icon or any additional word.
+
+NEGATIVE CONSTRAINTS:
+No hero dragon pose, no dragon face dominating the frame, no character portrait, no bright city panorama, no busy background behind the CTA, no misspelled text, no extra logo, no modern UI, no storyboard grid and no watermark.`
+  };
+
+  window.trailerProduction.units.forEach(unit => {
+    unit.imagePrompt = imagePrompts[unit.id];
+  });
+})();

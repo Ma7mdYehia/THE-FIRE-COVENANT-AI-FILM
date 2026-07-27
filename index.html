@@ -1215,7 +1215,7 @@ ${marked}`;
         <button class="scene-summary" data-scene-toggle>
           <span class="scene-no">${unit.order}</span>
           <span><h4>${view.title}</h4><p dir="ltr">${unit.en} · ${view.duration}</p></span>
-          <span class="scene-state">${tr("scene.readyMotion")}</span>
+          <span class="scene-state">${tr("scene.readyPrompts")}</span>
         </button>
         <div class="scene-content">
           <div class="scene-meta"><span>${view.duration}</span><span>Vertical 9:16</span><span>Google Flow Omni</span></div>
@@ -1232,7 +1232,12 @@ ${marked}`;
           ${renderAttachments(unit)}
           <p class="language-note">${tr("production.languageNote")}</p>
           <div class="prompt-wrap">
-            <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-trailer="${unit.id}">${tr("scene.copyPrompt")}</button></div>
+            <div class="prompt-head"><strong>IMAGE GENERATION · ${unit.id === "intro" || unit.id === "outro" ? "COVER PROMPT" : "SCENE SHEET PROMPT"}</strong><button class="copy-btn" data-copy-trailer-image="${unit.id}">${tr("scene.copyPrompt")}</button></div>
+            ${customizationNote()}
+            <pre>${renderCustomPrompt(unit.imagePrompt)}</pre>
+          </div>
+          <div class="prompt-wrap">
+            <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-trailer-motion="${unit.id}">${tr("scene.copyPrompt")}</button></div>
             ${customizationNote()}
             <pre>${renderCustomPrompt(localizeVoice(unit.prompt))}</pre>
           </div>
@@ -1502,9 +1507,14 @@ ${marked}`;
       if (sceneToggle) sceneToggle.closest('.scene-item').classList.toggle('open');
       const directCopy = event.target.closest('[data-copy-text]');
       if (directCopy) navigator.clipboard.writeText(decodeURIComponent(directCopy.dataset.copyText)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
-      const trailerCopy = event.target.closest('[data-copy-trailer]');
-      if (trailerCopy) {
-        const unit = trailer.units.find(item => item.id === trailerCopy.dataset.copyTrailer);
+      const trailerImageCopy = event.target.closest('[data-copy-trailer-image]');
+      if (trailerImageCopy) {
+        const unit = trailer.units.find(item => item.id === trailerImageCopy.dataset.copyTrailerImage);
+        if (unit) navigator.clipboard.writeText(editablePrompt(unit.imagePrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+      }
+      const trailerMotionCopy = event.target.closest('[data-copy-trailer-motion]');
+      if (trailerMotionCopy) {
+        const unit = trailer.units.find(item => item.id === trailerMotionCopy.dataset.copyTrailerMotion);
         if (unit) navigator.clipboard.writeText(editablePrompt(localizeVoice(unit.prompt))).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       const episodeImageCopy = event.target.closest('[data-copy-episode-image]');
