@@ -1,6 +1,8 @@
 window.episodeOneProduction = {
   title: "البيضة الأخيرة",
   en: "EPISODE 01 — THE LAST EGG",
+  cover: "assets/episode-01/episode-01-the-last-egg-cover-v1.webp",
+  videoUrl: "",
   format: "Vertical 9:16 · 12 cinematic units · Google Flow Omni",
   narrator: "نفس الصوت الأنثوي الإنجليزي العميق والهادئ والناضج في جميع المشاهد.",
   summary: "افتتاحية قوية تكشف دفن البيضة قبل ثمانية عشر عامًا، عودتها إلى العاصمة، استجابة آزر والعلامة، ثم الخيانة الداخلية وقيام جيش الرايات السوداء.",

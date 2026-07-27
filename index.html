@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="ملف الإنتاج التفاعلي لمسلسل عهد النار — الموسم الأول: وارثة الرماد." />
+  <meta name="description" content="The interactive production archive for The Fire Covenant — an original AI-crafted fantasy series." />
   <meta name="theme-color" content="#09090a" />
-  <title>عهد النار — ملف صناعة المسلسل بالذكاء الاصطناعي</title>
+  <title>The Fire Covenant — AI Series Production Archive</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Bebas+Neue&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Bebas+Neue&display=swap');
 
     :root {
       --base: #09090a;
@@ -41,7 +41,7 @@
       background:
         radial-gradient(ellipse 75% 48% at 50% -10%, rgba(217,119,6,.14), transparent 72%),
         linear-gradient(180deg, #09090a 0%, #0d0b0b 45%, #080809 100%);
-      font-family: "IBM Plex Sans Arabic", system-ui, sans-serif;
+      font-family: Inter, system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -109,6 +109,30 @@
       transition: .2s ease;
     }
     .nav a:hover { color: var(--ink); background: var(--glass); }
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px;
+      direction: ltr;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255,255,255,.035);
+    }
+    .lang-btn {
+      min-width: 35px;
+      min-height: 32px;
+      padding: 6px 8px;
+      border: 0;
+      border-radius: 8px;
+      color: var(--muted);
+      background: transparent;
+      font: 700 10px/1 Inter, sans-serif;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .lang-btn:hover { color: var(--ink); background: rgba(255,255,255,.055); }
+    .lang-btn.active { color: #180f07; background: linear-gradient(135deg,#f2b14f,#d97706); }
     .phase-chip {
       direction: ltr; white-space: nowrap;
       color: #f9d99b; border: 1px solid rgba(217,119,6,.32); background: rgba(217,119,6,.1);
@@ -203,7 +227,7 @@
 
     .episodes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
     .episode-card {
-      position: relative; min-height: 300px; padding: 22px; text-align: right;
+      position: relative; min-height: 300px; padding: 22px; text-align: start;
       border-radius: 22px; border: 1px solid var(--border); color: var(--ink);
       background:
         linear-gradient(145deg, rgba(255,255,255,.045), transparent 40%),
@@ -246,6 +270,34 @@
     .trailer-card .card-action { position: relative; z-index: 2; }
     .trailer-card h3 { max-width: 520px; margin-top: 98px; font-size: clamp(28px,4vw,44px); }
     .trailer-card p { max-width: 590px; color: #c9c3bd; }
+    .episode-card.educational-card {
+      grid-column: span 2;
+      min-height: 360px;
+      isolation: isolate;
+      background: #0b0908;
+    }
+    .educational-card .educational-bg,
+    .educational-card .educational-shade { position: absolute; inset: 0; }
+    .educational-card .educational-bg {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 45%;
+      filter: brightness(.56) saturate(.78) contrast(1.08);
+      transition: transform .55s cubic-bezier(.22,1,.36,1);
+      z-index: -3;
+    }
+    .educational-card:hover .educational-bg { transform: scale(1.025); }
+    .educational-card .educational-shade {
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(7,6,6,.94) 0%, rgba(7,6,6,.56) 55%, rgba(7,6,6,.25) 100%),
+        linear-gradient(0deg, rgba(7,6,6,.96) 0%, transparent 72%);
+    }
+    .educational-card::before { color: rgba(242,169,59,.13); }
+    .educational-card .ep-meta,
+    .educational-card h3,
+    .educational-card p,
+    .educational-card .card-action { position: relative; z-index: 2; }
+    .educational-card h3 { max-width: 590px; margin-top: 98px; font-size: clamp(27px,3.6vw,42px); }
+    .educational-card p { max-width: 620px; color: #d1cbc5; }
     .episode-card.episode-ready { isolation: isolate; background: #0b0908; }
     .episode-ready .episode-bg,
     .episode-ready .episode-shade { position: absolute; inset: 0; }
@@ -264,6 +316,69 @@
     .episode-ready h3,
     .episode-ready p,
     .episode-ready .card-action { position: relative; z-index: 2; }
+    .episode-card.episode-soon {
+      cursor: not-allowed;
+      opacity: .56;
+      filter: saturate(.35);
+      box-shadow: none;
+    }
+    .episode-card.episode-soon:hover {
+      transform: none;
+      border-color: var(--border);
+    }
+    .episode-card.episode-soon::after {
+      content: "SOON";
+      position: absolute;
+      inset: 22px 22px auto auto;
+      min-width: 64px;
+      padding: 7px 11px;
+      border: 1px solid rgba(231,193,141,.28);
+      border-radius: 999px;
+      color: #e7c18d;
+      background: rgba(9,9,10,.72);
+      font: 700 10px/1 Inter,sans-serif;
+      letter-spacing: .16em;
+      text-align: center;
+      direction: ltr;
+    }
+    .episode-card.episode-soon .ep-meta { color: #aaa39b; }
+    .episode-card.episode-soon .card-action {
+      color: #aaa39b;
+      letter-spacing: .08em;
+      direction: ltr;
+    }
+    .free-resource-card {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      margin: 24px 0;
+      padding: 24px;
+      border: 1px solid rgba(242,169,59,.24);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(217,119,6,.13), transparent 35%),
+        rgba(17,14,13,.86);
+    }
+    .free-resource-card h3 { margin: 0 0 9px; font-size: 23px; }
+    .free-resource-card p { margin: 0; color: #c9c4bf; line-height: 1.85; }
+    .resource-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 17px; }
+    .resource-link {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
+      padding: 10px 15px; border-radius: 999px; color: #16100a; background: var(--amber-bright);
+      font-weight: 800; font-size: 12px;
+    }
+    .manychat-flow { display: grid; gap: 10px; }
+    .manychat-message {
+      padding: 15px; border: 1px solid var(--border); border-radius: 16px;
+      background: rgba(244,244,242,.035);
+    }
+    .manychat-message small { display: block; margin-bottom: 7px; color: var(--amber-bright); font: 700 9px/1 Inter,sans-serif; letter-spacing: .12em; }
+    .manychat-message p { white-space: pre-line; font-size: 12px; line-height: 1.75; }
+    .manychat-button {
+      display: inline-flex; margin-top: 10px; padding: 7px 11px; border-radius: 999px;
+      background: rgba(242,169,59,.12); border: 1px solid rgba(242,169,59,.28);
+      color: #efc98f; font-size: 10px; font-weight: 800;
+    }
 
     .filterbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: -6px 0 24px; }
     .filter-btn { min-height: 40px; border: 1px solid var(--border); border-radius: 999px; padding: 9px 13px; color: var(--muted); background: rgba(244,244,242,.025); cursor: pointer; }
@@ -271,7 +386,7 @@
     .characters-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
     .character-card {
       position: relative; min-height: 430px; border-radius: var(--radius); overflow: hidden;
-      border: 1px solid var(--border); background: var(--surface); cursor: pointer; text-align: right; color: var(--ink);
+      border: 1px solid var(--border); background: var(--surface); cursor: pointer; text-align: start; color: var(--ink);
       transition: .28s cubic-bezier(.22,1,.36,1); box-shadow: var(--shadow); padding: 0;
     }
     .character-card:hover { transform: translateY(-5px); border-color: rgba(217,119,6,.35); }
@@ -293,7 +408,7 @@
     .locations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
     .location-card {
       position: relative; min-height: 360px; overflow: hidden; border-radius: var(--radius);
-      padding: 0; color: var(--ink); text-align: right; cursor: pointer;
+      padding: 0; color: var(--ink); text-align: start; cursor: pointer;
       transition: .28s cubic-bezier(.22,1,.36,1);
     }
     .location-card:hover { transform: translateY(-5px); border-color: rgba(217,119,6,.35); }
@@ -349,7 +464,7 @@
     .production-head p { margin:0; color:var(--muted); font-size:12px; }
     .scene-list { display:grid; gap:12px; }
     .scene-item { border:1px solid rgba(244,244,242,.09); border-radius:20px; overflow:hidden; background:rgba(244,244,242,.025); }
-    .scene-summary { width:100%; display:grid; grid-template-columns:60px 1fr auto; gap:16px; align-items:center; padding:18px; color:var(--ink); background:transparent; border:0; text-align:right; cursor:pointer; }
+    .scene-summary { width:100%; display:grid; grid-template-columns:60px 1fr auto; gap:16px; align-items:center; padding:18px; color:var(--ink); background:transparent; border:0; text-align:start; cursor:pointer; }
     .scene-no { color:var(--amber-bright); font:400 30px/1 "Bebas Neue",sans-serif; direction:ltr; }
     .scene-summary h4 { margin:0 0 4px; font-size:17px; }
     .scene-summary p { margin:0; color:var(--muted); font-size:11px; }
@@ -375,7 +490,7 @@
     .episode-prep-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:0 0 24px; }
     .episode-prep-card {
       position:relative; min-height:240px; overflow:hidden; padding:0; border-radius:20px;
-      border:1px solid rgba(244,244,242,.1); color:var(--ink); text-align:right; cursor:pointer;
+      border:1px solid rgba(244,244,242,.1); color:var(--ink); text-align:start; cursor:pointer;
       background:#0a0908; transition:.25s ease;
     }
     .episode-prep-card:hover { transform:translateY(-3px); border-color:rgba(217,119,6,.35); }
@@ -436,11 +551,26 @@
     .prompt-head { display:flex; justify-content:space-between; align-items:center; gap:15px; padding:13px 15px; border-bottom:1px solid rgba(244,244,242,.07); }
     .prompt-head strong { font:700 10px/1 Inter,sans-serif; color:#e9bc7d; letter-spacing:.12em; direction:ltr; }
     .copy-btn { color:var(--ink); background:rgba(244,244,242,.06); border:1px solid var(--border); border-radius:10px; padding:8px 10px; cursor:pointer; font-size:11px; }
+    .language-note { margin: 12px 0; padding: 11px 13px; color: #d8c3a7; border: 1px solid rgba(217,119,6,.2); border-radius: 12px; background: rgba(217,119,6,.07); font-size: 11px; line-height: 1.7; }
     pre { margin:0; padding:19px; white-space:pre-wrap; word-break:break-word; direction:ltr; text-align:left; color:#d6d1cc; font:500 12px/1.75 ui-monospace,SFMono-Regular,Menlo,monospace; }
     .empty-media { display:grid; place-items:center; min-height:390px; color:rgba(244,244,242,.09); font-size:150px; font-weight:700; }
 
     .toast { position:fixed; z-index:100; inset:auto 50% 22px auto; transform:translate(50%,20px); opacity:0; pointer-events:none; color:#17100a; background:#f1ad4f; border-radius:999px; padding:11px 16px; font-size:12px; font-weight:700; transition:.22s ease; }
     .toast.show { transform:translate(50%,0); opacity:1; }
+
+    html[dir="rtl"] body { font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; }
+    html[lang="ur"] body { font-family: "Noto Nastaliq Urdu", "IBM Plex Sans Arabic", system-ui, sans-serif; }
+    html[lang="ur"] .nav a,
+    html[lang="ur"] .btn,
+    html[lang="ur"] .stat span,
+    html[lang="ur"] .card-action { line-height: 1.8; }
+    html[dir="ltr"] .card-action svg { transform: rotate(180deg); }
+    html[dir="rtl"] .hero-actions .btn-primary > span:last-child { transform: rotate(180deg); }
+    html[dir="ltr"] .hero::before {
+      background:
+        linear-gradient(270deg, rgba(9,9,10,.95) 3%, rgba(9,9,10,.54) 47%, rgba(9,9,10,.45) 100%),
+        linear-gradient(0deg, #09090a 0%, rgba(9,9,10,.15) 42%, rgba(9,9,10,.4) 100%);
+    }
 
     @media (max-width: 980px) {
       .nav { display:none; }
@@ -456,13 +586,17 @@
       .shell { width:min(calc(100% - 20px),var(--max)); }
       .topbar { top:8px; }
       .topbar-inner { width:calc(100% - 16px); padding-inline:8px 12px; }
+      .brand-copy span { display:none; }
+      .language-switch { margin-inline-start:auto; }
       .phase-chip { display:none; }
       .hero { padding:145px 0 42px; }
       .hero::before { background:linear-gradient(0deg,#09090a 0%,rgba(9,9,10,.5) 60%,rgba(9,9,10,.5) 100%); }
       h1 { font-size:clamp(58px,21vw,86px); }
       section { padding:68px 0; }
       .phase-grid, .episodes-grid, .characters-grid, .locations-grid, .workflow, .result-grid { grid-template-columns:1fr; }
-      .episode-card.trailer-card { grid-column: auto; min-height: 330px; }
+      .episode-card.trailer-card,
+      .episode-card.educational-card { grid-column: auto; min-height: 330px; }
+      .free-resource-card { grid-template-columns: 1fr; }
       .attachment-grid { grid-template-columns: 1fr; }
       .episode-prep-grid { grid-template-columns:1fr; }
       .watermark-guide { grid-template-columns:1fr; text-align:center; }
@@ -492,77 +626,82 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner glass">
-      <a class="brand" href="#top" aria-label="عهد النار — العودة للبداية">
+      <a class="brand" href="#top" aria-label="The Fire Covenant — back to top" data-i18n-aria="brand.aria">
         <span class="brand-mark"><img src="assets/branding/fire-covenant-emblem-512-v1.png" alt="" /></span>
-        <span class="brand-copy"><strong>عهد النار</strong><span>AI SERIES LAB</span></span>
+        <span class="brand-copy"><strong data-i18n="brand.name">THE FIRE COVENANT</strong><span>AI SERIES LAB</span></span>
       </a>
-      <nav class="nav" aria-label="أقسام الصفحة">
-        <a href="#plan">الخطة</a><a href="#story">القصة</a><a href="#episodes">الحلقات</a><a href="#characters">الشخصيات</a><a href="#locations">المواقع</a><a href="#workflow">طريقة العمل</a>
+      <nav class="nav" aria-label="Page sections" data-i18n-aria="nav.aria">
+        <a href="#plan" data-i18n="nav.roadmap">Roadmap</a><a href="#story" data-i18n="nav.story">Story</a><a href="#episodes" data-i18n="nav.episodes">Episodes</a><a href="#characters" data-i18n="nav.characters">Characters</a><a href="#locations" data-i18n="nav.locations">Locations</a><a href="#workflow" data-i18n="nav.workflow">Workflow</a>
       </nav>
-      <span class="phase-chip">EPISODE 02 · PRODUCTION READY</span>
+      <div class="language-switch" role="group" aria-label="Choose language" data-i18n-aria="language.aria">
+        <button class="lang-btn active" type="button" data-language="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" type="button" data-language="ar" aria-pressed="false">ع</button>
+        <button class="lang-btn" type="button" data-language="ur" aria-pressed="false">اردو</button>
+      </div>
+      <span class="phase-chip">LAUNCH KIT · TRAILER + EP 01 + FREE WORKFLOW</span>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="hero-media"><img src="assets/golden-city.webp" alt="العاصمة المزدهرة في عالم عهد النار" /></div>
+      <div class="hero-media"><img src="assets/golden-city.webp" alt="The Golden Capital in The Fire Covenant" data-i18n-alt="hero.imageAlt" /></div>
       <div class="shell hero-grid">
         <div>
-          <span class="eyebrow"><i class="eyebrow-dot"></i> مسلسل عربي أصلي مصنوع بالذكاء الاصطناعي</span>
-          <h1>عَهْدُ النَّار<small>THE FIRE COVENANT</small></h1>
-          <p class="season-title">الموسم الأول: وَارِثَةُ الرَّمَاد</p>
-          <p class="hero-lede">رحلة إنتاج مفتوحة توثّق كيف يتحول عالم خيالي عربي من فكرة، إلى شخصيات ومواقع، ثم Scene Sheets وفيديوهات سينمائية — مع البرومبتات والنتائج في كل خطوة.</p>
+          <span class="eyebrow"><i class="eyebrow-dot"></i><span data-i18n="hero.eyebrow">AN ORIGINAL AI-CRAFTED FANTASY SERIES</span></span>
+          <h1><span data-i18n="hero.title">THE FIRE COVENANT</span><small data-i18n="hero.titleAlt">عَهْدُ النَّار</small></h1>
+          <p class="season-title" data-i18n="hero.season">SEASON ONE: HEIR OF ASHES</p>
+          <p class="hero-lede" data-i18n="hero.lede">A living production archive documenting how an original fantasy world moves from story and visual references to Scene Sheets, cinematic video, sound, and final episodes — with the working prompts and decisions behind every stage.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#episodes">استكشف الموسم <span>←</span></a>
-            <a class="btn" href="#characters">افتح Character Vault</a>
+            <a class="btn btn-primary" href="#episodes"><span data-i18n="hero.primaryCta">Explore the season</span><span>→</span></a>
+            <a class="btn" href="#characters" data-i18n="hero.secondaryCta">Open Character Vault</a>
           </div>
         </div>
-        <aside class="hero-stat-card glass" aria-label="حالة المشروع">
-          <p>حالة ملف الإنتاج — الحلقة الثانية موثقة</p>
+        <aside class="hero-stat-card glass" aria-label="Project status" data-i18n-aria="stats.aria">
+          <p data-i18n="stats.heading">PRODUCTION STATUS — LAUNCH IN PROGRESS</p>
           <div class="stats">
-            <div class="stat"><strong>08</strong><span>حلقات مخططة</span></div>
-            <div class="stat"><strong>10</strong><span>عناصر شخصيات منفّذة</span></div>
-            <div class="stat"><strong>08</strong><span>مواقع معتمدة</span></div>
-            <div class="stat"><strong>14</strong><span>وحدة في الحلقة الثانية</span></div>
+            <div class="stat"><strong>02</strong><span data-i18n="stats.episodes">Documented episodes</span></div>
+            <div class="stat"><strong>10</strong><span data-i18n="stats.characters">Locked character assets</span></div>
+            <div class="stat"><strong>08</strong><span data-i18n="stats.locations">Approved locations</span></div>
+            <div class="stat"><strong>06</strong><span data-i18n="stats.breakdown">Free breakdown scenes</span></div>
           </div>
-          <div class="progress-line" aria-label="نسبة تقدم المشروع 75 بالمئة"><i style="width:75%"></i></div>
+          <div class="progress-line" aria-label="Project progress 82 percent" data-i18n-aria="stats.progress"><i style="width:82%"></i></div>
         </aside>
       </div>
     </section>
 
     <section id="plan">
       <div class="shell">
-        <div class="section-head"><div><p class="kicker">PRODUCTION ROADMAP</p><h2>المشروع على 3 مراحل</h2></div><p>كل مرحلة تضيف طبقة إنتاج جديدة، مع الحفاظ على نفس الشخصيات والهوية البصرية والبرومبتات المعتمدة.</p></div>
+        <div class="section-head"><div><p class="kicker">PRODUCTION ROADMAP</p><h2 data-i18n="roadmap.title">A production system in three layers</h2></div><p data-i18n="roadmap.lede">Each layer adds a new production capability while preserving the same identities, locations, visual continuity, and approved prompts.</p></div>
         <div class="phase-grid">
-          <article class="phase-card glass"><span class="phase-num">01</span><span class="status done"><i class="status-dot"></i> مكتملة</span><h3>Series Bible والأساس التفاعلي</h3><p>تثبيت العالم، الموسم، الحلقات، الشخصيات والمراجع البصرية داخل واجهة قابلة للتوسع.</p><ul><li>هوية ووصف المسلسل والموسم</li><li>قوس درامي من 8 حلقات</li><li>Character Vault بالصور والبرومبتات</li><li>مواقع العالم المعتمدة</li></ul></article>
-          <article class="phase-card glass active"><span class="phase-num">02</span><span class="status done"><i class="status-dot"></i> قيد التنفيذ</span><h3>Episode Production System</h3><p>تحويل كل حلقة إلى مشاهد إنتاجية موثقة من الفكرة حتى الـScene Sheet.</p><ul><li>Scene breakdown لكل حلقة</li><li>Image prompts لكل مشهد</li><li>Motion prompts والتحريك</li><li>رفع نتائج Scene Sheets</li></ul></article>
-          <article class="phase-card glass"><span class="phase-num">03</span><span class="status next"><i class="status-dot"></i> لاحقًا</span><h3>Video Results والإطلاق</h3><p>ربط الفيديوهات النهائية وتوثيق المونتاج والصوت والنشر كتجربة تعليمية كاملة.</p><ul><li>روابط الفيديو النهائية</li><li>Voiceover وSFX والموسيقى</li><li>ملاحظات التحسين والنسخ</li><li>Trailer وخطة النشر</li></ul></article>
+          <article class="phase-card glass"><span class="phase-num">01</span><span class="status done"><i class="status-dot"></i><span data-i18n="roadmap.p1.status">Complete</span></span><h3 data-i18n="roadmap.p1.title">Series Bible & Visual Foundations</h3><p data-i18n="roadmap.p1.body">The world, season arc, characters, factions, and recurring visual references are locked in one expandable archive.</p><ul><li data-i18n="roadmap.p1.i1">Series and season identity</li><li data-i18n="roadmap.p1.i2">Eight-episode dramatic arc</li><li data-i18n="roadmap.p1.i3">Character Vault with master prompts</li><li data-i18n="roadmap.p1.i4">Approved world locations</li></ul></article>
+          <article class="phase-card glass active"><span class="phase-num">02</span><span class="status done"><i class="status-dot"></i><span data-i18n="roadmap.p2.status">In production</span></span><h3 data-i18n="roadmap.p2.title">Episode Production System</h3><p data-i18n="roadmap.p2.body">Every episode is broken into documented production scenes, from dramatic intent to its final motion prompt.</p><ul><li data-i18n="roadmap.p2.i1">Scene breakdown for every episode</li><li data-i18n="roadmap.p2.i2">Image prompts for every scene</li><li data-i18n="roadmap.p2.i3">Camera, motion, dialogue, and sound direction</li><li data-i18n="roadmap.p2.i4">Approved Scene Sheets and references</li></ul></article>
+          <article class="phase-card glass active"><span class="phase-num">03</span><span class="status done"><i class="status-dot"></i><span data-i18n="roadmap.p3.status">Launching</span></span><h3 data-i18n="roadmap.p3.title">Final Videos & Public Breakdown</h3><p data-i18n="roadmap.p3.body">The trailer and first episodes move into release while the educational workflow documents how each final scene was built.</p><ul><li data-i18n="roadmap.p3.i1">Official trailer and episode covers</li><li data-i18n="roadmap.p3.i2">Six-scene educational production reel</li><li data-i18n="roadmap.p3.i3">Free workflow delivered through ManyChat</li><li data-i18n="roadmap.p3.i4">Episode links added as they are published</li></ul></article>
         </div>
       </div>
     </section>
 
     <section id="story">
       <div class="shell">
-        <div class="section-head"><div><p class="kicker">SERIES BIBLE</p><h2>العالم والقصة</h2></div><p>Fantasy عربي أصلي عن السلطة والولاء والإرث؛ التنين هنا ليس وحشًا، بل طرف في عهد أقدم من المملكة نفسها.</p></div>
+        <div class="section-head"><div><p class="kicker">SERIES BIBLE</p><h2 data-i18n="story.title">World & Story</h2></div><p data-i18n="story.lede">An original epic fantasy about power, loyalty, memory, and inheritance. The dragon is not a monster; it is a living party to a covenant older than the kingdom.</p></div>
         <div class="bible-grid">
-          <article class="story-card glass"><span class="label">SERIES LOGLINE</span><h3>حين تستيقظ آخر بيضة تنين… يبدأ العهد في اختيار وريثه.</h3><p>في مملكة عربية مزدهرة يحكمها الملك يحيى بالعدل وتحرسها قوة آزر، آخر التنانين العظماء، تظهر بيضة اعتُقد أنها فُقدت للأبد. مع عودة نادر قائد التمرّد واهتزاز الثقة في العرش، تنجذب حافظة العهد ليان إلى سر داخل البيضة قد يعيد التوازن — أو يشعل حربًا تنهي زمن الملوك والتنانين معًا.</p><div class="pill-row"><span class="pill">Epic Arabic Fantasy</span><span class="pill">Political Drama</span><span class="pill">Dragons</span><span class="pill">AI Filmmaking</span><span class="pill">8 Episodes</span></div></article>
-          <article class="story-card glass"><span class="label">SEASON ONE ARC</span><h3>وَارِثَةُ الرَّمَاد</h3><p>يبدأ الموسم في ذروة ازدهار المملكة، ثم يكشف تدريجيًا أن السلام مبني على أسرار مدفونة. نادر يحوّل الشك إلى تمرّد، وآزر يدخل حربه الأخيرة، بينما تكتشف ليان أن علاقتها بالبيضة ليست صدفة. النهاية لا تعيد النظام القديم؛ بل تولد عهدًا جديدًا مع نيرا، وتفتح باب الخطر الحقيقي الذي يراقبه الفارس الرمادي.</p><div class="pill-row"><span class="pill">البداية: عصر ذهبي</span><span class="pill">المنتصف: تمرّد وحصار</span><span class="pill">النهاية: ميلاد نيرا</span></div></article>
+          <article class="story-card glass"><span class="label">SERIES LOGLINE</span><h3 data-i18n="story.loglineTitle">When the last dragon egg awakens, the Covenant begins choosing its heir.</h3><p data-i18n="story.loglineBody">In a prosperous kingdom ruled by King Yahia and guarded by Azar, the last of the great dragons, an egg believed lost forever returns. As rebel commander Nader turns an old disappearance into a weapon against the throne, Covenant Keeper Layan is drawn toward a secret inside the egg that could restore balance — or ignite a war that ends the age of kings and dragons.</p><div class="pill-row"><span class="pill" data-i18n="story.tag1">Epic Fantasy</span><span class="pill" data-i18n="story.tag2">Political Drama</span><span class="pill" data-i18n="story.tag3">Dragons</span><span class="pill" data-i18n="story.tag4">AI Filmmaking</span><span class="pill" data-i18n="story.tag5">8 Episodes</span></div></article>
+          <article class="story-card glass"><span class="label">SEASON ONE ARC</span><h3 data-i18n="story.arcTitle">HEIR OF ASHES</h3><p data-i18n="story.arcBody">The season opens at the height of the kingdom’s prosperity, then reveals that peace was built on buried secrets. Nader turns doubt into rebellion, Azar enters his final war, and Layan discovers that her bond with the egg is no accident. The ending does not restore the old order: Nira is born, a new covenant begins, and the Grey Rider watches a greater danger awaken.</p><div class="pill-row"><span class="pill" data-i18n="story.arcTag1">Opening: The Golden Age</span><span class="pill" data-i18n="story.arcTag2">Middle: Rebellion & Siege</span><span class="pill" data-i18n="story.arcTag3">Finale: Nira Is Born</span></div></article>
         </div>
       </div>
     </section>
 
     <section id="episodes">
       <div class="shell">
-        <div class="section-head"><div><p class="kicker">OFFICIAL TRAILER + SEASON 01</p><h2>التريلر وحلقات الموسم</h2></div><p>ابدأ بالحلقة الخاصة رقم 00 للوصول إلى مقدمة التريلر، 8 Scene Sheets، مراجع كل مشهد، برومبتات Flow Omni والقفلة النهائية. ثم استكشف حلقات الموسم الأول.</p></div>
+        <div class="section-head"><div><p class="kicker">TRAILER + FREE BREAKDOWN + SEASON 01</p><h2 data-i18n="episodes.title">Trailer, Free Breakdown & Episodes</h2></div><p data-i18n="episodes.lede">Explore the official trailer package, open the complete “From Scene Sheet to Final Scene” workflow, then enter the production archive for each released episode.</p></div>
         <div id="episodesGrid" class="episodes-grid"></div>
       </div>
     </section>
 
     <section id="characters">
       <div class="shell">
-        <div class="section-head"><div><p class="kicker">CHARACTER VAULT</p><h2>الشخصيات والمراجع</h2></div><p>اكتملت كل مراجع الشخصيات والجيوش للموسم الأول. افتح أي عنصر لمراجعة هويته البصرية والـMaster Prompt المعتمد.</p></div>
-        <div class="filterbar" role="group" aria-label="تصفية الشخصيات">
-          <button class="filter-btn active" data-filter="all">الكل · 10</button><button class="filter-btn" data-filter="ready">تم تنفيذها · 10</button>
+        <div class="section-head"><div><p class="kicker">CHARACTER VAULT</p><h2 data-i18n="characters.title">Characters & Production References</h2></div><p data-i18n="characters.lede">All season-one character, creature, and army references are locked. Open any asset to review its visual identity and approved master prompt.</p></div>
+        <div class="filterbar" role="group" aria-label="Filter characters" data-i18n-aria="characters.filterAria">
+          <button class="filter-btn active" data-filter="all" data-i18n="characters.all">All · 10</button><button class="filter-btn" data-filter="ready" data-i18n="characters.ready">Production ready · 10</button>
         </div>
         <div id="charactersGrid" class="characters-grid"></div>
       </div>
@@ -570,38 +709,40 @@
 
     <section id="locations">
       <div class="shell">
-        <div class="section-head"><div><p class="kicker">WORLD LOCATIONS</p><h2>المواقع المعتمدة</h2></div><p>6 مراجع ثابتة تحافظ على الجغرافيا والحجم والعمارة والإضاءة. افتح أي موقع للوصف والـMaster Location Prompt.</p></div>
+        <div class="section-head"><div><p class="kicker">WORLD LOCATIONS</p><h2 data-i18n="locations.title">Approved Locations</h2></div><p data-i18n="locations.lede">Eight locked environment references preserve geography, scale, architecture, and lighting across every episode. Open any location for its description and master prompt.</p></div>
         <div id="locationsGrid" class="locations-grid"></div>
       </div>
     </section>
 
     <section id="workflow">
       <div class="shell">
-        <div class="section-head"><div><p class="kicker">AI PRODUCTION PIPELINE</p><h2>طريقة صناعة كل حلقة</h2></div><p>الهيكل الذي ستتبعه الصفحة في المرحلة الثانية لكل حلقة ومشهد، من الفكرة حتى نتيجة الفيديو.</p></div>
+        <div class="section-head"><div><p class="kicker">AI PRODUCTION PIPELINE</p><h2 data-i18n="workflow.title">How Every Episode Is Built</h2></div><p data-i18n="workflow.lede">The working pipeline now used across the series — from dramatic intent and references to the final edited scene.</p></div>
         <div class="workflow">
-          <article class="work-step glass"><h3>فكرة الحلقة</h3><p>الهدف الدرامي، الصراع، التحول والنهاية التي تقود للحلقة التالية.</p></article>
-          <article class="work-step glass"><h3>تفكيك المشاهد</h3><p>وصف كل مشهد، الزمن، الموقع، الشخصيات وزاوية الكاميرا.</p></article>
-          <article class="work-step glass"><h3>Image Prompt</h3><p>برومبت الصورة مع مراجع الهوية، الزي، المكان والإضاءة.</p></article>
-          <article class="work-step glass"><h3>Scene Sheet</h3><p>رفع نتيجة الشيت وتثبيت Start / End Frames قبل التحريك.</p></article>
-          <article class="work-step glass"><h3>Motion + Video</h3><p>برومبت الحركة، نتيجة الفيديو، الرابط وملاحظات التحسين.</p></article>
+          <article class="work-step glass"><h3 data-i18n="workflow.s1.title">Story Beat</h3><p data-i18n="workflow.s1.body">Define the dramatic objective, conflict, turning point, dialogue, and link to the next scene.</p></article>
+          <article class="work-step glass"><h3 data-i18n="workflow.s2.title">Scene Direction</h3><p data-i18n="workflow.s2.body">Lock timing, location, characters, camera angles, movement, transitions, and sound.</p></article>
+          <article class="work-step glass"><h3>Image Prompt</h3><p data-i18n="workflow.s3.body">Build the image prompt around the approved identity, costume, location, and lighting references.</p></article>
+          <article class="work-step glass"><h3>Scene Sheet</h3><p data-i18n="workflow.s4.body">Generate a clear multi-shot board, then use each panel as an independent full-screen shot guide.</p></article>
+          <article class="work-step glass"><h3>Motion + Final Edit</h3><p data-i18n="workflow.s5.body">Animate with locked camera and audio direction, review continuity, and assemble the final scene.</p></article>
         </div>
       </div>
     </section>
 
     <div class="shell next-phase glass">
-      <div><p class="kicker">CURRENT BUILD</p><h2>الحلقة الثانية جاهزة للتحريك</h2><p>تم توثيق Previously On، المشاهد 01–12، تشويق الحلقة الثالثة، برمبتات الصور والتحريك، الحوارات، المرفقات، والمواقع والهوية الجديدة.</p></div>
-      <span class="btn">EPISODE 02 · 14 UNITS READY</span>
+      <div><p class="kicker">CURRENT BUILD</p><h2 data-i18n="current.title">The launch archive and free workflow are live</h2><p data-i18n="current.body">The trailer, first two production packages, approved references, episode-one cover, and six-scene educational breakdown now live together in one continuously updated archive.</p></div>
+      <span class="btn">FREE WORKFLOW · 6 SCENES READY</span>
     </div>
   </main>
 
-  <footer><div class="shell footer-inner"><span>ملف إنتاج حي — يتم تحديثه مع كل مشهد ونتيجة جديدة.</span><span class="footer-brand">A YEHIA.DIGITAL AI FILM PROJECT · 2026</span></div></footer>
+  <footer><div class="shell footer-inner"><span data-i18n="footer.live">A living production archive — updated with every new scene and final result.</span><span class="footer-brand">A YEHIA.DIGITAL AI FILM PROJECT · 2026</span></div></footer>
 
-  <dialog id="detailDialog" aria-labelledby="modalHeading"><div class="modal-scroll"><button class="modal-close" aria-label="إغلاق النافذة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div id="modalContent"></div></div></dialog>
-  <div class="toast" id="toast" role="status">تم نسخ البرومبت</div>
+  <dialog id="detailDialog" aria-labelledby="modalHeading"><div class="modal-scroll"><button class="modal-close" aria-label="Close dialog" data-i18n-aria="modal.close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div id="modalContent"></div></div></dialog>
+  <div class="toast" id="toast" role="status" data-i18n="toast.copied">Prompt copied</div>
 
   <script src="trailer-data.js"></script>
   <script src="episode-01-data.js"></script>
   <script src="episode-02-data.js"></script>
+  <script src="educational-reel-data.js"></script>
+  <script src="site-i18n.js"></script>
   <script>
     const episodes = [
       {n:1,title:"البيضة الأخيرة",en:"THE LAST EGG",idea:"يعود كشّافو الحدود ببيضة تنين سليمة عُثر عليها تحت معبد محترق. آزر يتعرّف إلى سلالتها، بينما تضيء علامة غامضة في كف ليان لحظة اقترابها منها.",turn:"يأمر يحيى بإخفاء البيضة داخل قاعة الحكم، لكن خبر وجودها يتسرّب قبل نهاية الليلة.",cast:"يحيى، علياء، آزر، ليان، زين",hook:"نادر يتلقى قطعة من القشرة ويقول: عاد العهد الذي سرقوه منا."},
@@ -652,6 +793,7 @@
     const trailer = window.trailerProduction;
     const episodeOneProduction = window.episodeOneProduction;
     const episodeTwoProduction = window.episodeTwoProduction;
+    const educationalReel = window.educationalReelProduction;
     const iconArrow = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>`;
     const episodesGrid = document.getElementById('episodesGrid');
     const charactersGrid = document.getElementById('charactersGrid');
@@ -659,174 +801,462 @@
     const dialog = document.getElementById('detailDialog');
     const modalContent = document.getElementById('modalContent');
     const toast = document.getElementById('toast');
+    const languagePacks = window.siteI18n;
+    let currentLanguage = (() => {
+      try {
+        const saved = localStorage.getItem("fire-covenant-language");
+        return ["en", "ar", "ur"].includes(saved) ? saved : "en";
+      } catch {
+        return "en";
+      }
+    })();
 
-    episodesGrid.innerHTML = `
-      <button class="episode-card trailer-card" data-ep="00" data-kind="trailer">
-        <img class="trailer-bg" src="${trailer.cover}" alt="" />
-        <span class="trailer-shade"></span>
-        <span class="ep-meta">SPECIAL 00 · OFFICIAL TRAILER</span>
-        <h3>${trailer.title}</h3>
-        <p>${trailer.summary}</p>
-        <span class="card-action">افتح حزمة التريلر ${iconArrow}</span>
-      </button>` + episodes.map(ep => `
-      <button class="episode-card ${ep.n === 1 || ep.n === 2 ? "episode-ready" : ""}" data-ep="0${ep.n}" data-kind="episode" data-id="${ep.n}">
-        ${ep.n === 1 ? `<img class="episode-bg" src="${episodeOneProduction.scenes[0].image}" alt="" /><span class="episode-shade"></span>` : ""}
-        ${ep.n === 2 ? `<img class="episode-bg" src="${episodeTwoProduction.scenes[1].image}" alt="" /><span class="episode-shade"></span>` : ""}
-        <span class="ep-meta">EPISODE 0${ep.n}</span><h3>${ep.title}</h3><p>${ep.idea}</p>
-        <span class="card-action">${ep.n === 1 || ep.n === 2 ? "افتح حزمة الإنتاج الكاملة" : "افتح فكرة الحلقة"} ${iconArrow}</span>
-      </button>`).join('');
+    function tr(key) {
+      return languagePacks[currentLanguage]?.ui?.[key] || languagePacks.en.ui[key] || key;
+    }
 
-    charactersGrid.innerHTML = characters.map(ch => `
-      <button class="character-card ${ch.status === 'pending' ? 'pending' : ''}" data-kind="character" data-id="${ch.id}" data-status="${ch.status}">
-        <span class="character-image">${ch.image ? `<img src="${ch.image}" alt="Character Sheet — ${ch.name}" loading="lazy" />` : ''}</span>
-        <span class="character-shade"></span>
-        <span class="character-copy"><span class="badge ${ch.status}">${ch.status === 'ready' ? '✓ تم تنفيذها' : '○ قيد التنفيذ'}</span><h3>${ch.name}</h3><span class="role">${ch.role}</span><p>${ch.desc}</p></span>
-      </button>`).join('');
+    function localized(section, item) {
+      const key = section === "episodes" ? item.n : item.id;
+      const translated = languagePacks[currentLanguage]?.[section]?.[key] || {};
+      if (currentLanguage === "en" && !translated.name && item.en) translated.name = item.en;
+      if (currentLanguage === "en" && !translated.title && item.en) translated.title = item.en;
+      return {...item, ...translated};
+    }
 
-    locationsGrid.innerHTML = locations.map(location => `
-      <button class="location-card glass" data-kind="location" data-id="${location.id}">
-        <img src="${location.image}" alt="Location Sheet — ${location.name}" loading="lazy" />
-        <span class="location-copy"><span class="badge ready">✓ موقع معتمد</span><h3>${location.name}</h3><p>${location.desc}</p></span>
-      </button>`).join('');
+    function localizedFeature(feature) {
+      return languagePacks[currentLanguage]?.features?.[feature] || languagePacks.en.features[feature];
+    }
+
+    function localizeVoice(value = "") {
+      const replacements = languagePacks[currentLanguage]?.voices || {};
+      let output = Object.entries(replacements)
+        .sort(([a], [b]) => b.length - a.length)
+        .reduce((text, [source, target]) => text.split(source).join(target), value);
+      const directives = {
+        en: [
+          ["During Arabic speech", "During English speech"],
+          ["accurate Arabic lip sync", "accurate English lip sync"],
+          ["adult Egyptian male voice, Cairo accent", "adult English-speaking male voice, neutral international accent"],
+          ["adult Egyptian male voice", "adult English-speaking male voice"],
+          ["Egyptian male voice", "English-speaking male voice"],
+          ["natural Cairo accent", "natural neutral English accent"],
+          ["Cairo accent", "neutral international English accent"],
+          ["distinct natural Egyptian male voice", "distinct natural English-speaking male voice"]
+        ],
+        ar: [
+          ["deep, calm, mature English FEMALE narrator", "deep, calm, mature Arabic FEMALE narrator with natural Egyptian delivery"],
+          ["deep, mature English female narrator", "deep, mature Arabic female narrator with natural Egyptian delivery"],
+          ["same English FEMALE narrator", "same Arabic FEMALE narrator with natural Egyptian delivery"],
+          ["English FEMALE narrator", "Arabic FEMALE narrator with natural Egyptian delivery"],
+          ["English female voice", "Arabic female voice with natural Egyptian delivery"]
+        ],
+        ur: [
+          ["During Arabic speech", "During Urdu speech"],
+          ["accurate Arabic lip sync", "accurate Urdu lip sync"],
+          ["adult Egyptian male voice, Cairo accent", "adult Urdu-speaking male voice with a natural Pakistani Urdu accent"],
+          ["adult Egyptian male voice", "adult Urdu-speaking male voice"],
+          ["Egyptian male voice", "Urdu-speaking male voice"],
+          ["natural Cairo accent", "natural Pakistani Urdu accent"],
+          ["Cairo accent", "Pakistani Urdu accent"],
+          ["distinct natural Egyptian male voice", "distinct natural Urdu-speaking male voice"],
+          ["deep, calm, mature English FEMALE narrator", "deep, calm, mature Urdu FEMALE narrator with a natural Pakistani Urdu accent"],
+          ["deep, mature English female narrator", "deep, mature Urdu female narrator with a natural Pakistani Urdu accent"],
+          ["same English FEMALE narrator", "same Urdu FEMALE narrator with a natural Pakistani Urdu accent"],
+          ["English FEMALE narrator", "Urdu FEMALE narrator with a natural Pakistani Urdu accent"],
+          ["English female voice", "Urdu female voice with a natural Pakistani Urdu accent"]
+        ]
+      };
+      for (const [source, target] of directives[currentLanguage] || []) {
+        output = output.split(source).join(target);
+      }
+      return output;
+    }
+
+    function localizeDuration(value = "") {
+      if (currentLanguage === "ar") return value;
+      const number = value.match(/\d+(?:\s*[–-]\s*\d+)?/)?.[0];
+      if (!number) return value;
+      return currentLanguage === "ur" ? `${number} سیکنڈ` : `${number} seconds`;
+    }
+
+    function sceneView(scene) {
+      if (currentLanguage === "ar") return scene;
+      const title = languagePacks[currentLanguage]?.sceneTitles?.[scene.en] || scene.en || scene.title;
+      const purpose = currentLanguage === "ur"
+        ? `${title} کے لیے مکمل پروڈکشن یونٹ، جس میں مقررہ Scene Sheet، حوالے، کیمرا، آواز اور motion prompt شامل ہیں۔`
+        : `Complete production unit for ${title}, including its locked Scene Sheet, references, camera, sound, and motion prompt.`;
+      return {...scene, title, duration: localizeDuration(scene.duration), purpose};
+    }
+
+    function attachmentView(attachment) {
+      if (currentLanguage === "ar") return attachment;
+      return {
+        ...attachment,
+        type: currentLanguage === "ur" ? "پروڈکشن حوالہ" : "PRODUCTION REFERENCE",
+        role: currentLanguage === "ur"
+          ? "اس فائل کو دکھائی گئی ترتیب میں اپ لوڈ کریں۔ اس کی درست authority اور استعمال مکمل پرامپٹ میں مقرر ہے۔"
+          : "Upload this file in the displayed order. Its exact authority and use are locked inside the complete prompt."
+      };
+    }
+
+    function productionRules(rules) {
+      if (currentLanguage === "ar") return rules;
+      if (currentLanguage === "ur") return [
+        "پہلے Scene Sheet اپ لوڈ کریں، پھر کردار، مقام اور object references دکھائی گئی ترتیب میں۔",
+        "Scene Sheet صرف shot order، framing اور timing طے کرتی ہے؛ flat grid کو animate نہ کریں۔",
+        "Character اور Location Sheets شناخت، لباس اور تعمیرات کے حتمی حوالے ہیں۔",
+        "ہر panel کو الگ full-screen cinematic shot کے طور پر دوبارہ بنائیں۔",
+        "پرامپٹ کی ہدایات انگریزی میں رکھیں؛ صرف بولے جانے والے مکالمے اور narration منتخب زبان میں استعمال کریں۔"
+      ];
+      return [
+        "Upload the Scene Sheet first, followed by character, location, and object references in the displayed order.",
+        "The Scene Sheet controls shot order, framing, and timing only; never animate the flat grid.",
+        "Character and Location Sheets remain the final authority for identity, wardrobe, and architecture.",
+        "Rebuild every panel as an independent full-screen cinematic shot.",
+        "Keep prompt instructions in English; only spoken dialogue and narration follow the selected language."
+      ];
+    }
+
+    function narrationView(scene) {
+      const value = scene.narrator || scene.dialogue || "";
+      if (currentLanguage === "ar") return value;
+      if (/لا يوجد راو|لا يوجد راوي/.test(value)) {
+        return currentLanguage === "ur"
+          ? "کوئی narrator نہیں — کرداروں کا مکالمہ منظر کو آگے بڑھاتا ہے۔"
+          : "No narrator — character dialogue drives the scene.";
+      }
+      return localizeVoice(value);
+    }
+
+    function byLanguage(en, ar, ur) {
+      return currentLanguage === "ar" ? ar : currentLanguage === "ur" ? ur : en;
+    }
+
+    function educationalCtaView() {
+      if (currentLanguage === "ar") return educationalReel.cta;
+      if (currentLanguage === "ur") return {
+        ...educationalReel.cta,
+        firstMessage: "خوش آمدید 👋\nکیا آپ جاننا چاہتے ہیں کہ ایک خیال کو مکمل AI series میں کیسے بدلا جائے؟ میں نے کردار، مقامات، Scene Sheets، motion prompts، camera اور sound تک پورا مفت بریک ڈاؤن تیار کیا ہے۔",
+        firstButton: "مفت لنک حاصل کریں 🔥",
+        secondMessage: `یہ مکمل پروجیکٹ اور مفت بریک ڈاؤن ہے:\n${educationalReel.cta.url}\n\nآپ idea سے final scene تک پورا production workflow سیکھیں گے۔`,
+        secondButton: "مفت بریک ڈاؤن شروع کریں 🐉"
+      };
+      return {
+        ...educationalReel.cta,
+        firstMessage: "Welcome 👋\nWant to learn how an idea becomes a complete AI series? I prepared a free step-by-step breakdown covering characters, locations, Scene Sheets, motion prompts, camera, sound, and final direction.",
+        firstButton: "Get the free link 🔥",
+        secondMessage: `Here is the complete project and free breakdown:\n${educationalReel.cta.url}\n\nYou will learn the complete production workflow from idea to final scene.`,
+        secondButton: "Start the free breakdown 🐉"
+      };
+    }
+
+    function applyStaticLanguage() {
+      const rtl = currentLanguage === "ar" || currentLanguage === "ur";
+      document.documentElement.lang = currentLanguage;
+      document.documentElement.dir = rtl ? "rtl" : "ltr";
+      document.title = tr("meta.title");
+      document.querySelector('meta[name="description"]').setAttribute("content", tr("meta.description"));
+      document.querySelectorAll("[data-i18n]").forEach(node => {
+        node.textContent = tr(node.dataset.i18n);
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach(node => {
+        node.setAttribute("aria-label", tr(node.dataset.i18nAria));
+      });
+      document.querySelectorAll("[data-i18n-alt]").forEach(node => {
+        node.setAttribute("alt", tr(node.dataset.i18nAlt));
+      });
+      document.querySelectorAll("[data-language]").forEach(button => {
+        const active = button.dataset.language === currentLanguage;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    function renderCollections() {
+      const trailerCopy = localizedFeature("trailer");
+      const educationalCopy = localizedFeature("educational");
+      episodesGrid.innerHTML = `
+        <button class="episode-card trailer-card" data-ep="00" data-kind="trailer">
+          <img class="trailer-bg" src="${trailer.cover}" alt="" />
+          <span class="trailer-shade"></span>
+          <span class="ep-meta">SPECIAL 00 · OFFICIAL TRAILER</span>
+          <h3>${trailerCopy.title}</h3>
+          <p>${trailerCopy.summary}</p>
+          <span class="card-action">${tr("card.openTrailer")} ${iconArrow}</span>
+        </button>
+        <button class="episode-card educational-card" data-ep="AI" data-kind="educational">
+          <img class="educational-bg" src="${educationalReel.cover}" alt="" />
+          <span class="educational-shade"></span>
+          <span class="ep-meta">FREE BREAKDOWN · 6 SCENES · MULTILINGUAL VOICE</span>
+          <h3>${educationalCopy.title}</h3>
+          <p>${educationalCopy.subline}</p>
+          <span class="card-action">${tr("card.openBreakdown")} ${iconArrow}</span>
+        </button>` + episodes.map(item => {
+          const ep = localized("episodes", item);
+          return `
+        <button class="episode-card ${ep.n === 1 || ep.n === 2 ? "episode-ready" : "episode-soon"}" data-ep="0${ep.n}" ${ep.n === 1 || ep.n === 2 ? `data-kind="episode" data-id="${ep.n}"` : `disabled aria-disabled="true"`}>
+          ${ep.n === 1 ? `<img class="episode-bg" src="${episodeOneProduction.cover}" alt="" /><span class="episode-shade"></span>` : ""}
+          ${ep.n === 2 ? `<img class="episode-bg" src="${episodeTwoProduction.scenes[1].image}" alt="" /><span class="episode-shade"></span>` : ""}
+          <span class="ep-meta">EPISODE 0${ep.n}${ep.n > 2 ? " · LOCKED" : ""}</span><h3>${ep.title}</h3><p>${ep.idea}</p>
+          <span class="card-action">${ep.n === 1 || ep.n === 2 ? `${tr("card.openEpisode")} ${iconArrow}` : tr("card.locked")}</span>
+        </button>`;
+        }).join("");
+
+      charactersGrid.innerHTML = characters.map(item => {
+        const ch = localized("characters", item);
+        return `
+        <button class="character-card ${ch.status === "pending" ? "pending" : ""}" data-kind="character" data-id="${ch.id}" data-status="${ch.status}">
+          <span class="character-image">${ch.image ? `<img src="${ch.image}" alt="Character Sheet — ${ch.name}" loading="lazy" />` : ""}</span>
+          <span class="character-shade"></span>
+          <span class="character-copy"><span class="badge ${ch.status}">✓ ${tr("card.ready")}</span><h3>${ch.name}</h3><span class="role">${ch.role}</span><p>${ch.desc}</p></span>
+        </button>`;
+      }).join("");
+
+      locationsGrid.innerHTML = locations.map(item => {
+        const location = localized("locations", item);
+        return `
+        <button class="location-card glass" data-kind="location" data-id="${location.id}">
+          <img src="${location.image}" alt="Location Sheet — ${location.name}" loading="lazy" />
+          <span class="location-copy"><span class="badge ready">✓ ${tr("card.locationReady")}</span><h3>${location.name}</h3><p>${location.desc}</p></span>
+        </button>`;
+      }).join("");
+    }
+
+    function applyLanguage(language, persist = true) {
+      currentLanguage = language;
+      if (persist) {
+        try { localStorage.setItem("fire-covenant-language", language); } catch {}
+      }
+      if (dialog.open) closeDialog();
+      applyStaticLanguage();
+      renderCollections();
+    }
+
+    applyLanguage(currentLanguage, false);
 
     function renderAttachments(unit) {
-      return `<div class="attachment-head"><h4>المرفقات المطلوبة بالترتيب</h4><p>ارفع الملفات بالترتيب الموضح. وظيفة كل ملف محددة حتى لا يخلط Flow بين التكوين وهوية الشخصية والموقع.</p></div>
-        <div class="attachment-grid">${unit.attachments.map((attachment, index) => `
+      return `<div class="attachment-head"><h4>${tr("attachments.title")}</h4><p>${tr("attachments.help")}</p></div>
+        <div class="attachment-grid">${unit.attachments.map((item, index) => {
+          const attachment = attachmentView(item);
+          return `
           <article class="attachment-card">
-            <a href="${attachment.src}" target="_blank" rel="noopener" aria-label="فتح ${attachment.name} بالحجم الكامل"><img src="${attachment.src}" alt="${attachment.name}" loading="lazy" /></a>
+            <a href="${attachment.src}" target="_blank" rel="noopener" aria-label="${tr("attachments.open")} — ${attachment.name}"><img src="${attachment.src}" alt="${attachment.name}" loading="lazy" /></a>
             <div class="attachment-copy">
               <small>UPLOAD ${String(index + 1).padStart(2, "0")} · ${attachment.type}</small>
               <h5>${attachment.name}</h5>
               <p>${attachment.role}</p>
             </div>
-          </article>`).join("")}</div>`;
+          </article>`;
+        }).join("")}</div>`;
     }
 
     function renderTrailerUnit(unit) {
+      const view = sceneView(unit);
       const textLock = unit.screenText.length
-        ? `<article class="detail-panel"><h3>النصوص الظاهرة حرفيًا</h3><ul class="text-lock-list">${unit.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
-        : `<article class="detail-panel"><h3>النصوص الظاهرة</h3><p>لا توجد نصوص أو عناوين داخل هذا المشهد.</p></article>`;
+        ? `<article class="detail-panel"><h3>${tr("scene.screenExact")}</h3><ul class="text-lock-list">${unit.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
+        : `<article class="detail-panel"><h3>${tr("scene.screenText")}</h3><p>${tr("scene.noText")}</p></article>`;
       return `<article class="scene-item">
         <button class="scene-summary" data-scene-toggle>
           <span class="scene-no">${unit.order}</span>
-          <span><h4>${unit.title}</h4><p dir="ltr">${unit.en} · ${unit.duration}</p></span>
-          <span class="scene-state">جاهز للتحريك</span>
+          <span><h4>${view.title}</h4><p dir="ltr">${unit.en} · ${view.duration}</p></span>
+          <span class="scene-state">${tr("scene.readyMotion")}</span>
         </button>
         <div class="scene-content">
-          <div class="scene-meta"><span>${unit.duration}</span><span>Vertical 9:16</span><span>Google Flow Omni</span></div>
+          <div class="scene-meta"><span>${view.duration}</span><span>Vertical 9:16</span><span>Google Flow Omni</span></div>
           <figure class="sheet-preview">
-            <a href="${unit.image}" target="_blank" rel="noopener"><img src="${unit.image}" alt="${unit.title}" loading="lazy" /></a>
-            <figcaption><span>${unit.id === "intro" || unit.id === "outro" ? "الغلاف المعتمد" : "Scene Sheet المعتمدة"}</span><a href="${unit.image}" target="_blank" rel="noopener">فتح بالحجم الكامل ↗</a></figcaption>
+            <a href="${unit.image}" target="_blank" rel="noopener"><img src="${unit.image}" alt="${view.title}" loading="lazy" /></a>
+            <figcaption><span>${unit.id === "intro" || unit.id === "outro" ? tr("scene.approvedCover") : tr("scene.approvedSheet")}</span><a href="${unit.image}" target="_blank" rel="noopener">${tr("scene.openFull")}</a></figcaption>
           </figure>
           <div class="detail-grid">
-            <article class="detail-panel"><h3>الهدف الدرامي</h3><p>${unit.purpose}</p></article>
-            <article class="detail-panel"><h3>الراوي</h3><p dir="ltr">${unit.narrator}</p></article>
+            <article class="detail-panel"><h3>${tr("scene.purpose")}</h3><p>${view.purpose}</p></article>
+            <article class="detail-panel"><h3>${tr("scene.narrator")}</h3><p>${narrationView(unit)}</p></article>
             ${textLock}
-            <article class="detail-panel"><h3>قاعدة التنفيذ</h3><p>الـScene Sheet تتحكم في ترتيب اللقطات والكادرات فقط. ملفات الشخصيات والمواقع هي المرجع الحاسم للهوية والتفاصيل.</p></article>
+            <article class="detail-panel"><h3>${tr("scene.executionRule")}</h3><p>${tr("scene.executionTrailer")}</p></article>
           </div>
           ${renderAttachments(unit)}
+          <p class="language-note">${tr("production.languageNote")}</p>
           <div class="prompt-wrap">
-            <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-trailer="${unit.id}">نسخ البرومبت</button></div>
-            <pre>${escapeHtml(unit.prompt)}</pre>
+            <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-trailer="${unit.id}">${tr("scene.copyPrompt")}</button></div>
+            <pre>${escapeHtml(localizeVoice(unit.prompt))}</pre>
           </div>
         </div>
       </article>`;
     }
 
     function renderEpisodeScene(scene, productionKey) {
+      const view = sceneView(scene);
       const textLock = scene.screenText.length
-        ? `<article class="detail-panel"><h3>النصوص الظاهرة حرفيًا</h3><ul class="text-lock-list">${scene.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
-        : `<article class="detail-panel"><h3>النصوص الظاهرة</h3><p>لا توجد نصوص على الشاشة داخل هذا المشهد.</p></article>`;
+        ? `<article class="detail-panel"><h3>${tr("scene.screenExact")}</h3><ul class="text-lock-list">${scene.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
+        : `<article class="detail-panel"><h3>${tr("scene.screenText")}</h3><p>${tr("scene.noText")}</p></article>`;
       return `<article class="scene-item">
         <button class="scene-summary" data-scene-toggle>
           <span class="scene-no">${scene.order}</span>
-          <span><h4>${scene.title}</h4><p dir="ltr">${scene.en} · ${scene.duration}</p></span>
-          <span class="scene-state">الصورة والبرومبت جاهزان</span>
+          <span><h4>${view.title}</h4><p dir="ltr">${scene.en} · ${view.duration}</p></span>
+          <span class="scene-state">${tr("scene.readyPrompts")}</span>
         </button>
         <div class="scene-content">
           <div class="scene-meta">
-            <span>${scene.duration}</span><span>Vertical 9:16</span><span>${scene.location}</span><span>${scene.cast}</span>
+            <span>${view.duration}</span><span>Vertical 9:16</span>${currentLanguage === "ar" ? `<span>${scene.location}</span><span>${scene.cast}</span>` : ""}
           </div>
           <figure class="sheet-preview">
-            <a href="${scene.image}" target="_blank" rel="noopener"><img src="${scene.image}" alt="Scene ${scene.order} — ${scene.title}" loading="lazy" /></a>
-            <figcaption><span>Scene Sheet معتمدة · 8 لقطات</span><a href="${scene.image}" target="_blank" rel="noopener">فتح الصورة بالحجم الكامل ↗</a></figcaption>
+            <a href="${scene.image}" target="_blank" rel="noopener"><img src="${scene.image}" alt="Scene ${scene.order} — ${view.title}" loading="lazy" /></a>
+            <figcaption><span>${tr("scene.sheetEight")}</span><a href="${scene.image}" target="_blank" rel="noopener">${tr("scene.openImage")}</a></figcaption>
           </figure>
           <div class="detail-grid">
-            <article class="detail-panel scene-purpose"><h3>الهدف الدرامي</h3><p>${scene.purpose}</p></article>
-            <article class="detail-panel"><h3>الصوت المعتمد</h3><p dir="ltr">${scene.narrator}</p></article>
+            <article class="detail-panel scene-purpose"><h3>${tr("scene.purpose")}</h3><p>${view.purpose}</p></article>
+            <article class="detail-panel"><h3>${tr("scene.narrator")}</h3><p>${narrationView(scene)}</p></article>
             ${textLock}
-            <article class="detail-panel"><h3>قاعدة التنفيذ</h3><p>ارفع الشيت أولًا، ثم المراجع بالترتيب. أعد بناء كل Panel كلقطة Full Screen مستقلة؛ لا تحرّك شبكة الشيت نفسها.</p></article>
+            <article class="detail-panel"><h3>${tr("scene.executionRule")}</h3><p>${tr("scene.executionEpisode")}</p></article>
           </div>
           ${renderAttachments(scene)}
+          <p class="language-note">${tr("production.languageNote")}</p>
           <div class="prompt-stack">
             <div class="prompt-wrap">
-              <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-episode-image="${scene.id}" data-episode-production="${productionKey}">نسخ برومبت الصورة</button></div>
+              <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-episode-image="${scene.id}" data-episode-production="${productionKey}">${tr("scene.copyPrompt")}</button></div>
               <pre>${escapeHtml(scene.imagePrompt)}</pre>
             </div>
             <div class="prompt-wrap">
-              <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-episode-motion="${scene.id}" data-episode-production="${productionKey}">نسخ برومبت التحريك</button></div>
-              <pre>${escapeHtml(scene.motionPrompt)}</pre>
+              <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-episode-motion="${scene.id}" data-episode-production="${productionKey}">${tr("scene.copyPrompt")}</button></div>
+              <pre>${escapeHtml(localizeVoice(scene.motionPrompt))}</pre>
             </div>
           </div>
         </div>
       </article>`;
     }
 
-    function openTrailer() {
+    function renderEducationalScene(scene) {
+      const view = sceneView(scene);
+      const textLock = scene.screenText.length
+        ? `<article class="detail-panel"><h3>${tr("scene.screenExact")}</h3><ul class="text-lock-list">${scene.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
+        : `<article class="detail-panel"><h3>${tr("scene.screenText")}</h3><p>${tr("scene.noText")}</p></article>`;
+      return `<article class="scene-item">
+        <button class="scene-summary" data-scene-toggle>
+          <span class="scene-no">${scene.order}</span>
+          <span><h4>${view.title}</h4><p dir="ltr">${scene.en} · ${view.duration}</p></span>
+          <span class="scene-state">MULTILINGUAL VOICE · ${tr("card.ready")}</span>
+        </button>
+        <div class="scene-content">
+          <div class="scene-meta"><span>${view.duration}</span><span>Vertical 9:16</span><span>Google Flow Omni</span><span>EN · AR · UR</span></div>
+          <figure class="sheet-preview">
+            <a href="${scene.image}" target="_blank" rel="noopener"><img src="${scene.image}" alt="${scene.en}" loading="lazy" /></a>
+            <figcaption><span>Educational Scene Sheet · 8 shots</span><a href="${scene.image}" target="_blank" rel="noopener">${tr("scene.openFull")}</a></figcaption>
+          </figure>
+          <div class="detail-grid">
+            <article class="detail-panel scene-purpose"><h3>${tr("scene.purpose")}</h3><p>${view.purpose}</p></article>
+            <article class="detail-panel"><h3>${tr("scene.narrator")}</h3><p>${localizeVoice(scene.dialogue)}</p></article>
+            ${textLock}
+            <article class="detail-panel"><h3>${tr("scene.executionRule")}</h3><p>${tr("scene.executionEpisode")}</p></article>
+          </div>
+          ${renderAttachments(scene)}
+          <p class="language-note">${tr("production.languageNote")}</p>
+          <div class="prompt-stack">
+            <div class="prompt-wrap">
+              <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-educational-image="${scene.id}">${tr("scene.copyPrompt")}</button></div>
+              <pre>${escapeHtml(scene.imagePrompt)}</pre>
+            </div>
+            <div class="prompt-wrap">
+              <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MULTILINGUAL VOICE PROMPT</strong><button class="copy-btn" data-copy-educational-motion="${scene.id}">${tr("scene.copyPrompt")}</button></div>
+              <pre>${escapeHtml(localizeVoice(scene.motionPrompt))}</pre>
+            </div>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function openEducationalReel() {
+      const feature = localizedFeature("educational");
+      const cta = educationalCtaView();
       modalContent.innerHTML = `
-        <div class="modal-hero trailer-modal-hero">
-          <img src="${trailer.cover}" alt="${trailer.en}" />
-          <div class="modal-title"><span class="badge ready">✓ 10 وحدات جاهزة للتحريك</span><h2 id="modalHeading">${trailer.title}</h2><p dir="ltr">${trailer.en}</p></div>
+        <div class="modal-hero episode-production-hero">
+          <img src="${educationalReel.cover}" alt="${feature.title}" />
+          <div class="modal-title"><span class="badge ready">✓ ${byLanguage("6 SCENES · MULTILINGUAL VOICE · CTA","6 مشاهد · صوت متعدد اللغات · CTA","6 مناظر · کثیر لسانی آواز · CTA")}</span><h2 id="modalHeading">${feature.title}</h2><p dir="ltr">${educationalReel.en}</p></div>
         </div>
         <div class="modal-body">
           <div class="detail-grid">
-            <article class="detail-panel"><h3>حزمة الإنتاج</h3><p>${trailer.summary}</p></article>
-            <article class="detail-panel"><h3>المقاس والأداة</h3><p dir="ltr">${trailer.format} · ${trailer.duration}</p></article>
-            <article class="detail-panel"><h3>صوت الراوي الثابت</h3><p>${trailer.narrator}</p></article>
-            <article class="detail-panel"><h3>طريقة الاستخدام</h3><p>افتح أي وحدة، حمّل الصورة، ارفع المرفقات بالترتيب، ثم انسخ البرومبت كاملًا إلى Flow Omni.</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Reel concept","فكرة الريل","ریل کا تصور")}</h3><p>${feature.summary}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Format & tool","المقاس والأداة","فارمیٹ اور ٹول")}</h3><p dir="ltr">${educationalReel.format} · ${localizeDuration(educationalReel.duration)}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Hook","الهوك","ہُک")}</h3><p>${feature.title}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Learning promise","الوعد التعليمي","سیکھنے کا وعدہ")}</h3><p>${feature.subline}</p></article>
           </div>
-          <div class="production-head"><div><p class="kicker">TRAILER · PRODUCTION BOARD</p><h3>المقدمة + 8 مشاهد + النهاية</h3></div><p>كل الصور والمراجع والبرومبتات موثقة داخل كل وحدة</p></div>
+          <div class="free-resource-card">
+            <div>
+              <p class="kicker">FREE AI SERIES WORKFLOW</p>
+              <h3>${byLanguage("Learn the complete project for free","اتعلم المشروع كامل مجانًا","مکمل پروجیکٹ مفت سیکھیں")}</h3>
+              <p>${byLanguage(`Comment <strong dir="ltr">${cta.keyword}</strong> and ManyChat will send the free project page, Scene Sheets, prompts, and complete workflow.`,`اكتب <strong dir="ltr">${cta.keyword}</strong> في الكومنت، وManyChat يرسل صفحة الشرح والـScene Sheets والبرومبتات كاملة.`,`کمنٹ میں <strong dir="ltr">${cta.keyword}</strong> لکھیں، اور ManyChat مفت project page، Scene Sheets اور prompts بھیج دے گا۔`)}</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="${cta.url}" target="_blank" rel="noopener">${byLanguage("Open free breakdown ↗","افتح الشرح المجاني ↗","مفت بریک ڈاؤن کھولیں ↗")}</a>
+                <button class="copy-btn" data-copy-text="${encodeURIComponent(cta.url)}">${byLanguage("Copy link","نسخ الرابط","لنک کاپی کریں")}</button>
+              </div>
+            </div>
+            <div class="manychat-flow">
+              <article class="manychat-message"><small>MESSAGE 01</small><p>${cta.firstMessage}</p><span class="manychat-button">${cta.firstButton}</span></article>
+              <article class="manychat-message"><small>MESSAGE 02</small><p>${cta.secondMessage}</p><span class="manychat-button">${cta.secondButton}</span></article>
+            </div>
+          </div>
+          <div class="production-guide"><h3>${byLanguage("Locked execution rules","قواعد التنفيذ الثابتة","مقررہ عمل درآمد کے اصول")}</h3><ol>${productionRules(educationalReel.rules).map(rule => `<li>${rule}</li>`).join("")}</ol></div>
+          <div class="production-head"><div><p class="kicker">EDUCATIONAL REEL · PRODUCTION BOARD</p><h3>${byLanguage("6 scenes from hook to Comment Prompt","6 مشاهد من الهوك إلى Comment Prompt","ہُک سے Comment Prompt تک 6 مناظر")}</h3></div><p>${byLanguage("Every scene includes its sheet, uploads, dialogue, image prompt, and motion prompt.","كل مشهد يشمل الشيت والمرفقات والحوار وبرومبتَي الصورة والتحريك","ہر منظر میں sheet، uploads، dialogue، image prompt اور motion prompt شامل ہیں۔")}</p></div>
+          <div class="scene-list">${educationalReel.scenes.map(renderEducationalScene).join("")}</div>
+        </div>`;
+      showDialog();
+    }
+
+    function openTrailer() {
+      const feature = localizedFeature("trailer");
+      modalContent.innerHTML = `
+        <div class="modal-hero trailer-modal-hero">
+          <img src="${trailer.cover}" alt="${trailer.en}" />
+          <div class="modal-title"><span class="badge ready">✓ ${byLanguage("10 MOTION-READY UNITS","10 وحدات جاهزة للتحريك","10 موشن کے لیے تیار یونٹس")}</span><h2 id="modalHeading">${feature.title}</h2><p dir="ltr">${trailer.en}</p></div>
+        </div>
+        <div class="modal-body">
+          <div class="detail-grid">
+            <article class="detail-panel"><h3>${byLanguage("Production package","حزمة الإنتاج","پروڈکشن پیکج")}</h3><p>${feature.summary}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Format & tool","المقاس والأداة","فارمیٹ اور ٹول")}</h3><p dir="ltr">${trailer.format} · ${localizeDuration(trailer.duration)}</p></article>
+            <article class="detail-panel"><h3>${tr("scene.narrator")}</h3><p>${byLanguage("The same deep, calm, mature female voice across every narrated scene.","نفس الصوت الأنثوي العميق والهادئ والناضج في كل مشاهد الرواية.","تمام narrated مناظر میں ایک ہی گہری، پُرسکون اور پختہ خاتون آواز۔")}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("How to use","طريقة الاستخدام","استعمال کا طریقہ")}</h3><p>${byLanguage("Open a unit, upload its image and references in order, then copy the complete Flow Omni prompt.","افتح أي وحدة وارفع الصورة والمراجع بالترتيب ثم انسخ برومبت Flow Omni كاملًا.","کوئی unit کھولیں، تصویر اور references ترتیب سے اپ لوڈ کریں، پھر مکمل Flow Omni prompt کاپی کریں۔")}</p></article>
+          </div>
+          <div class="production-head"><div><p class="kicker">TRAILER · PRODUCTION BOARD</p><h3>${byLanguage("Opening + 8 scenes + final card","المقدمة + 8 مشاهد + النهاية","آغاز + 8 مناظر + اختتامی کارڈ")}</h3></div><p>${byLanguage("Every image, reference, and prompt is documented inside its unit.","كل الصور والمراجع والبرومبتات موثقة داخل كل وحدة","ہر تصویر، حوالہ اور prompt اپنے unit میں دستاویزی ہے۔")}</p></div>
           <div class="scene-list">${trailer.units.map(renderTrailerUnit).join("")}</div>
         </div>`;
       showDialog();
     }
 
     function openEpisode(ep) {
+      const episodeView = localized("episodes", ep);
       let production;
       let hero;
       if (ep.n === 1) {
         production = `
           <div class="production-guide">
-            <h3>إرشادات التنفيذ الثابتة</h3>
-            <ol>${episodeOneProduction.rules.map(rule => `<li>${rule}</li>`).join("")}</ol>
+            <h3>${byLanguage("Locked execution rules","إرشادات التنفيذ الثابتة","مقررہ عمل درآمد کے اصول")}</h3>
+            <ol>${productionRules(episodeOneProduction.rules).map(rule => `<li>${rule}</li>`).join("")}</ol>
           </div>
           <div class="production-head">
-            <div><p class="kicker">EPISODE 01 · PRODUCTION BOARD</p><h3>المشهد 01 إلى 12</h3></div>
-            <p>افتح كل مشهد للوصول للصورة والمرفقات وبرومبتَي الإنشاء والتحريك</p>
+            <div><p class="kicker">EPISODE 01 · PRODUCTION BOARD</p><h3>${byLanguage("SCENES 01–12","المشاهد 01–12","مناظر 01–12")}</h3></div>
+            <p>${byLanguage("Open a scene for its image, required uploads, image prompt, and localized-voice motion prompt.","افتح كل مشهد للوصول للصورة والمرفقات وبرومبتَي الإنشاء والتحريك بصوت لغة الموقع.","تصویر، uploads، image prompt اور منتخب زبان والے motion prompt کے لیے منظر کھولیں۔")}</p>
           </div>
           <div class="scene-list">${episodeOneProduction.scenes.map(scene => renderEpisodeScene(scene, "episode-01")).join("")}</div>`;
-        hero = `<div class="modal-hero episode-production-hero"><img src="${episodeOneProduction.scenes[0].image}" alt="${episodeOneProduction.en}" /><div class="modal-title"><span class="badge ready">✓ 12 مشهدًا جاهزًا للإنتاج</span><h2 id="modalHeading">${episodeOneProduction.title}</h2><p dir="ltr">${episodeOneProduction.en}</p></div></div>`;
+        hero = `<div class="modal-hero episode-production-hero"><img src="${episodeOneProduction.cover}" alt="${episodeOneProduction.en}" /><div class="modal-title"><span class="badge ready">✓ ${byLanguage("12 PRODUCTION-READY SCENES","12 مشهدًا جاهزًا للإنتاج","12 پروڈکشن کے لیے تیار مناظر")}</span><h2 id="modalHeading">${episodeView.title}</h2><p dir="ltr">${episodeOneProduction.en}</p></div></div>`;
       } else if (ep.n === 2) {
-        const episodeLocations = episodeTwoProduction.locations.map(id => locations.find(location => location.id === id));
+        const episodeLocations = episodeTwoProduction.locations.map(id => localized("locations", locations.find(location => location.id === id)));
         production = `
           <div class="production-guide">
-            <h3>نظام السرد والتنفيذ المعتمد</h3>
-            <ol>${episodeTwoProduction.rules.map(rule => `<li>${rule}</li>`).join("")}</ol>
+            <h3>${byLanguage("Locked narration & execution system","نظام السرد والتنفيذ المعتمد","مقررہ narration اور execution system")}</h3>
+            <ol>${productionRules(episodeTwoProduction.rules).map(rule => `<li>${rule}</li>`).join("")}</ol>
           </div>
           <div class="watermark-guide">
-            <img src="${episodeTwoProduction.watermark.overlay}" alt="علامة YEHIA.DIGITAL الشفافة" />
+            <img src="${episodeTwoProduction.watermark.overlay}" alt="YEHIA.DIGITAL transparent watermark" />
             <div>
-              <h4>علامة حقوق الفيديو المعتمدة</h4>
-              <p>${episodeTwoProduction.watermark.usage}</p>
+              <h4>${byLanguage("Approved video watermark","علامة حقوق الفيديو المعتمدة","منظور شدہ ویڈیو واٹرمارک")}</h4>
+              <p>${byLanguage("Place the 512×512 overlay at the top-right of a 1080×1920 video, 110–135px wide, 65–75% opacity, and 45px from the edges.",episodeTwoProduction.watermark.usage,"512×512 overlay کو 1080×1920 ویڈیو کے اوپر دائیں، 110–135px چوڑا، 65–75% opacity اور کناروں سے 45px دور رکھیں۔")}</p>
               <div class="watermark-actions">
-                <a href="${episodeTwoProduction.watermark.overlay}" target="_blank" rel="noopener">نسخة المونتاج 512×512 ↗</a>
-                <a href="${episodeTwoProduction.watermark.master}" target="_blank" rel="noopener">النسخة الأصلية ↗</a>
+                <a href="${episodeTwoProduction.watermark.overlay}" target="_blank" rel="noopener">${byLanguage("512×512 edit overlay ↗","نسخة المونتاج 512×512 ↗","512×512 ایڈٹ اوورلے ↗")}</a>
+                <a href="${episodeTwoProduction.watermark.master}" target="_blank" rel="noopener">${byLanguage("Original master ↗","النسخة الأصلية ↗","اصل ماسٹر ↗")}</a>
               </div>
             </div>
           </div>
           <div class="production-head">
-            <div><p class="kicker">EPISODE 02 · LOCATION LOCKS</p><h3>المواقع الجديدة المعتمدة</h3></div>
-            <p>اضغط على أي موقع لفتح Location Sheet والبرومبت الكامل</p>
+            <div><p class="kicker">EPISODE 02 · LOCATION LOCKS</p><h3>${byLanguage("New approved locations","المواقع الجديدة المعتمدة","نئے منظور شدہ مقامات")}</h3></div>
+            <p>${byLanguage("Open any location for its complete Location Sheet and master prompt.","اضغط على أي موقع لفتح Location Sheet والبرومبت الكامل.","مکمل Location Sheet اور master prompt کے لیے کوئی مقام کھولیں۔")}</p>
           </div>
           <div class="episode-prep-grid">${episodeLocations.map(location => `
             <button class="episode-prep-card" data-kind="location" data-id="${location.id}">
@@ -835,40 +1265,55 @@
             </button>`).join("")}
           </div>
           <div class="production-head">
-            <div><p class="kicker">EPISODE 02 · PRODUCTION BOARD</p><h3>Previously On + المشاهد 01–12 + Next Episode</h3></div>
-            <p>كل وحدة تشمل الشيت والمرفقات والصوت وبرمبتَي الصورة والتحريك</p>
+            <div><p class="kicker">EPISODE 02 · PRODUCTION BOARD</p><h3>${byLanguage("Previously On + Scenes 01–12 + Next Episode","ما حدث سابقًا + المشاهد 01–12 + الحلقة القادمة","Previously On + مناظر 01–12 + اگلی قسط")}</h3></div>
+            <p>${byLanguage("Every unit includes its sheet, uploads, voice, image prompt, and motion prompt.","كل وحدة تشمل الشيت والمرفقات والصوت وبرمبتَي الصورة والتحريك.","ہر unit میں sheet، uploads، voice، image prompt اور motion prompt شامل ہیں۔")}</p>
           </div>
           <div class="scene-list">${episodeTwoProduction.scenes.map(scene => renderEpisodeScene(scene, "episode-02")).join("")}</div>`;
-        hero = `<div class="modal-hero episode-production-hero"><img src="${episodeTwoProduction.scenes[1].image}" alt="${episodeTwoProduction.en}" /><div class="modal-title"><span class="badge ready">✓ 14 وحدة جاهزة للإنتاج</span><h2 id="modalHeading">${episodeTwoProduction.title}</h2><p dir="ltr">${episodeTwoProduction.en}</p></div></div>`;
+        hero = `<div class="modal-hero episode-production-hero"><img src="${episodeTwoProduction.scenes[1].image}" alt="${episodeTwoProduction.en}" /><div class="modal-title"><span class="badge ready">✓ ${byLanguage("14 PRODUCTION-READY UNITS","14 وحدة جاهزة للإنتاج","14 پروڈکشن کے لیے تیار یونٹس")}</span><h2 id="modalHeading">${episodeView.title}</h2><p dir="ltr">${episodeTwoProduction.en}</p></div></div>`;
       } else {
-        production = `<div class="prompt-wrap"><div class="prompt-head"><strong>PHASE 02 STATUS</strong></div><pre>هذه الحلقة ما زالت ضمن الـSeries Bible.
-يبدأ تفكيك مشاهدها بعد اعتماد وإنتاج الحلقة الثانية.</pre></div>`;
-        hero = `<div class="modal-hero"><div class="empty-media">0${ep.n}</div><div class="modal-title"><span class="badge ready">الموسم الأول · الحلقة 0${ep.n}</span><h2 id="modalHeading">${ep.title}</h2><p dir="ltr">${ep.en}</p></div></div>`;
+        production = `<div class="prompt-wrap"><div class="prompt-head"><strong>PRODUCTION STATUS</strong></div><pre>${byLanguage("This episode remains locked inside the Series Bible and will open when its scene production begins.","هذه الحلقة ما زالت مقفولة داخل الـSeries Bible، وتُفتح عند بدء إنتاج مشاهدها.","یہ قسط ابھی Series Bible میں locked ہے اور scene production شروع ہونے پر کھلے گی۔")}</pre></div>`;
+        hero = `<div class="modal-hero"><div class="empty-media">0${ep.n}</div><div class="modal-title"><span class="badge ready">${byLanguage(`SEASON ONE · EPISODE 0${ep.n}`,`الموسم الأول · الحلقة 0${ep.n}`,`پہلا سیزن · قسط 0${ep.n}`)}</span><h2 id="modalHeading">${episodeView.title}</h2><p dir="ltr">${ep.en}</p></div></div>`;
       }
       modalContent.innerHTML = `
         ${hero}
         <div class="modal-body"><div class="detail-grid">
-          <article class="detail-panel"><h3>فكرة الحلقة</h3><p>${ep.idea}</p></article>
-          <article class="detail-panel"><h3>التحول الدرامي</h3><p>${ep.turn}</p></article>
-          <article class="detail-panel"><h3>الشخصيات الأساسية</h3><p>${ep.cast}</p></article>
-          <article class="detail-panel"><h3>قفلة الحلقة</h3><p>${ep.hook}</p></article>
+          <article class="detail-panel"><h3>${tr("episode.idea")}</h3><p>${episodeView.idea}</p></article>
+          <article class="detail-panel"><h3>${tr("episode.turn")}</h3><p>${episodeView.turn}</p></article>
+          <article class="detail-panel"><h3>${tr("episode.cast")}</h3><p>${episodeView.cast}</p></article>
+          <article class="detail-panel"><h3>${tr("episode.hook")}</h3><p>${episodeView.hook}</p></article>
         </div>${production}</div>`;
       showDialog();
     }
 
     function openCharacter(ch) {
+      const view = localized("characters", ch);
+      const visual = currentLanguage === "ar"
+        ? ch.visual
+        : byLanguage(
+            "The approved Character Sheet is the authority for face, age, body proportions, wardrobe, equipment, materials, and recurring silhouette.",
+            ch.visual,
+            "منظور شدہ Character Sheet چہرے، عمر، جسمانی تناسب، لباس، سامان، مواد اور مستقل silhouette کا حتمی حوالہ ہے۔"
+          );
       modalContent.innerHTML = `
-        <div class="modal-hero">${ch.image ? `<img src="${ch.image}" alt="${ch.name}" />` : `<div class="empty-media">؟</div>`}<div class="modal-title"><span class="badge ${ch.status}">${ch.status === 'ready' ? '✓ Character Sheet معتمدة' : '○ لم يتم تنفيذ الشيت بعد'}</span><h2 id="modalHeading">${ch.name}</h2><p dir="ltr">${ch.en} · ${ch.role}</p></div></div>
-        <div class="modal-body"><div class="detail-grid"><article class="detail-panel"><h3>دورها في القصة</h3><p>${ch.desc}</p></article><article class="detail-panel"><h3>الهوية البصرية الثابتة</h3><p>${ch.visual}</p></article></div>
-        <div class="prompt-wrap"><div class="prompt-head"><strong>MASTER CHARACTER PROMPT</strong><button class="copy-btn" data-copy="prompt">نسخ البرومبت</button></div><pre id="promptText">${escapeHtml(ch.prompt)}</pre></div></div>`;
+        <div class="modal-hero">${ch.image ? `<img src="${ch.image}" alt="${view.name}" />` : `<div class="empty-media">?</div>`}<div class="modal-title"><span class="badge ${ch.status}">✓ ${byLanguage("APPROVED CHARACTER SHEET","Character Sheet معتمدة","منظور شدہ Character Sheet")}</span><h2 id="modalHeading">${view.name}</h2><p>${view.role}</p></div></div>
+        <div class="modal-body"><div class="detail-grid"><article class="detail-panel"><h3>${tr("character.storyRole")}</h3><p>${view.desc}</p></article><article class="detail-panel"><h3>${tr("character.visualIdentity")}</h3><p>${visual}</p></article></div>
+        <div class="prompt-wrap"><div class="prompt-head"><strong>${tr("prompt.masterCharacter")}</strong><button class="copy-btn" data-copy="prompt">${tr("scene.copyPrompt")}</button></div><pre id="promptText">${escapeHtml(ch.prompt)}</pre></div></div>`;
       showDialog();
     }
 
     function openLocation(location) {
+      const view = localized("locations", location);
+      const visual = currentLanguage === "ar"
+        ? location.visual
+        : byLanguage(
+            "The approved Location Sheet is the authority for geography, architecture, scale, materials, lighting direction, entrances, routes, and recurring camera continuity.",
+            location.visual,
+            "منظور شدہ Location Sheet جغرافیہ، تعمیرات، پیمانہ، مواد، روشنی، داخلی راستوں اور مستقل camera continuity کا حتمی حوالہ ہے۔"
+          );
       modalContent.innerHTML = `
-        <div class="modal-hero"><img src="${location.image}" alt="${location.name}" /><div class="modal-title"><span class="badge ready">✓ Location Sheet معتمدة</span><h2 id="modalHeading">${location.name}</h2><p dir="ltr">${location.en}</p></div></div>
-        <div class="modal-body"><div class="detail-grid"><article class="detail-panel"><h3>دوره في العالم</h3><p>${location.desc}</p></article><article class="detail-panel"><h3>الهوية البصرية الثابتة</h3><p>${location.visual}</p></article></div>
-        <div class="prompt-wrap"><div class="prompt-head"><strong>MASTER LOCATION PROMPT</strong><button class="copy-btn" data-copy="prompt">نسخ البرومبت</button></div><pre id="promptText">${escapeHtml(location.prompt)}</pre></div></div>`;
+        <div class="modal-hero"><img src="${location.image}" alt="${view.name}" /><div class="modal-title"><span class="badge ready">✓ ${byLanguage("APPROVED LOCATION SHEET","Location Sheet معتمدة","منظور شدہ Location Sheet")}</span><h2 id="modalHeading">${view.name}</h2><p dir="ltr">${location.en}</p></div></div>
+        <div class="modal-body"><div class="detail-grid"><article class="detail-panel"><h3>${tr("location.worldRole")}</h3><p>${view.desc}</p></article><article class="detail-panel"><h3>${tr("location.visualIdentity")}</h3><p>${visual}</p></article></div>
+        <div class="prompt-wrap"><div class="prompt-head"><strong>${tr("prompt.masterLocation")}</strong><button class="copy-btn" data-copy="prompt">${tr("scene.copyPrompt")}</button></div><pre id="promptText">${escapeHtml(location.prompt)}</pre></div></div>`;
       showDialog();
     }
 
@@ -877,9 +1322,12 @@
     function closeDialog() { dialog.close ? dialog.close() : dialog.removeAttribute('open'); }
 
     document.addEventListener('click', event => {
+      const languageButton = event.target.closest("[data-language]");
+      if (languageButton) applyLanguage(languageButton.dataset.language);
       const card = event.target.closest('[data-kind]');
       if (card) {
         if (card.dataset.kind === 'trailer') openTrailer();
+        if (card.dataset.kind === 'educational') openEducationalReel();
         if (card.dataset.kind === 'episode') openEpisode(episodes.find(ep => String(ep.n) === card.dataset.id));
         if (card.dataset.kind === 'character') openCharacter(characters.find(ch => ch.id === card.dataset.id));
         if (card.dataset.kind === 'location') openLocation(locations.find(location => location.id === card.dataset.id));
@@ -892,7 +1340,7 @@
       const trailerCopy = event.target.closest('[data-copy-trailer]');
       if (trailerCopy) {
         const unit = trailer.units.find(item => item.id === trailerCopy.dataset.copyTrailer);
-        if (unit) navigator.clipboard.writeText(unit.prompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        if (unit) navigator.clipboard.writeText(localizeVoice(unit.prompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       const episodeImageCopy = event.target.closest('[data-copy-episode-image]');
       if (episodeImageCopy) {
@@ -904,7 +1352,17 @@
       if (episodeMotionCopy) {
         const production = episodeMotionCopy.dataset.episodeProduction === "episode-02" ? episodeTwoProduction : episodeOneProduction;
         const scene = production.scenes.find(item => item.id === episodeMotionCopy.dataset.copyEpisodeMotion);
-        if (scene) navigator.clipboard.writeText(scene.motionPrompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        if (scene) navigator.clipboard.writeText(localizeVoice(scene.motionPrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+      }
+      const educationalImageCopy = event.target.closest('[data-copy-educational-image]');
+      if (educationalImageCopy) {
+        const scene = educationalReel.scenes.find(item => item.id === educationalImageCopy.dataset.copyEducationalImage);
+        if (scene) navigator.clipboard.writeText(scene.imagePrompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+      }
+      const educationalMotionCopy = event.target.closest('[data-copy-educational-motion]');
+      if (educationalMotionCopy) {
+        const scene = educationalReel.scenes.find(item => item.id === educationalMotionCopy.dataset.copyEducationalMotion);
+        if (scene) navigator.clipboard.writeText(localizeVoice(scene.motionPrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       if (event.target.closest('[data-copy="prompt"]')) {
         const text = document.getElementById('promptText').innerText;
