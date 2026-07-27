@@ -306,7 +306,14 @@
     "هوّ اللي نَفَّذه...": "It executed it...",
     "بس أنا اللي وَجَّهته.": "but I’m the one who directed it.",
     "وَجَّهته": "directed it",
-    "عاوِز البرومبت والشَّرح كامِل؟ اُكتُب “Prompt” في الكومنت.": "Want the prompt and the complete breakdown? Comment “Prompt”."
+    "عاوِز البرومبت والشَّرح كامِل؟ اُكتُب “Prompt” في الكومنت.": "Want the prompt and the complete breakdown? Comment “Prompt”.",
+    "أَنا ناقِص تِنّين يِهرَب دِلوقتي؟": "Is this really when my dragon decides to escape?",
+    "يَحيى! التِّنّين هَرَب!": "Yahia! The dragon escaped!",
+    "خَرَج مِن المَشهَد!": "It came out of the scene!",
+    "مِين كَتَب Interactive؟": "Who wrote Interactive?",
+    "مِين كَتَب إنترأكتِف؟": "Who wrote Interactive?",
+    "إنت!": "You!",
+    "تابِعني… قَبل ما يِهرَب الباقي.": "Follow me… before the rest escape."
   };
 
   const voicesAr = {

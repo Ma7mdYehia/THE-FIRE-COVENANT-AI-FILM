@@ -799,6 +799,7 @@
   <script src="episode-01-data.js"></script>
   <script src="episode-02-data.js"></script>
   <script src="educational-reel-data.js"></script>
+  <script src="interactive-dragon-reel-data.js"></script>
   <script src="site-i18n.js"></script>
   <script>
     const episodes = [
@@ -851,6 +852,7 @@
     const episodeOneProduction = window.episodeOneProduction;
     const episodeTwoProduction = window.episodeTwoProduction;
     const educationalReel = window.educationalReelProduction;
+    const interactiveDragonReel = window.interactiveDragonReelProduction;
     const iconArrow = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>`;
     const episodesGrid = document.getElementById('episodesGrid');
     const charactersGrid = document.getElementById('charactersGrid');
@@ -896,6 +898,11 @@
           ["adult Egyptian male voice, Cairo accent", "adult English-speaking male voice, neutral international accent"],
           ["adult Egyptian male voice", "adult English-speaking male voice"],
           ["Egyptian male voice", "English-speaking male voice"],
+          ["Egyptian female voice", "English-speaking female voice"],
+          ["authentic Egyptian Arabic", "natural English"],
+          ["natural Egyptian Arabic", "natural English"],
+          ["authentic Egyptian accent", "neutral international English accent"],
+          ["Egyptian pronunciation", "English pronunciation"],
           ["natural Cairo accent", "natural neutral English accent"],
           ["Cairo accent", "neutral international English accent"],
           ["distinct natural Egyptian male voice", "distinct natural English-speaking male voice"]
@@ -1024,6 +1031,8 @@
       ["THE NEXT MORNING", "ON-SCREEN TEXT"],
       ["THE KING LIED", "ON-SCREEN TEXT"],
       ["Comment Prompt", "ON-SCREEN TEXT"],
+      ["INTERACTIVE", "PROMPT VARIABLE"],
+      ["Interactive", "PROMPT VARIABLE"],
       ["YEHIA.DIGITAL", "BRAND NAME"],
       ["English FEMALE narrator", "VOICE"],
       ["English female narrator", "VOICE"],
@@ -1147,6 +1156,14 @@ ${marked}`;
           <h3>${educationalCopy.title}</h3>
           <p>${educationalCopy.subline}</p>
           <span class="card-action">${tr("card.openBreakdown")} ${iconArrow}</span>
+        </button>
+        <button class="episode-card educational-card" data-ep="AI-02" data-kind="interactive-comedy">
+          <img class="educational-bg" src="${interactiveDragonReel.cover}" alt="" />
+          <span class="educational-shade"></span>
+          <span class="ep-meta">COMEDY REEL · 2 SCENES · EGYPTIAN ARABIC</span>
+          <h3>${byLanguage(interactiveDragonReel.en, interactiveDragonReel.title)}</h3>
+          <p>${byLanguage("I wrote “Interactive”… so the dragon joined the edit.", interactiveDragonReel.subline)}</p>
+          <span class="card-action">${byLanguage("Open comedy reel", "افتح الريل الفكاهي")} ${iconArrow}</span>
         </button>` + episodes.map(item => {
           const ep = localized("episodes", item);
           return `
@@ -1288,7 +1305,7 @@ ${marked}`;
       </article>`;
     }
 
-    function renderEducationalScene(scene) {
+    function renderEducationalScene(scene, productionKey = "educational") {
       const view = sceneView(scene);
       const textLock = scene.screenText.length
         ? `<article class="detail-panel"><h3>${tr("scene.screenExact")}</h3><ul class="text-lock-list">${scene.screenText.map(line => `<li>${line}</li>`).join("")}</ul></article>`
@@ -1315,12 +1332,12 @@ ${marked}`;
           <p class="language-note">${tr("production.languageNote")}</p>
           <div class="prompt-stack">
             <div class="prompt-wrap">
-              <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-educational-image="${scene.id}">${tr("scene.copyPrompt")}</button></div>
+              <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-educational-image="${scene.id}" data-reel-production="${productionKey}">${tr("scene.copyPrompt")}</button></div>
               ${customizationNote()}
               <pre>${renderCustomPrompt(scene.imagePrompt)}</pre>
             </div>
             <div class="prompt-wrap">
-              <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MULTILINGUAL VOICE PROMPT</strong><button class="copy-btn" data-copy-educational-motion="${scene.id}">${tr("scene.copyPrompt")}</button></div>
+              <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MULTILINGUAL VOICE PROMPT</strong><button class="copy-btn" data-copy-educational-motion="${scene.id}" data-reel-production="${productionKey}">${tr("scene.copyPrompt")}</button></div>
               ${customizationNote()}
               <pre>${renderCustomPrompt(localizeVoice(scene.motionPrompt))}</pre>
             </div>
@@ -1363,6 +1380,32 @@ ${marked}`;
           <div class="production-guide"><h3>${byLanguage("Locked execution rules","قواعد التنفيذ الثابتة","مقررہ عمل درآمد کے اصول")}</h3><ol>${productionRules(educationalReel.rules).map(rule => `<li>${rule}</li>`).join("")}</ol></div>
           <div class="production-head"><div><p class="kicker">EDUCATIONAL REEL · PRODUCTION BOARD</p><h3>${byLanguage("6 scenes from hook to Comment Prompt","6 مشاهد من الهوك إلى Comment Prompt","ہُک سے Comment Prompt تک 6 مناظر")}</h3></div><p>${byLanguage("Every scene includes its sheet, uploads, dialogue, image prompt, and motion prompt.","كل مشهد يشمل الشيت والمرفقات والحوار وبرومبتَي الصورة والتحريك","ہر منظر میں sheet، uploads، dialogue، image prompt اور motion prompt شامل ہیں۔")}</p></div>
           <div class="scene-list">${educationalReel.scenes.map(renderEducationalScene).join("")}</div>
+        </div>`;
+      showDialog();
+    }
+
+    function openInteractiveComedyReel() {
+      const title = byLanguage(interactiveDragonReel.en, interactiveDragonReel.title);
+      const summary = byLanguage(
+        "A grounded office-fantasy comedy: Yahia is editing calmly when the word “Interactive” lets the dragon escape the generated scene and chase a team member through the studio.",
+        interactiveDragonReel.summary
+      );
+      modalContent.innerHTML = `
+        <div class="modal-hero episode-production-hero">
+          <img src="${interactiveDragonReel.cover}" alt="${title}" />
+          <div class="modal-title"><span class="badge ready">✓ ${byLanguage("2 CONNECTED SCENES · EGYPTIAN ARABIC","مشهدان متصلان · حوار مصري")}</span><h2 id="modalHeading">${title}</h2><p dir="ltr">${interactiveDragonReel.en}</p></div>
+        </div>
+        <div class="modal-body">
+          ${publishedVideo(interactiveDragonReel.videoUrl, "Watch the published comedy reel", "شاهد الريل الفكاهي المنشور")}
+          <div class="detail-grid">
+            <article class="detail-panel"><h3>${byLanguage("Reel concept","فكرة الريل")}</h3><p>${summary}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Format & tool","المقاس والأداة")}</h3><p dir="ltr">${interactiveDragonReel.format} · ${localizeDuration(interactiveDragonReel.duration)}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Opening hook","الهوك الافتتاحي")}</h3><p>${byLanguage("This is the last thing I need — my dragon escaping now.", interactiveDragonReel.hook)}</p></article>
+            <article class="detail-panel"><h3>${byLanguage("Comedy payoff","القفلة الكوميدية")}</h3><p>${byLanguage("One word in the prompt turned a generated character into an office problem.", "كلمة واحدة في البرومبت حولت الشخصية المولدة إلى مشكلة داخل المكتب.")}</p></article>
+          </div>
+          <div class="production-guide"><h3>${byLanguage("Locked execution rules","قواعد التنفيذ الثابتة")}</h3><ol>${productionRules(interactiveDragonReel.rules).map(rule => `<li>${rule}</li>`).join("")}</ol></div>
+          <div class="production-head"><div><p class="kicker">OFFICE FANTASY COMEDY · PRODUCTION BOARD</p><h3>${byLanguage("Two continuous scenes from impact to punchline","مشهدان متصلان من الخبطة إلى القفلة")}</h3></div><p>${byLanguage("Each scene includes the approved sheet, upload guide, exact dialogue, image prompt and motion prompt.","كل مشهد يشمل الشيت والمرفقات والحوار وبرومبت الصورة وبرومبت التحريك.")}</p></div>
+          <div class="scene-list">${interactiveDragonReel.scenes.map(scene => renderEducationalScene(scene, "interactive-dragon")).join("")}</div>
         </div>`;
       showDialog();
     }
@@ -1498,6 +1541,7 @@ ${marked}`;
       if (card) {
         if (card.dataset.kind === 'trailer') openTrailer();
         if (card.dataset.kind === 'educational') openEducationalReel();
+        if (card.dataset.kind === 'interactive-comedy') openInteractiveComedyReel();
         if (card.dataset.kind === 'episode') openEpisode(episodes.find(ep => String(ep.n) === card.dataset.id));
         if (card.dataset.kind === 'character') openCharacter(characters.find(ch => ch.id === card.dataset.id));
         if (card.dataset.kind === 'location') openLocation(locations.find(location => location.id === card.dataset.id));
@@ -1531,12 +1575,14 @@ ${marked}`;
       }
       const educationalImageCopy = event.target.closest('[data-copy-educational-image]');
       if (educationalImageCopy) {
-        const scene = educationalReel.scenes.find(item => item.id === educationalImageCopy.dataset.copyEducationalImage);
+        const reel = educationalImageCopy.dataset.reelProduction === "interactive-dragon" ? interactiveDragonReel : educationalReel;
+        const scene = reel.scenes.find(item => item.id === educationalImageCopy.dataset.copyEducationalImage);
         if (scene) navigator.clipboard.writeText(editablePrompt(scene.imagePrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       const educationalMotionCopy = event.target.closest('[data-copy-educational-motion]');
       if (educationalMotionCopy) {
-        const scene = educationalReel.scenes.find(item => item.id === educationalMotionCopy.dataset.copyEducationalMotion);
+        const reel = educationalMotionCopy.dataset.reelProduction === "interactive-dragon" ? interactiveDragonReel : educationalReel;
+        const scene = reel.scenes.find(item => item.id === educationalMotionCopy.dataset.copyEducationalMotion);
         if (scene) navigator.clipboard.writeText(editablePrompt(localizeVoice(scene.motionPrompt))).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       if (event.target.closest('[data-copy="prompt"]')) {

@@ -25,7 +25,7 @@ Do not animate the flat Scene Sheet as a slideshow or show its grid inside the f
     en: "FROM SCENE SHEET TO FINAL SCENE",
     format: "Vertical 9:16 · 6 cinematic scenes · Google Flow Omni",
     duration: "حوالي 60 ثانية",
-    cover: "assets/educational-reel/reel-cover-turn-idea-into-ai-series-v1.webp",
+    cover: "assets/educational-reel/reel-cover-turn-idea-into-ai-series-v2.webp",
     videoUrl: "https://www.instagram.com/p/DbQn9Lns3z0/",
     summary: "ريل Marketing Drama تعليمي يكشف بطريقة سينمائية وفكاهية كيف يتحول التخطيط والمراجع والـScene Sheet إلى مشهد نهائي، مع حوار مصري وCTA يقود إلى الشرح المجاني.",
     hook: "حوّل فكرتك لمسلسل كامل بالـAI",
