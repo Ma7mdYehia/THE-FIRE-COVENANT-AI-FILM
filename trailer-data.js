@@ -4,6 +4,7 @@ window.trailerProduction = {
   duration: "نحو 84 ثانية",
   format: "Vertical 9:16 · Google Flow Omni",
   cover: "assets/trailer/the-fire-covenant-official-trailer-cover-v1.webp",
+  videoUrl: "https://www.instagram.com/p/DbL5aYrMRFq/",
   summary: "مقدمة سينمائية، 8 مشاهد مترابطة، ثم قفلة تحمل هوية YEHIA.DIGITAL ودعوة للوصول إلى البرومبت والشرح الكامل.",
   narrator: "صوت أنثوي إنجليزي عميق وهادئ وناضج، ثابت في جميع المشاهد.",
   units: [
