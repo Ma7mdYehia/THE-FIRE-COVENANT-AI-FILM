@@ -581,6 +581,38 @@
     .prompt-head { display:flex; justify-content:space-between; align-items:center; gap:15px; padding:13px 15px; border-bottom:1px solid rgba(244,244,242,.07); }
     .prompt-head strong { font:700 10px/1 Inter,sans-serif; color:#e9bc7d; letter-spacing:.12em; direction:ltr; }
     .copy-btn { color:var(--ink); background:rgba(244,244,242,.06); border:1px solid var(--border); border-radius:10px; padding:8px 10px; cursor:pointer; font-size:11px; }
+    .prompt-customization {
+      display:grid;
+      gap:8px;
+      padding:13px 15px;
+      border-bottom:1px solid rgba(244,244,242,.07);
+      background:linear-gradient(135deg,rgba(217,119,6,.1),rgba(255,255,255,.018));
+    }
+    .prompt-customization strong {
+      color:#f0b75f;
+      font:700 10px/1.2 Inter,sans-serif;
+      letter-spacing:.12em;
+    }
+    .prompt-customization p { margin:0; color:#cfc4b7; font-size:11px; line-height:1.7; }
+    .variable-legend { display:flex; flex-wrap:wrap; gap:6px; }
+    .variable-legend span {
+      padding:5px 8px;
+      border:1px solid rgba(242,169,59,.24);
+      border-radius:999px;
+      color:#e9c28d;
+      background:rgba(217,119,6,.07);
+      font:700 9px/1 Inter,sans-serif;
+      letter-spacing:.04em;
+    }
+    .prompt-variable {
+      padding:1px 3px;
+      border:1px solid rgba(249,178,69,.42);
+      border-radius:4px;
+      color:#ffd089;
+      background:rgba(217,119,6,.22);
+      box-decoration-break:clone;
+      -webkit-box-decoration-break:clone;
+    }
     .language-note { margin: 12px 0; padding: 11px 13px; color: #d8c3a7; border: 1px solid rgba(217,119,6,.2); border-radius: 12px; background: rgba(217,119,6,.07); font-size: 11px; line-height: 1.7; }
     pre { margin:0; padding:19px; white-space:pre-wrap; word-break:break-word; direction:ltr; text-align:left; color:#d6d1cc; font:500 12px/1.75 ui-monospace,SFMono-Regular,Menlo,monospace; }
     .empty-media { display:grid; place-items:center; min-height:390px; color:rgba(244,244,242,.09); font-size:150px; font-weight:700; }
@@ -952,6 +984,128 @@
         </aside>`;
     }
 
+    const promptVariableTerms = [
+      ["A YEHIA.DIGITAL PRODUCTION", "PRODUCTION CREDIT"],
+      ["ABSOLUTE YAHIA IDENTITY LOCK", "IDENTITY SECTION"],
+      ["Mo Yahia Character Sheet", "FACE REFERENCE"],
+      ["King Yahia Character Sheet", "CHARACTER SHEET"],
+      ["Queen Alia Character Sheet", "CHARACTER SHEET"],
+      ["Zayn Character Sheet", "CHARACTER SHEET"],
+      ["Layan Character Sheet", "CHARACTER SHEET"],
+      ["Nader Character Sheet", "CHARACTER SHEET"],
+      ["Qais Character Sheet", "CHARACTER SHEET"],
+      ["Grey Rider Character Sheet", "CHARACTER SHEET"],
+      ["Azar and Egg Sheet", "CREATURE REFERENCE"],
+      ["Dragon Egg Reference", "OBJECT REFERENCE"],
+      ["Capital Market & Rooftops", "LOCATION"],
+      ["Royal Inner Passages", "LOCATION"],
+      ["Black Banners Camp", "LOCATION"],
+      ["Covenant Library", "LOCATION"],
+      ["The Golden Capital", "LOCATION"],
+      ["Golden Capital", "LOCATION"],
+      ["Golden City", "LOCATION"],
+      ["The Great Hall", "LOCATION"],
+      ["Great Hall", "LOCATION"],
+      ["Eastern Gate", "LOCATION"],
+      ["Lower Chamber", "LOCATION"],
+      ["Black Banner riders", "FACTION / EXTRAS"],
+      ["Royal Border Scouts", "FACTION / EXTRAS"],
+      ["Royal Guards", "FACTION / EXTRAS"],
+      ["Older Male Citizen", "CHARACTER ROLE"],
+      ["Market Woman", "CHARACTER ROLE"],
+      ["Royal Guard", "CHARACTER ROLE"],
+      ["Agitator", "CHARACTER ROLE"],
+      ["Civilian", "CHARACTER ROLE"],
+      ["Black Banners", "FACTION / EXTRAS"],
+      ["Army Pack", "FACTION REFERENCE"],
+      ["THE FIRE COVENANT", "PROJECT TITLE"],
+      ["WANT THE PROMPT & FULL BREAKDOWN?", "ON-SCREEN TEXT"],
+      ["OFFICIAL TRAILER", "ON-SCREEN TEXT"],
+      ["THE NEXT MORNING", "ON-SCREEN TEXT"],
+      ["THE KING LIED", "ON-SCREEN TEXT"],
+      ["Comment Prompt", "ON-SCREEN TEXT"],
+      ["YEHIA.DIGITAL", "BRAND NAME"],
+      ["English FEMALE narrator", "VOICE"],
+      ["English female narrator", "VOICE"],
+      ["English female voice", "VOICE"],
+      ["Egyptian male voice", "VOICE"],
+      ["English-speaking male voice", "VOICE"],
+      ["Cairo accent", "VOICE / ACCENT"],
+      ["neutral international accent", "VOICE / ACCENT"],
+      ["ZAYN IDENTITY LOCK", "IDENTITY SECTION"],
+      ["IDENTITY LOCK", "IDENTITY SECTION"],
+      ["CHARACTER LOCK", "IDENTITY SECTION"],
+      ["CREATURE LOCK", "CREATURE SECTION"],
+      ["FACE LOCK", "IDENTITY SECTION"],
+      ["VOICE LOCK", "VOICE SECTION"],
+      ["LOCATION LOCK", "LOCATION SECTION"],
+      ["TEXT LOCK", "ON-SCREEN TEXT SECTION"],
+      ["TEXT DESIGN", "ON-SCREEN TEXT SECTION"],
+      ["King Yahia", "CHARACTER NAME"],
+      ["Queen Alia", "CHARACTER NAME"],
+      ["Grey Rider", "CHARACTER NAME"],
+      ["Mo Yahia", "CHARACTER NAME"],
+      ["Yahia", "CHARACTER NAME"],
+      ["Zayn", "CHARACTER NAME"],
+      ["Layan", "CHARACTER NAME"],
+      ["Nader", "CHARACTER NAME"],
+      ["Qais", "CHARACTER NAME"],
+      ["Azar", "CREATURE NAME"],
+      ["Nira", "CREATURE NAME"],
+      ["Character Sheet", "CHARACTER SHEET"],
+      ["Location Sheet", "LOCATION SHEET"],
+      ["Scene Sheet", "SCENE SHEET"]
+    ].sort((a, b) => b[0].length - a[0].length);
+    const promptVariableTypes = new Map(promptVariableTerms.map(([term, type]) => [term.toLowerCase(), type]));
+    const promptVariableRegex = new RegExp(promptVariableTerms.map(([term]) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "gi");
+
+    function customizationNote() {
+      return `<div class="prompt-customization">
+        <strong>${byLanguage("CUSTOMIZABLE PROMPT","برومبت قابل للتخصيص")}</strong>
+        <p>${byLanguage(
+          "Orange highlights are safe personalization points. Replace the character name, uploaded face or Character Sheet, location, voice, brand, and on-screen text. If you change the face, also rewrite the physical-trait bullets inside the highlighted Identity Lock section. Keep shot timing, camera, transitions, and sound structure for the same directing quality.",
+          "الأجزاء البرتقالية هي نقاط التخصيص. غيّر اسم الشخصية ومرجع الوجه أو الـCharacter Sheet والموقع والصوت والبراند والنص الظاهر. لو غيّرت الوجه، عدّل أيضًا صفات الشكل داخل قسم Identity Lock المعلَّم. اترك التوقيت والكاميرا والترانزيشن والصوت لتحافظ على نفس جودة الإخراج."
+        )}</p>
+        <div class="variable-legend">
+          <span>${byLanguage("NAME / FACE","الاسم / الوجه")}</span>
+          <span>${byLanguage("CHARACTER SHEET","مرجع الشخصية")}</span>
+          <span>${byLanguage("LOCATION","الموقع")}</span>
+          <span>${byLanguage("VOICE","الصوت")}</span>
+          <span>${byLanguage("TEXT / BRAND","النص / البراند")}</span>
+        </div>
+      </div>`;
+    }
+
+    function renderCustomPrompt(value = "") {
+      let output = "";
+      let cursor = 0;
+      promptVariableRegex.lastIndex = 0;
+      value.replace(promptVariableRegex, (match, offset) => {
+        output += escapeHtml(value.slice(cursor, offset));
+        const type = promptVariableTypes.get(match.toLowerCase()) || "CUSTOM VALUE";
+        output += `<mark class="prompt-variable" title="${escapeHtml(type)}">${escapeHtml(match)}</mark>`;
+        cursor = offset + match.length;
+        return match;
+      });
+      output += escapeHtml(value.slice(cursor));
+      return output;
+    }
+
+    function editablePrompt(value = "") {
+      promptVariableRegex.lastIndex = 0;
+      const marked = value.replace(promptVariableRegex, match => {
+        const type = promptVariableTypes.get(match.toLowerCase()) || "CUSTOM VALUE";
+        return `{{${type}: ${match}}}`;
+      });
+      return `CUSTOMIZATION LAYER — EDIT BEFORE GENERATING
+Replace the values inside {{...}} with your own references and names.
+If you replace a character or face, upload the new Character Sheet and rewrite the physical-description bullets inside the marked IDENTITY SECTION.
+If you replace a location, upload the new Location Sheet and update matching architecture and material descriptions.
+Keep the shot order, timing, camera movement, transitions, sound design, and safety constraints unless you intentionally want a different directing treatment.
+
+${marked}`;
+    }
+
     function applyStaticLanguage() {
       const rtl = currentLanguage === "ar";
       document.documentElement.lang = currentLanguage;
@@ -1079,7 +1233,8 @@
           <p class="language-note">${tr("production.languageNote")}</p>
           <div class="prompt-wrap">
             <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-trailer="${unit.id}">${tr("scene.copyPrompt")}</button></div>
-            <pre>${escapeHtml(localizeVoice(unit.prompt))}</pre>
+            ${customizationNote()}
+            <pre>${renderCustomPrompt(localizeVoice(unit.prompt))}</pre>
           </div>
         </div>
       </article>`;
@@ -1115,11 +1270,13 @@
           <div class="prompt-stack">
             <div class="prompt-wrap">
               <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-episode-image="${scene.id}" data-episode-production="${productionKey}">${tr("scene.copyPrompt")}</button></div>
-              <pre>${escapeHtml(scene.imagePrompt)}</pre>
+              ${customizationNote()}
+              <pre>${renderCustomPrompt(scene.imagePrompt)}</pre>
             </div>
             <div class="prompt-wrap">
               <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MOTION PROMPT</strong><button class="copy-btn" data-copy-episode-motion="${scene.id}" data-episode-production="${productionKey}">${tr("scene.copyPrompt")}</button></div>
-              <pre>${escapeHtml(localizeVoice(scene.motionPrompt))}</pre>
+              ${customizationNote()}
+              <pre>${renderCustomPrompt(localizeVoice(scene.motionPrompt))}</pre>
             </div>
           </div>
         </div>
@@ -1154,11 +1311,13 @@
           <div class="prompt-stack">
             <div class="prompt-wrap">
               <div class="prompt-head"><strong>IMAGE GENERATION · SCENE SHEET PROMPT</strong><button class="copy-btn" data-copy-educational-image="${scene.id}">${tr("scene.copyPrompt")}</button></div>
-              <pre>${escapeHtml(scene.imagePrompt)}</pre>
+              ${customizationNote()}
+              <pre>${renderCustomPrompt(scene.imagePrompt)}</pre>
             </div>
             <div class="prompt-wrap">
               <div class="prompt-head"><strong>GOOGLE FLOW OMNI · MULTILINGUAL VOICE PROMPT</strong><button class="copy-btn" data-copy-educational-motion="${scene.id}">${tr("scene.copyPrompt")}</button></div>
-              <pre>${escapeHtml(localizeVoice(scene.motionPrompt))}</pre>
+              ${customizationNote()}
+              <pre>${renderCustomPrompt(localizeVoice(scene.motionPrompt))}</pre>
             </div>
           </div>
         </div>
@@ -1303,7 +1462,7 @@
       modalContent.innerHTML = `
         <div class="modal-hero">${ch.image ? `<img src="${ch.image}" alt="${view.name}" />` : `<div class="empty-media">?</div>`}<div class="modal-title"><span class="badge ${ch.status}">✓ ${byLanguage("APPROVED CHARACTER SHEET","Character Sheet معتمدة","منظور شدہ Character Sheet")}</span><h2 id="modalHeading">${view.name}</h2><p>${view.role}</p></div></div>
         <div class="modal-body"><div class="detail-grid"><article class="detail-panel"><h3>${tr("character.storyRole")}</h3><p>${view.desc}</p></article><article class="detail-panel"><h3>${tr("character.visualIdentity")}</h3><p>${visual}</p></article></div>
-        <div class="prompt-wrap"><div class="prompt-head"><strong>${tr("prompt.masterCharacter")}</strong><button class="copy-btn" data-copy="prompt">${tr("scene.copyPrompt")}</button></div><pre id="promptText">${escapeHtml(ch.prompt)}</pre></div></div>`;
+        <div class="prompt-wrap"><div class="prompt-head"><strong>${tr("prompt.masterCharacter")}</strong><button class="copy-btn" data-copy="prompt">${tr("scene.copyPrompt")}</button></div>${customizationNote()}<pre id="promptText">${renderCustomPrompt(ch.prompt)}</pre></div></div>`;
       showDialog();
     }
 
@@ -1319,7 +1478,7 @@
       modalContent.innerHTML = `
         <div class="modal-hero"><img src="${location.image}" alt="${view.name}" /><div class="modal-title"><span class="badge ready">✓ ${byLanguage("APPROVED LOCATION SHEET","Location Sheet معتمدة","منظور شدہ Location Sheet")}</span><h2 id="modalHeading">${view.name}</h2><p dir="ltr">${location.en}</p></div></div>
         <div class="modal-body"><div class="detail-grid"><article class="detail-panel"><h3>${tr("location.worldRole")}</h3><p>${view.desc}</p></article><article class="detail-panel"><h3>${tr("location.visualIdentity")}</h3><p>${visual}</p></article></div>
-        <div class="prompt-wrap"><div class="prompt-head"><strong>${tr("prompt.masterLocation")}</strong><button class="copy-btn" data-copy="prompt">${tr("scene.copyPrompt")}</button></div><pre id="promptText">${escapeHtml(location.prompt)}</pre></div></div>`;
+        <div class="prompt-wrap"><div class="prompt-head"><strong>${tr("prompt.masterLocation")}</strong><button class="copy-btn" data-copy="prompt">${tr("scene.copyPrompt")}</button></div>${customizationNote()}<pre id="promptText">${renderCustomPrompt(location.prompt)}</pre></div></div>`;
       showDialog();
     }
 
@@ -1346,33 +1505,33 @@
       const trailerCopy = event.target.closest('[data-copy-trailer]');
       if (trailerCopy) {
         const unit = trailer.units.find(item => item.id === trailerCopy.dataset.copyTrailer);
-        if (unit) navigator.clipboard.writeText(localizeVoice(unit.prompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        if (unit) navigator.clipboard.writeText(editablePrompt(localizeVoice(unit.prompt))).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       const episodeImageCopy = event.target.closest('[data-copy-episode-image]');
       if (episodeImageCopy) {
         const production = episodeImageCopy.dataset.episodeProduction === "episode-02" ? episodeTwoProduction : episodeOneProduction;
         const scene = production.scenes.find(item => item.id === episodeImageCopy.dataset.copyEpisodeImage);
-        if (scene) navigator.clipboard.writeText(scene.imagePrompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        if (scene) navigator.clipboard.writeText(editablePrompt(scene.imagePrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       const episodeMotionCopy = event.target.closest('[data-copy-episode-motion]');
       if (episodeMotionCopy) {
         const production = episodeMotionCopy.dataset.episodeProduction === "episode-02" ? episodeTwoProduction : episodeOneProduction;
         const scene = production.scenes.find(item => item.id === episodeMotionCopy.dataset.copyEpisodeMotion);
-        if (scene) navigator.clipboard.writeText(localizeVoice(scene.motionPrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        if (scene) navigator.clipboard.writeText(editablePrompt(localizeVoice(scene.motionPrompt))).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       const educationalImageCopy = event.target.closest('[data-copy-educational-image]');
       if (educationalImageCopy) {
         const scene = educationalReel.scenes.find(item => item.id === educationalImageCopy.dataset.copyEducationalImage);
-        if (scene) navigator.clipboard.writeText(scene.imagePrompt).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        if (scene) navigator.clipboard.writeText(editablePrompt(scene.imagePrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       const educationalMotionCopy = event.target.closest('[data-copy-educational-motion]');
       if (educationalMotionCopy) {
         const scene = educationalReel.scenes.find(item => item.id === educationalMotionCopy.dataset.copyEducationalMotion);
-        if (scene) navigator.clipboard.writeText(localizeVoice(scene.motionPrompt)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        if (scene) navigator.clipboard.writeText(editablePrompt(localizeVoice(scene.motionPrompt))).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
       if (event.target.closest('[data-copy="prompt"]')) {
         const text = document.getElementById('promptText').innerText;
-        navigator.clipboard.writeText(text).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
+        navigator.clipboard.writeText(editablePrompt(text)).then(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1700); });
       }
     });
 
